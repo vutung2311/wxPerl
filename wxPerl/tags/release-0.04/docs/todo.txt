@@ -1,0 +1,18 @@
+PRIORITY NORMAL:
+
+* wxApp::new
+    find a better solution yhan just 'croak' if OnInit
+    returns a false value
+
+* wxBitmap, wxIcon, wxImage, wxCursor
+    add missing constructors ( where applicable )
+
+* Better Makefile.PL structure
+
+DOCUMENTATTION:
+
+* Wx::Caret
+
+* Wx::Palette
+
+* wxDC::DrawSpline, wxDC::DrawLines, wxDC::DrawPolygon
