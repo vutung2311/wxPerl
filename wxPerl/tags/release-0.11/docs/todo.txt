@@ -1,0 +1,145 @@
+MISC:
+
+* tut & man in one file
+
+PRIORITY HIGH:
+
+For 0.12
+
+* Overload resolution
+  rewrite _match in C++ and move all overload resolution
+  routines to XS -> eliminate most lib/Wx/*.pm files
+
+PRIORITY NORMAL:
+
+* Threads
+   cloning of objects with a DESTROY
+
+* wxGrid
+    GetTable
+    SetTable
+
+* Wx::PlGridCellEditor/Renderer
+
+* wxMenu::Prepend*
+
+* wxXmlResource::LoadMenuBar
+    overload
+
+* configuration system
+
+* finish cpp/chkconfig.h
+
+* Wx::Colour::GetPixel
+    Does not work on wxMac
+
+* Wx::DataObject
+    Wx::PlDataObject
+
+* move THIS from HV to MAGIC?
+  
+* Decrease compilation time/code bloat:
+    Use precompiled headers where appropriate
+    Move constants out of Constants.xs when they need a separate #include
+    Move #include <wx/foo.h> to the XS requiring them
+    Add tests for wxUSE_XXX, and maybe a wxPERL_USE_XXX
+
+* Wx::HtmlWindow
+    AddFilter
+    GetInternalRepresentation
+    Fix inheritance...
+
+* Wx::HtmlHelp
+    CreateHelpFrame
+
+* Wx::HelpController
+    OnQuit
+    Get/SetFrameParameters
+
+* Wx::Stream
+    Better READLINE
+    Support for $/, etc?
+
+PRIORITY LOW:
+
+* Wx::HtmlHelpData ?
+
+* Decent wxClassInfo initialization strategy
+
+* Wx::App methods
+    CreateLogTarget
+
+* Wx::App::new
+    find a better solution yhan just 'croak' if OnInit
+    returns a false value
+
+* Wx::Help
+    enable all Wx::*Help* available in the current setup
+
+* Wx::PrintData
+    PostScript specific functions
+    overloaded constructors
+
+* Wx::PageSetupDialogData
+    overloaded constructors
+
+* Wx::PreviewFrame
+    CreateControlBar
+    CreateCanvas
+
+* Wx::PreviewControlBar
+    CreateButtons
+
+* operator == and != ( are they useful/have side effects? )
+    Wx::AcceleratorTable
+    Wx::Bitmap ( enable )
+    Wx::Brush
+    Wx::Colour
+    Wx::Cursor
+    Wx::Font
+    Wx::Rect
+    Wx::Region
+    Wx::Point
+    Wx::Size
+    Wx::Icon
+    Wx::Image
+    Wx::Palette
+    Wx::Pen
+
+DOCUMENTATTION:
+
+-- not documented in wxWindows --
+
+* Wx::MultipleChoiceDialog
+
+* Wx::NativeFontInfo
+
+CLASSES:
+  wxWizard
+  wxWizardPageSimple
+  wxWizardPage
+
+  wxFileHistory
+
+  wxCalendarCtrl
+  wxDirCtrl
+  wxMetafileDC
+  wxDCClipper
+  wxBufferedDC
+  wxTextValidator
+  wxGenericValidator
+
+  wxDateTime & co
+
+  wxDialUpManager
+  wxSocket* ?
+
+  wxDDE*
+  wxTCP*
+
+  Document/View
+
+  wxMimeTypesManager
+  wxFontMapper
+  wxEncodingConverter
+  wxFontEnumerator
