@@ -1,0 +1,130 @@
+Revision history for Perl extension Wx.
+
+0.16  Mon Aug 25 00:26:44 CEST 2003
+	- Added Wx::PlGridCellEditor and Wx::PlGridCellRenderer
+	  for custom Wx::Grid cell editing/displaying.
+	- Added Wx::PlGridTable for custom Wx::Grid storage.
+	- Fixed Wx::SocketServer::Accept.
+	- Added Wx::PlXmlResourceHandler, for inserting custom
+	  controls in XRC resources.
+	- wxWindows 2.5 compatibility.
+
+0.15  Mon May 19 15:39:05 CEST 2003
+	- Removed support for wxWindows 2.2.x and 2.3.x.
+	- Removed support for Perl 5.004.
+	- Started documentation for the extension api
+	  (see Wx/Api.pod).
+	- Added wxFrame/wxDialog::SetShape.
+
+0.14  Fri Apr 25 23:04:42 CEST 2003
+	- Added Wx::CalendarCtrl.
+	- Added Wx::DateTime (not the full interface).
+	- Restored compatibility with perl 5.005.
+	- Internal changes: objects returned by various constructors
+	  will not have an additional _WXTHIS key anymore.
+
+0.13  Tue Mar 11 19:27:04 CET 2003
+	- New build system, allows building wxPerl extension written using
+	  XS outside the wxPerl tree.
+	- Added Wx::Wave
+	- Added Wx::MemoryFSHandler
+	- Added Wx::Perl::Carp (thanks to podmaster).
+	- Mac OS X support (requires wxWindows 2.4.0 or newer).
+	- Added Wx::Socket* (thanks to Graciliano M. P.)
+
+0.12  Mon Dec 02 17:50:43 CET 2002
+	- new DEPRECATIONS section in README.txt, please read it
+	- it is now possibile to get the native handle of a Wx::Window
+	- implemented wxWizard and related classes
+	- Document/View framework (thanks to Simon Flack)
+	- Mostly completed wxStyledTextCtrl interface
+          (thanks to Graciliano M. P. and Simon Flack)
+	- implemented wxFontEnumerator and wxFontMapper
+	- implemented wxLogChain and wxLogPassThrough (2.3)
+	- Wx::PlLog, Wx::PlLogPassThrough, for custom logging
+
+0.11  Thu Aug 01 15:59:59 CEST 2002
+	- wxTextAttr (2.3)
+	- wxStyledTextControl, based on Scintilla
+	  (thanks to Marcus Friedlaender)
+	- Wx::Perl::SplashFast, for faster splash screens
+	  (thanks to Graciliano M. P.)
+	- wxToolBarTool
+	- Wx::PlFileSystemHandler, for custom file system handlers
+	- compatibility with Perl 5.7.3 and later
+	- updated build instructions, using suggestions from
+	  Graciliano M. P. and Marcus Friedlaender
+	- allow compilation of a single big Wx.so/dll; this allows building
+	  against a static wxWindows library
+	- wxThread::IsMain(), some testing with threads
+	  for Perl 5.7.3 (works with some caveats)
+	- wxPlEvent and wxPlCommandEvent
+
+0.10  Sun Mar 03 19:33:55 2002
+	- Fix a silly typo that broke wxTaskBar
+
+0.09  Fri Mar 01 20:59:59 2002
+	- wxTaskBarIcon (MS Windows only)
+	- wxGrid, wxGridCellAttr
+	- wxGridCellRenderer, wxGridCellEditor
+	- wxProcess and wxExecute
+	- wxConfig
+
+0.08  Sat Dec 01 10:23:44 2001
+	- wxToggleButton (2.3)
+	- wxSingleInstanceChecker (2.3)
+	- wxListView, virtual wxListCtrl (2.3)
+	- build system reorganization, hope this one is the
+	  last one...
+	- XRC (Xml ResourCes) wrapper (2.3)
+	- wxClipboard & wxDataObject
+	- Drag-and-Drop support
+	- MDI architecture
+	- wxBestHelpController (2.3)
+	- startup tips (wxShowTip, etc)
+	- wxFindReplaceDialog (2.3)
+	- wxPerl demo (like the wxPython one)
+	- wxSplashScreen
+
+0.07  Thu Jul 19 13:46:58 2001
+	- wxFileSystem & related classes wrappers
+	- wxHtmlEasyPrinting, wxPageSetupDialog
+	- Unicode support for Perl 5.6
+	- Printing Framework
+
+0.06  Tue Apr 10 17:28:56 2001
+	- changelog started
+	- new, modular build system
+	- Wx object module now exports functions (using __declspec
+	  on Win32, an auxiliary structure containig pointer to functions
+	  on other platforms) to related extension modules
+	- infrastructure for other modules exporting
+	  constants from Wx
+	- wxStream wrappers
+	- wxHtmlWindow, wxHtmlHelpController wrappers
+	- wx*HelpController* wrappers
+	- added ppmdist target for Win32
+
+0.05  Sun Mar 04 15:01:03 2001
+	- Wx::AcceleratorTable/Entry
+	- most common dialogs
+	- Wx::PlSizer (user defined sizer)
+	- Wx::ListCtrl
+	- Wx::TreeCtrl
+	- Wx::Log classes
+	- Wx::Timer
+	- Wx::SystemSettings
+	- some other minor classes (search for PACKAGE= in the sources)
+
+0.04  Sat Jan 20 15:02:04 2001
+	- Better overloaded method support
+	- Perl 5.004_04 compatibility
+	- MinGW compilation (with ActivePerl and Perl built from sources)
+	- wxMotif support (alpha)
+
+0.03  Mon Dec 04 15:00:01 2000
+	- First public release
+
+0.02  Thu Nov 30 xx:xx:xx 2000
+
+0.01  Tue Nov 28 xx:xx:xx 2000
