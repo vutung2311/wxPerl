@@ -1,0 +1,16 @@
+(?:^|/)[Mm]akefile$
+(?:^|/)pm_to_blib$
+[Cc][Vv][Ss]/
+\.([Rr][Es][Ss]|bs|def)$
+\.c$
+\.o$
+\.obj$
+\.pdb$
+\.poedit$
+^Opt$
+^Wx-\d+\.\d+\.(zip|tar\.gz|tgz)$
+^bak
+^blib
+^cpp/setup.h$
+^files.lst$
+~$
