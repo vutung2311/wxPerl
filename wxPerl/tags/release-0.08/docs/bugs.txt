@@ -1,0 +1,13 @@
+KNOWN BUGS:
+
+All platforms
+
+* Streams do not work with Perl 5.004 for lack of Tie::Handle
+  
+* The caret sample starts with incorrect size
+
+wxMSW
+
+* Wx::ToolBar
+    - toolbar sample: choose 'toggle toolbar orientation'
+      the status bar moves to topleft corner of the client area ( ? )
