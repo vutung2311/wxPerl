@@ -1,0 +1,166 @@
+PRIORITY HIGH:
+
+PRIORITY NORMAL:
+
+* Overload resolution
+  finish it!
+
+* store events in a C++ file and autogenerate them
+* rewrite lib/Wx/_Constants.pm in C++
+* try to have constants inlined where appropriate
+
+* wxCalendarCtrl
+    HitTest
+    
+* wxFontEnumerator virtual functions
+
+* wxDocManager::FileHistoryLoad/Save
+  wxDocument  CommandProcessor functions
+  wxDocument::Load/Save, investigate
+
+* testing
+    tests for all overloaded methods
+    tests for all events
+    tests for all classes creation/deletion
+
+* Threads
+    cloning of objects with a DESTROY
+
+* wxGrid
+    GetTable
+    SetTable
+
+* Wx::PlGridCellEditor/Renderer
+
+* wxXmlResource::LoadMenuBar
+    overload
+
+* configuration system
+
+* finish cpp/chkconfig.h
+
+* Wx::Colour::GetPixel
+    Does not work on wxMac
+
+* Wx::DataObject
+    Wx::PlDataObject
+
+* Decrease compilation time/code bloat:
+    Use precompiled headers where appropriate
+    Move constants out of Constants.xs when they need a separate #include
+    Move #include <wx/foo.h> to the XS requiring them
+    Add tests for wxUSE_XXX, and maybe a wxPERL_USE_XXX
+
+* Wx::HtmlWindow
+    AddFilter
+    GetInternalRepresentation
+    Fix inheritance...
+
+* Wx::HtmlHelp
+    CreateHelpFrame
+
+* Wx::HelpController
+    OnQuit
+    Get/SetFrameParameters
+
+* Wx::Stream
+    Better READLINE
+    Support for $/, etc?
+
+* Wx::StyledTextCtrl
+    AddStyledText
+    GetStyledText
+    GetCurLine
+    SendMsg
+
+* Wx::Frame
+    SetIcons
+
+PRIORITY LOW:
+
+* Wx::HtmlHelpData ?
+
+* Decent wxClassInfo initialization strategy
+
+* Wx::App methods
+    CreateLogTarget
+
+* Wx::App::new
+    find a better solution yhan just 'croak' if OnInit
+    returns a false value
+
+* Wx::Help
+    enable all Wx::*Help* available in the current setup
+
+* Wx::PrintData
+    PostScript specific functions
+    overloaded constructors
+
+* Wx::PageSetupDialogData
+    overloaded constructors
+
+* Wx::PreviewFrame
+    CreateControlBar
+    CreateCanvas
+
+* Wx::PreviewControlBar
+    CreateButtons
+
+* operator == and != ( are they useful/have side effects? )
+    Wx::AcceleratorTable
+    Wx::Bitmap ( enable )
+    Wx::Brush
+    Wx::Colour
+    Wx::Cursor
+    Wx::Font
+    Wx::Rect
+    Wx::Region
+    Wx::Point
+    Wx::Size
+    Wx::Icon
+    Wx::Image
+    Wx::Palette
+    Wx::Pen
+
+DOCUMENTATTION:
+
+* Add notes for:
+  - implemented/not implemented classes
+  - non-implemented functions
+
+* Documente Wx::PlValidator, Wx::PlLog, Wx::PlLogPassThrough
+
+* Document wxStatusBar::GetFieldRect
+
+* Document wxListBox::GetCount/Number is deprecated
+
+* Document wxDocTemplate::new
+
+* wxFontMapper
+   GetAltForEncoding
+
+-- not documented in wxWindows --
+
+* Wx::MultipleChoiceDialog
+
+* Wx::NativeFontInfo
+
+CLASSES:
+  wxGLCanvas
+
+  wxDirCtrl
+  wxMetafileDC
+  wxDCClipper
+  wxBufferedDC
+  wxTextValidator
+  wxGenericValidator
+
+  wxDDE*
+  wxTCP*
+
+  wxMimeTypesManager
+  wxEncodingConverter
+
+FEATURE REQUESTS
+
+* wxAutomationObject
