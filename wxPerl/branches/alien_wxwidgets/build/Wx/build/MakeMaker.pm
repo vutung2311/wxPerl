@@ -4,6 +4,7 @@ use strict;
 use Wx::build::Config;
 use Wx::build::Options;
 use ExtUtils::MakeMaker;
+use Alien::wxWidgets;
 use base 'Exporter';
 use vars qw(@EXPORT $VERSION);
 
@@ -156,13 +157,7 @@ sub _make_hook {
     undef *{"${class}::${hook_sub}"};
     unshift @{"${class}::ISA"}, $hook_package;
 
-    $this->{WX_CONFIG} =
-      Wx::build::Config->new( Wx::build::Options->
-                              get_options( is_wxPerl_tree() ?
-                                           'command_line' :
-                                           'saved' ),
-                              core => is_core(),
-                              get_saved_options => !is_wxPerl_tree() );
+    $this->{WX_CONFIG} = Wx::build::Config->new( core => is_core() );
 
     shift->$hook_sub( @_ );
   }
@@ -209,12 +204,7 @@ sub dynamic_lib { package MY; shift->SUPER::dynamic_lib( @_ ) }
 use vars '%args';
 sub _process_mm_arguments {
   local *args = $_[0];
-  my $cfg =
-    Wx::build::Config->new( Wx::build::Options->get_options( is_wxPerl_tree() ?
-                                                             'command_line' :
-                                                             'saved' ),
-                            core => is_core(),
-                            get_saved_options => !is_wxPerl_tree() );
+  my $cfg = Wx::build::Config->new( core => is_core() );
   my $build = 1;
   my $platform = $cfg->get_wx_platform;
   my %options =

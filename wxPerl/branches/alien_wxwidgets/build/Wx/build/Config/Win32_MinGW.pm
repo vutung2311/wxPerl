@@ -1,68 +1,13 @@
 package Wx::build::Config::Win32_MinGW;
 
 use strict;
-use base 'Wx::build::Config::Win32';
+use base 'Wx::build::Config::Any_OS';
 use File::Spec::Functions qw(catfile catdir rel2abs canonpath);
 use File::Basename 'dirname';
 use Cwd ();
 use Config;
 
-my( $makefile, $min_dir ) = __PACKAGE__->_init( 'gmake.mak' );
-
-sub _data {
-  my $this = shift;
-  return $this->{data} if $this->{data};
-
-  my %data = ( 'cxx'     => 'g++',
-               'ld'      => 'g++',
-               'wxdir'   => $ENV{WXDIR},
-             );
-
-  my $final = $this->_debug ? 'BUILD=debug'
-                            : 'BUILD=release';
-  my $unicode = $this->_unicode ? 'UNICODE=1' : 'UNICODE=0';
-  $unicode .= ' MSLU=1' if $this->_mslu;
-
-  my $dir = Cwd::cwd;
-  chdir $min_dir or die "chdir '$min_dir'";
-  my @t = qx(make -n -f makefile.gcc $final $unicode SHARED=1);
-
-  my( $libdir, $digits );
-  foreach ( @t ) {
-    chomp;
-
-    if( m/\s-l\w+/ ) {
-      m/-lwxbase(\d+)/ and $digits = $1;
-      s/^[cg]\+\+//;
-      s/(?:\s|^)-[co]//g;
-      s/\s+\S+\.(exe|o)/ /gi;
-      s{-L(\S+)}
-       {'-L' . ( $libdir = Wx::build::Config::is_wxPerl_tree() ?
-                           canonpath( rel2abs( $1 ) )   :
-                           catfile( $this->get_arch_directory, 'auto', 'Wx' ) )
-        }eg;
-      $data{libs} = $_;
-    } elsif( s/^\s*g\+\+\s+// ) {
-      s/\s+\S+\.(cpp|o)/ /g;
-      s/(?:\s|^)-[co]//g;
-      s{[-/]I(\S+)}{'-I' . canonpath( rel2abs( $1 ) )}egi;
-      s{[-/]I(\S+)[\\/]samples[\\/]minimal(\s|$)}{-I$1\\contrib\\include }i;
-      s{[-/]I(\S+)[\\/]samples(\s|$)}{ }i;
-      $data{cxxflags} = $_;
-    }
-  }
-
-  chdir $dir or die "chdir '$dir'";
-
-  $data{dlls} = $this->_grep_dlls( $libdir, $digits );
-
-#  {
-#    my $tmp = $data{dlls}{core}{dll};
-#    $tmp =~ m/^\D+(\d+)/;
-    $data{version} = $digits;
-#  }
-  $this->{data} = \%data;
-}
+my $makefile = "waggawagga";
 
 sub wx_config_24 {
   my $this = shift;
@@ -85,6 +30,12 @@ sub wx_config_24 {
     return $this->_replace_implib_24( $t );
   }
   return $t;
+}
+
+sub get_core_lib {
+  my( $this, @libs ) = @_;
+
+  return join ' ', Alien::wxWidgets->libraries( @libs );
 }
 
 sub get_core_lib_25 {
@@ -113,7 +64,7 @@ sub get_core_lib_24 {
     grep { !m/^(?:adv|base|html|net|xml|core)$/ } @libs;
 }
 
-sub get_contrib_lib {
+sub get_contrib_lib_24 {
   my( $this, $lib ) = @_;
 
   $lib = 'wxxrc' if $lib eq 'xrc';
@@ -128,44 +79,23 @@ sub get_flags {
   my $this = shift;
   my %config = $this->SUPER::get_flags;
 
-  $config{CC} = 'g++';
-  $config{LD} = 'g++';
-  $config{CCFLAGS} .= " -fvtable-thunks ";
+  $config{CC} = Alien::wxWidgets->compiler;
+  $config{LD} = Alien::wxWidgets->linker;
+  $config{CCFLAGS} .= Alien::wxWidgets->c_flags . ' ';
+  $config{dynamic_lib}{OTHERLDFLAGS} .= Alien::wxWidgets->link_flags . ' ';
   $config{clean}{FILES} .= 'dll.base dll.exp ';
+  $config{DEFINE} .= Alien::wxWidgets->defines . ' ';
+  $config{INC} .= Alien::wxWidgets->include_path;
 
   if( $this->_debug ) {
-    $config{CCFLAGS} .= ' -g ';
-    $config{OPTIMIZE} = '';
-  } else {
-    $config{dynamic_lib}{OTHERLDFLAGS} .= ' -s ';
-  }
-
-  my $cccflags = $this->wx_config( 'cxxflags' );
-  my $libs = $this->wx_config( 'libs' );
-
-  foreach ( split /\s+/, $cccflags ) {
-    m(^-DSTRICT) && next;
-    m(^-W.*) && next; # under Win32 -Wall gives you TONS of warnings
-    m(^-I) && do {
-      next if m{(?:regex|zlib|jpeg|png|tiff)$};
-      $config{INC} .= "$_ ";
-      next;
-    };
-    m(^-D) && do { $config{DEFINE} .= "$_ "; next; };
-    $config{CCFLAGS} .= "$_ ";;
-  }
-
-  foreach ( split /\s+/, $libs ) {
-    m(wx|unicows)i || next;
-    next if m{(?:wx(?:zlib|regexu?|expat|png|jpeg|tiff))$};
-    $config{LIBS} .= "$_ ";
+    $config{OPTIMIZE} = ' ';
   }
 
   # add $MINGWDIR/lib to lib search path, to stop perl from complaining...
   my $path = Wx::build::Utils::path_search( 'gcc.exe' )
     or warn "Unable to find gcc";
   $path =~ s{bin[\\/]gcc\.exe$}{}i;
-  $config{LIBS} = "-L${path}lib $config{LIBS}";
+  $config{LIBS} = "-L${path}lib " . ( $config{LIBS} || '' );
 
   return %config;
 }

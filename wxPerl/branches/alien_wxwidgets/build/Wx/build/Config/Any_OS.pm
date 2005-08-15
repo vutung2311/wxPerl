@@ -22,14 +22,7 @@ sub get_flags {
   return %config;
 }
 
-sub wx_config_25 {
-  my $this = shift;
-  my $data = $this->_data;
-
-  foreach ( @_ ) { warn $_ unless defined $data->{$_} }
-
-  return @{$data}{@_};
-}
+sub get_wx_platform { Alien::wxWidgets->config->{toolkit} }
 
 1;
 

@@ -14,15 +14,13 @@ my $ovlh = File::Spec->catfile( qw(cpp ovl_const.h) );
 
 sub configure_core {
   my $this = shift;
-  my $cfg =
-    Wx::build::Config->new( Wx::build::Options->get_options( 'command_line' ),
-                            core => 1,
-                            get_saved_options => 0 );
+  my $cfg = Wx::build::Config->new( core => 1 );
   my %config = $cfg->get_flags;
 
   $config{clean} =
     { FILES => "$ovlc $ovlh .exists overload Opt copy_files files.lst" .
-               " cpp/setup.h cpp/plwindow.h cpp/artprov.h cpp/popupwin.h" };
+               " cpp/setup.h cpp/plwindow.h cpp/artprov.h cpp/popupwin.h" .
+               " fix_alien" };
 
   return %config;
 }
@@ -30,12 +28,7 @@ sub configure_core {
 sub configure_ext {
   my $this = shift;
   my $is_tree = Wx::build::MakeMaker::is_wxPerl_tree();
-  my $cfg =
-    Wx::build::Config->new( Wx::build::Options->get_options( $is_tree ?
-                                                             'command_line' :
-                                                             'saved' ),
-                            core => 0,
-                            get_saved_options => !$is_tree );
+  my $cfg = Wx::build::Config->new( core => 0 );
   my %config = $cfg->get_flags;
 
   return %config;
@@ -63,11 +56,12 @@ sub depend_core {
                  $exp              => join( ' ', @files_with_constants ),
                  $ovlc             => 'overload',
                  $ovlh             => $ovlc,
-                 '$(INST_STATIC)'  => $exp,
-                 '$(INST_DYNAMIC)' => $exp,
+                 '$(INST_STATIC)'  => "$exp fix_alien",
+                 '$(INST_DYNAMIC)' => "$exp fix_alien",
                  'pm_to_blib'      => 'copy_files',
                  'blibdirs'        => 'copy_files',
                  'blibdirs.ts'     => 'copy_files',
+                 'fix_alien'       => 'pm_to_blib blibdirs blibdirs.ts',
                  'copy_files'      => join( ' ', keys %files ),
                );
   my %this_depend = @_;
@@ -120,6 +114,11 @@ overload :
 copy_files :
 \t\$(PERL) script/copy_files.pl files.lst
 \t\$(TOUCH) copy_files
+
+fix_alien : Wx.pm ext/pperl/splashfast/SplashFast.pm
+\t\$(PERL) script/fix_alien_path.pl Wx.pm blib/lib/Wx.pm
+\t\$(PERL) script/fix_alien_path.pl ext/pperl/splashfast/SplashFast.pm blib/lib/Wx/Perl/SplashFast.pm
+\t\$(TOUCH) fix_alien
 
 parser :
 	yapp -v -s -o script/XSP.pm script/XSP.yp

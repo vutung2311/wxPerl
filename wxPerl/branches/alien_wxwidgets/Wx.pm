@@ -4,7 +4,7 @@
 ## Author:      Mattia Barbon
 ## Modified by:
 ## Created:     01/10/2000
-## RCS-ID:      $Id: Wx.pm,v 1.80 2005/07/14 20:41:13 mbarbon Exp $
+## RCS-ID:      $Id: Wx.pm,v 1.80.2.1 2005/08/15 16:17:09 mbarbon Exp $
 ## Copyright:   (c) 2000-2005 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
@@ -88,51 +88,12 @@ sub _croak {
   goto &Carp::croak;
 }
 
-# Blech! (again...)
-# wxWidgets DLLs need to be installed in the same directory as Wx.dll,
-# but then LoadLibrary can't find them unless they are already loaded,
-# so we explicitly load them (on Win32 and wxWidgets 2.5.x+) just before
-# calling Wx::wx_boot. Finding the library requires determining the path
-# and the correct name
-my( $wx_path, $wx_pre, $wx_post );
-
-sub _load_file {
-  Wx::wxVERSION() < 2.005 ? DynaLoader::dl_load_file( $_[0], 0 ) :
-                            Wx::_load_plugin( $_[0] );
-}
-
-sub load_dll {
-  return if $^O ne 'MSWin32' || Wx::wxVERSION() < 2.005;
-  my $suff = ( Wx::wxUNICODE() ? 'u' : '' ) .
-             ( Wx::wxDEBUG()   ? 'd' : '' );
-
-  unless( $wx_path ) {
-    foreach ( @INC ) {
-      if( -f "$_/auto/Wx/Wx.dll" ) {
-        $wx_path = "$_/auto/Wx";
-        my $lib = ( glob "$wx_path/wx*${suff}_html*.dll" )[0];
-        next unless $lib;
-        $lib =~ s{.*[/\\]([^/\\]+)$}{$1};
-        $lib =~ m/^wx(?:msw)([^_]+)_html_([^\.]+)\.dll/i
-          or die "PANIC: name scheme for '$lib' in '$_'";
-        $wx_pre = $1;
-        $wx_post = $2;
-        last;
-      }
-    }
-  }
-
-  foreach my $path ( "$wx_path/wxmsw${wx_pre}_$_[0]_${wx_post}.dll",
-                     "$wx_path/wxbase${wx_pre}_$_[0]_${wx_post}.dll" ) {
-      -f $path and Wx::_load_file( $path ) and last;
-  }
-}
-
 #
 # XSLoader/DynaLoader wrapper
 #
 sub wxPL_STATIC();
 sub wx_boot($$) {
+  local $ENV{PATH} = 'XXXALIENXXX' . $ENV{PATH} if $^O eq 'MSWin32';
   if( $_[0] eq 'Wx' || !wxPL_STATIC ) {
     if( $] < 5.006 ) {
       require DynaLoader;
