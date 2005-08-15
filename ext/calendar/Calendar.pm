@@ -4,7 +4,7 @@
 ## Author:      Mattia Barbon
 ## Modified by:
 ## Created:     05/10/2002
-## RCS-ID:      $Id: Calendar.pm,v 1.7 2005/03/27 16:26:20 mbarbon Exp $
+## RCS-ID:      $Id: Calendar.pm,v 1.7.2.1 2005/08/15 16:17:10 mbarbon Exp $
 ## Copyright:   (c) 2002, 2005 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
@@ -19,7 +19,6 @@ use vars qw($VERSION);
 
 $VERSION = '0.01';
 
-Wx::load_dll( 'adv' );
 Wx::wx_boot( 'Wx::Calendar', $VERSION );
 
 #

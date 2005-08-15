@@ -13,7 +13,6 @@ build/Wx/build/Config/Any_wx_config.pm
 build/Wx/build/Config/gmake.mak
 build/Wx/build/Config/MacOSX_GCC.pm
 build/Wx/build/Config/nmake.mak
-build/Wx/build/Config/Win32.pm
 build/Wx/build/Config/Win32_MinGW.pm
 build/Wx/build/Config/Win32_MSVC.pm
 build/Wx/build/Config.pm
@@ -36,6 +35,7 @@ script/XSpp.pod
 script/XSP.pm
 script/XSP.yp
 script/copy_files.pl
+script/fix_alien_path.pl
 script/make_exp_list.pl
 script/make_ovl_list.pl
 script/make_ppm.pl

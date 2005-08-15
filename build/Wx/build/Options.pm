@@ -8,27 +8,12 @@ Wx::build::Options - retrieve wxWidgets/wxPerl build options
 
 =head1 METHODS
 
-=head2 get_options
-
-  my %options = Wx::build::Options->get_options( $from );
-
-Valid values for I<$from> are C<'command_line'> and C<'saved'>.
-
-  %options = ( unicode => 0,
-               static  => 0,
-               debug   => 0,
-              );
-
 =cut
 
 use Getopt::Long;
 Getopt::Long::Configure( 'pass_through' );
 
-my $debug        = 0;
-my $unicode      = 0;
-my $mslu         = 0;
 my $help         = 0;
-my $static       = 0;
 my $mksymlinks   = 0;
 my $extra_libs   = '';
 my $extra_cflags = '';
@@ -42,25 +27,8 @@ sub _load_options {
   $options = do 'Wx/build/Opt.pm';
   die "Unable to load options: $@" unless $options;
 
-  ( $debug, $unicode, $mslu, $static, $extra_cflags, $extra_libs )
-    = @{$options}{qw(debug unicode mslu static extra_cflags extra_libs)};
-}
-
-sub get_options {
-  my $ref = shift;
-  my $from = shift;
-
-  if( $from eq 'saved' ) {
-    _load_options();
-  } else {
-    _parse_options();
-  }
-
-  return ( unicode => $unicode,
-           mslu    => $mslu,
-           static  => $static,
-           debug   => $debug,
-         );
+  ( $extra_cflags, $extra_libs )
+    = @{$options}{qw(extra_cflags extra_libs)};
 }
 
 my $parsed = 0;
@@ -71,11 +39,7 @@ sub _parse_options {
 
   $parsed = 1;
 
-  my $result = GetOptions( 'debug'          => \$debug,
-                           'unicode'        => \$unicode,
-                           'mslu'           => \$mslu,
-                           'help'           => \$help,
-                           'static'         => \$static,
+  my $result = GetOptions( 'help'           => \$help,
                            'mksymlinks'     => \$mksymlinks,
                            'extra-libs=s'   => \$extra_libs,
                            'extra-cflags=s' => \$extra_cflags,
@@ -90,10 +54,6 @@ Usage: perl Makefile.PL [options]
   --enable/disable-foo where foo is one of: dnd filesys grid help
                        html mdi print xrc stc docview calendar datetime 
   --help               you are reading it
-  --debug              enable debugging
-  --unicode            enable Unicode support (MSW/GTK2 only)
-  --mslu               use libunicows for Unicode
-  --static             link all extensions in a single big shared object
   --mksymlinks         create a symlink tree
   --extra-libs=libs    specify extra linking flags
   --extra-cflags=flags specify extra compilation flags
@@ -162,11 +122,7 @@ sub write_config_file {
   my $file = shift;
 
   require Data::Dumper;
-  my $str = Data::Dumper->Dump( [ { debug        => $debug,
-                                    unicode      => $unicode,
-                                    mslu         => $mslu,
-                                    static       => $static,
-                                    extra_libs   => $extra_libs,
+  my $str = Data::Dumper->Dump( [ { extra_libs   => $extra_libs,
                                     extra_cflags => $extra_cflags
                                   } ] );
 

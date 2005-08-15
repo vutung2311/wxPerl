@@ -16,11 +16,8 @@ Wx::build::Config - configuration information about wxWidgets/wxPerl
 
 =head2 new
 
-  my $cfg = Wx::build::Config->new( unicode           => 0,
-                                    debug             => 0,
-                                    get_saved_options => 1,
+  my $cfg = Wx::build::Config->new( get_saved_options => 1,
                                     core              => 0,
-                                    static            => 0,
                                    );
 
 =cut
@@ -40,30 +37,17 @@ sub new {
     my $this = bless {}, $ref;
     my %args = @_;
 
-    $args{get_saved_options} = 1 unless exists $args{get_saved_options};
-
-    if( $args{get_saved_options} ) {
-      my %options = Wx::build::Options->get_options( 'saved' );
-      $this->{CORE} = 0;
-      @{$this}{qw(DEBUG STATIC UNICODE MSLU)} =
-        @options{qw(debug static unicode mslu)};
-    } else {
-      $this->{UNICODE} = $args{unicode} || 0;
-      $this->{MSLU}    = $args{mslu} || 0;
-      $this->{DEBUG}   = $args{debug} || 0;
-      $this->{CORE}    = $args{core} || 0;
-      $this->{STATIC}  = $args{static} || 0;
-    }
+    $this->{CORE} = $args{core} || 0;
 
     return $this;
   }
 }
 
-sub _unicode { $_[0]->{UNICODE} }
-sub _mslu    { $_[0]->{MSLU} }
-sub _debug   { $_[0]->{DEBUG} }
+sub _unicode { Alien::wxWidgets->config->{unicode} }
+sub _mslu    { Alien::wxWidgets->config->{mslu} }
+sub _debug   { Alien::wxWidgets->config->{debug} }
 sub _core    { $_[0]->{CORE} }
-sub _static  { $_[0]->{STATIC} }
+sub _static  { 0 }
 
 =head2 wx_config
 
@@ -122,21 +106,7 @@ B<DEPRECATED as of wxPerl 0.16>.
 
 =cut
 
-sub get_wx_version {
-  my $this = shift;
-  my $ver = $this->wx_config( 'version' );
-
-  $ver =~ m/(\d+)\.(\d+)\.(\d+)/ &&
-    return $1 + $2 / 1000 + $3 / 1000000;
-  $ver =~ m/(\d)(\d+)_(\d+)/ &&
-    return $1 + $2 / 1000 + $3 / 1000000;
-  $ver =~ m/(\d)(\d)(\d+)/ &&
-    return $1 + $2 / 1000 + $3 / 1000000;
-  $ver =~ m/(\d)(\d)/ &&
-    return $1 + $2 / 1000;
-
-  die "unable to get wxWidgets' version ($ver)";
-}
+sub get_wx_version { Alien::wxWidgets->version }
 
 =head2 get_wx_platform
 
