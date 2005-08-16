@@ -12,10 +12,27 @@ my $ovl = lib_file( 'Wx/_Ovl.pm' );
 my $ovlc = File::Spec->catfile( qw(cpp ovl_const.cpp) );
 my $ovlh = File::Spec->catfile( qw(cpp ovl_const.h) );
 
+sub get_flags {
+  my $this = shift;
+  my %config;
+
+  $config{INC} .= '-I' . curdir . ' ';
+  $config{INC} .= '-I' . $this->get_api_directory . ' ';
+
+  unless( $this->_core ) {
+    $config{DEFINE} .= " -DWXPL_EXT ";
+  }
+
+  if( $this->_static ) {
+    $config{DEFINE} .= " -DWXPL_STATIC ";
+  }
+
+  return %config;
+}
+
 sub configure_core {
   my $this = shift;
-  my $cfg = Wx::build::Config->new( core => 1 );
-  my %config = $cfg->get_flags;
+  my %config = $this->get_flags;
 
   $config{clean} =
     { FILES => "$ovlc $ovlh .exists overload Opt copy_files files.lst" .
@@ -25,19 +42,12 @@ sub configure_core {
   return %config;
 }
 
-sub configure_ext {
-  my $this = shift;
-  my $is_tree = Wx::build::MakeMaker::is_wxPerl_tree();
-  my $cfg = Wx::build::Config->new( core => 0 );
-  my %config = $cfg->get_flags;
-
-  return %config;
-}
+sub configure_ext { return $_[0]->get_flags }
 
 sub _depend_common {
   my $this = shift;
 
-  return xs_dependencies( $this, [ curdir, $this->wx_config->get_api_directory
+  return xs_dependencies( $this, [ curdir, $this->get_api_directory
                                  ] );
 }
 
@@ -56,12 +66,11 @@ sub depend_core {
                  $exp              => join( ' ', @files_with_constants ),
                  $ovlc             => 'overload',
                  $ovlh             => $ovlc,
-                 '$(INST_STATIC)'  => "$exp fix_alien",
-                 '$(INST_DYNAMIC)' => "$exp fix_alien",
+                 '$(INST_STATIC)'  => $exp,
+                 '$(INST_DYNAMIC)' => $exp,
                  'pm_to_blib'      => 'copy_files',
                  'blibdirs'        => 'copy_files',
                  'blibdirs.ts'     => 'copy_files',
-                 'fix_alien'       => 'pm_to_blib blibdirs blibdirs.ts',
                  'copy_files'      => join( ' ', keys %files ),
                );
   my %this_depend = @_;

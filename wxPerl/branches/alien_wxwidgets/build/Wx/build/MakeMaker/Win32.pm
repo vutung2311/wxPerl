@@ -3,7 +3,37 @@ package Wx::build::MakeMaker::Win32;
 use strict;
 use base 'Wx::build::MakeMaker::Any_OS';
 use Wx::build::Utils;
-use File::Basename ();
+use Config;
+
+sub is_mingw() { $Config{cc} =~ /gcc/ }
+
+sub get_flags {
+  my $this = shift;
+  my %config = $this->SUPER::get_flags;
+
+  $config{CC} = Alien::wxWidgets->compiler;
+  $config{LD} = Alien::wxWidgets->linker;
+  $config{CCFLAGS} .= Alien::wxWidgets->c_flags . ' ';
+#  $config{dynamic_lib}{OTHERLDFLAGS} = Alien::wxWidgets->link_flags;
+  $config{clean}{FILES} .= is_mingw ? ' dll.base dll.exp '
+                                    :' *.pdb *.pdb *_def.old ';
+  $config{DEFINE} .= Alien::wxWidgets->defines . ' ';
+  $config{INC} .= Alien::wxWidgets->include_path;
+
+  if( $this->_debug ) {
+    $config{OPTIMIZE} = ' ';
+  }
+
+  if( is_mingw() ) {
+      # add $MINGWDIR/lib to lib search path, to stop perl from complaining...
+      my $path = Wx::build::Utils::path_search( 'gcc.exe' )
+        or warn "Unable to find gcc";
+      $path =~ s{bin[\\/]gcc\.exe$}{}i;
+      $config{LIBS} = "-L${path}lib " . ( $config{LIBS} || '' );
+  }
+
+  return %config;
+}
 
 sub configure_core {
   my $this = shift;
@@ -14,14 +44,6 @@ sub configure_core {
   $config{LDFROM}     .= "\$(OBJECT) $res ";
   $config{dynamic_lib}{INST_DYNAMIC_DEP} .= " $res";
   $config{clean}{FILES} .= " $res Wx_def.old";
-
-  return %config;
-}
-
-sub configure_ext {
-  my $this = shift;
-  my $is_tree = Wx::build::MakeMaker::is_wxPerl_tree();
-  my %config = $this->SUPER::configure_ext( @_ );
 
   return %config;
 }
@@ -51,6 +73,14 @@ ppm : pure_all
 	perl script/make_ppm.pl
 
 EOT
+}
+
+sub depend_core {
+  shift->SUPER::depend_core
+    ( 'fix_alien'       => 'pm_to_blib blibdirs blibdirs.ts',
+      '$(INST_STATIC)'  => 'fix_alien',
+      '$(INST_DYNAMIC)' => 'fix_alien',
+     )
 }
 
 1;

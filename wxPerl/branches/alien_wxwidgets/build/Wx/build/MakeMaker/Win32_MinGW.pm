@@ -38,7 +38,7 @@ sub dynamic_lib {
 
   return $text unless $text =~ m/dlltool/i;
 
-  my $strip = $this->wx_config->_debug ? '' : ' -s ';
+  my $strip = $this->_debug ? '' : ' -s ';
 
   $text =~ s{(?:^\s+(?:dlltool|\$\(LD\)).*\n)+}
     {\tg++ -shared $strip -o \$@ \$(LDFROM) \$(MYEXTLIB) \$(PERL_ARCHIVE) \$(LDLOADLIBS) \$(BASEEXT).def\n}m;
