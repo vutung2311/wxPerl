@@ -8,14 +8,6 @@ README.txt
 Changes
 run
 
-build/Wx/build/Config/Any_OS.pm
-build/Wx/build/Config/Any_wx_config.pm
-build/Wx/build/Config/gmake.mak
-build/Wx/build/Config/MacOSX_GCC.pm
-build/Wx/build/Config/nmake.mak
-build/Wx/build/Config/Win32_MinGW.pm
-build/Wx/build/Config/Win32_MSVC.pm
-build/Wx/build/Config.pm
 build/Wx/build/MakeMaker/Any_OS.pm
 build/Wx/build/MakeMaker/Any_wx_config.pm
 build/Wx/build/MakeMaker/MacOSX_GCC.pm
