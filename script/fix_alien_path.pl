@@ -5,23 +5,21 @@
 ## Author:      Mattia Barbon
 ## Modified by:
 ## Created:     15/08/2005
-## RCS-ID:      $Id: fix_alien_path.pl,v 1.1.2.1 2005/08/15 16:17:15 mbarbon Exp $
+## RCS-ID:      $Id: fix_alien_path.pl,v 1.1.2.2 2005/08/16 20:56:56 mbarbon Exp $
 ## Copyright:   (c) 2005 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
 #############################################################################
 
 use strict;
-use Alien::wxWidgets;
+use Alien::wxWidgets 0.02;
 use Fatal qw(open close unlink);
 use Config;
 
 my( $from, $to ) = @ARGV;
-my $path = $INC{'Alien/wxWidgets.pm'};
+my $path = Alien::wxWidgets->shared_library_path;
 
-$path =~ s{\.pm$}{/lib};
-
-unlink $to;
+unlink $to if -f $to;
 open my $in, "< $from";
 open my $out, "> $to";
 
