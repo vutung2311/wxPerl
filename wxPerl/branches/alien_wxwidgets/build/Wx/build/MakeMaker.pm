@@ -2,7 +2,7 @@ package Wx::build::MakeMaker;
 
 use strict;
 use ExtUtils::MakeMaker;
-use Alien::wxWidgets 0.02;
+use Alien::wxWidgets 0.03 ();
 use base 'Exporter';
 use Config;
 use vars qw(@EXPORT $VERSION);
@@ -330,10 +330,10 @@ use vars '%args';
 sub _process_mm_arguments {
   local *args = $_[0];
   my $build = 1;
-  my $platform = Alien::wxWidgets->config->{toolkit};
   my %options =
     Wx::build::Options->get_makemaker_options( is_wxPerl_tree()
                                                ? () : ( 'saved' ) );
+  my $platform = Alien::wxWidgets->config->{toolkit};
 
   $args{CCFLAGS} .= $options{extra_cflags} ? ' ' . $options{extra_cflags} : '';
   $args{LIBS} .=  $options{extra_libs} ? ' ' . $options{extra_libs} : '';

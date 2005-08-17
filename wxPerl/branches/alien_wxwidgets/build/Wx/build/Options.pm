@@ -17,9 +17,25 @@ my $help         = 0;
 my $mksymlinks   = 0;
 my $extra_libs   = '';
 my $extra_cflags = '';
+my $alien_key    = '';
 my %subdirs      = ();
-
+my %wx           = ();
 my $options;
+
+sub _wx_version {
+    my( $o, $v ) = @_;
+
+    $v =~ m/(\d+)\.(\d+)(?:\.(\d+))?/
+      or die 'Invalid version specification: ', $v, "\n";
+
+    if( defined $3 ) {
+        $wx{version} = [ $1 + $2 / 1000 + $3 / 1000000,
+                         $1 + $2 / 1000 + ( $3 + 1 ) / 1000000 ];
+    } else {
+        $wx{version} = [ $1 + $2 / 1000,
+                         $1 + ( $2 + 1 ) / 1000 ];
+    }
+}
 
 sub _load_options {
   return if $options;
@@ -27,8 +43,10 @@ sub _load_options {
   $options = do 'Wx/build/Opt.pm';
   die "Unable to load options: $@" unless $options;
 
-  ( $extra_cflags, $extra_libs )
-    = @{$options}{qw(extra_cflags extra_libs)};
+  ( $extra_cflags, $extra_libs, $alien_key )
+    = @{$options}{qw(extra_cflags extra_libs alien_key)};
+
+  Alien::wxWidgets->load( key => $alien_key );
 }
 
 my $parsed = 0;
@@ -43,6 +61,12 @@ sub _parse_options {
                            'mksymlinks'     => \$mksymlinks,
                            'extra-libs=s'   => \$extra_libs,
                            'extra-cflags=s' => \$extra_cflags,
+                           # for Alien::wxWidgets
+                           'wx-debug!'      => \($wx{debug}),
+                           'wx-unicode!'    => \($wx{unicode}),
+                           'wx-mslu!'       => \($wx{mslu}),
+                           'wx-version=s'   => \&_wx_version,
+                           'wx-toolkit=s'   => \($wx{toolkit}),
                            '<>'             => \&_process_options,
                          );
 
@@ -57,10 +81,21 @@ Usage: perl Makefile.PL [options]
   --mksymlinks         create a symlink tree
   --extra-libs=libs    specify extra linking flags
   --extra-cflags=flags specify extra compilation flags
+
+  --[no-]wx-debug      [Non-] debugging wxWidgets
+  --[no-]wx-unicode    [Non-] Unicode wxWidgets
+  --[no-]wx-mslu       [Non-] MSLU wxWidgets (Windows only)
+  --wx-version=2.6[.1] 
+  --wx-toolkit=msw|gtk|gtk2|motif|mac|...
 HELP
 
     exit !$result;
   }
+
+  Alien::wxWidgets->load( map  { $_ => $wx{$_} }
+                          grep { defined $wx{$_} }
+                               keys %wx );
+  $alien_key = Alien::wxWidgets->key;
 }
 
 sub _process_options {
@@ -123,7 +158,8 @@ sub write_config_file {
 
   require Data::Dumper;
   my $str = Data::Dumper->Dump( [ { extra_libs   => $extra_libs,
-                                    extra_cflags => $extra_cflags
+                                    extra_cflags => $extra_cflags,
+                                    alien_key    => $alien_key,
                                   } ] );
 
   Wx::build::Utils::write_string( $file, $str );
