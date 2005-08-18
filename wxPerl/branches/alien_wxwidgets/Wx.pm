@@ -4,7 +4,7 @@
 ## Author:      Mattia Barbon
 ## Modified by:
 ## Created:     01/10/2000
-## RCS-ID:      $Id: Wx.pm,v 1.80.2.1 2005/08/15 16:17:09 mbarbon Exp $
+## RCS-ID:      $Id: Wx.pm,v 1.80.2.2 2005/08/18 16:12:23 mbarbon Exp $
 ## Copyright:   (c) 2000-2005 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
@@ -15,13 +15,15 @@ package Wx;
 use strict;
 require Exporter;
 
-use vars qw(@ISA $VERSION $AUTOLOAD @EXPORT_OK %EXPORT_TAGS
+use vars qw(@ISA $VERSION $XS_VERSION $AUTOLOAD @EXPORT_OK %EXPORT_TAGS
   $_platform $_universal $_msw $_gtk $_motif $_mac $_x11 $_static);
 
 $_msw = 1; $_gtk = 2; $_motif = 3; $_mac = 4; $_x11 = 5;
 
 @ISA = qw(Exporter);
-$VERSION = '0.26';
+$VERSION = '0.25_01';
+$XS_VERSION = $VERSION;
+$VERSION = eval $VERSION;
 
 sub BEGIN{
   @EXPORT_OK = qw(wxPOINT wxSIZE wxTheApp);
@@ -111,15 +113,15 @@ sub wx_boot($$) {
   }
 }
 
-wx_boot( 'Wx', $VERSION );
+wx_boot( 'Wx', $XS_VERSION );
 
 {
-  _boot_Constant( 'Wx', $VERSION );
-  _boot_Events( 'Wx', $VERSION );
-  _boot_Window( 'Wx', $VERSION );
-  _boot_Controls( 'Wx', $VERSION );
-  _boot_Frames( 'Wx', $VERSION );
-  _boot_GDI( 'Wx', $VERSION );
+  _boot_Constant( 'Wx', $XS_VERSION );
+  _boot_Events( 'Wx', $XS_VERSION );
+  _boot_Window( 'Wx', $XS_VERSION );
+  _boot_Controls( 'Wx', $XS_VERSION );
+  _boot_Frames( 'Wx', $XS_VERSION );
+  _boot_GDI( 'Wx', $XS_VERSION );
 }
 
 #

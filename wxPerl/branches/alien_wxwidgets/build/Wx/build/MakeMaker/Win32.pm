@@ -77,7 +77,7 @@ EOT
 
 sub depend_core {
   shift->SUPER::depend_core
-    ( 'fix_alien'       => 'pm_to_blib blibdirs blibdirs.ts',
+    ( 'fix_alien'       => 'pm_to_blib',
       '$(INST_STATIC)'  => 'fix_alien',
       '$(INST_DYNAMIC)' => 'fix_alien',
      )

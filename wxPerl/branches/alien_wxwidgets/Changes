@@ -1,6 +1,7 @@
 Revision history for Perl extension Wx.
 
-0.26
+0.25_01  Wed Aug 17 22:58:57 CEST 2005
+	- Refactored build system, now based upon Alien::wxWidgets.
 	- Fix Original Object Return for Wx::PlGridCellEditor and
 	  Wx::PlGridCellRenderer.
 	- Fix various Wx::GridBagSizer problems.
