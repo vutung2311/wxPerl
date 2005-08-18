@@ -4,7 +4,7 @@
 ## Author:      Graciliano M. P.
 ## Modified by:
 ## Created:     30/06/2002
-## RCS-ID:      $Id: SplashFast.pm,v 1.21 2005/07/14 20:41:22 mbarbon Exp $
+## RCS-ID:      $Id: SplashFast.pm,v 1.21.2.2 2005/08/18 16:12:24 mbarbon Exp $
 ## Copyright:   (c) 2002-2005 Graciliano M. P.
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
@@ -60,12 +60,16 @@ sub OnInit { return 1 }
 
 package Wx ;
 
-use vars qw($VERSION);
+use vars qw($VERSION $XS_VERSION);
 
-$VERSION = '0.26'; # bootstrap will catch wrong versions
+$VERSION = '0.25_01'; # bootstrap will catch wrong versions
+$XS_VERSION = $VERSION;
+$VERSION = eval $VERSION;
 
 sub wxPL_STATIC();
 sub _wx_boot($$) {
+  local $ENV{PATH} = 'XXXALIENXXX' . $ENV{PATH} if $^O eq 'MSWin32';
+
   if( $_[0] eq 'Wx' ) {
     if( $] < 5.006 ) {
       require DynaLoader;
@@ -83,9 +87,9 @@ sub _wx_boot($$) {
   }
 }
 
-_wx_boot( 'Wx', $VERSION );
-_boot_Constant( 'Wx', $VERSION );
-_boot_GDI( 'Wx', $VERSION );
+_wx_boot( 'Wx', $XS_VERSION );
+_boot_Constant( 'Wx', $XS_VERSION );
+_boot_GDI( 'Wx', $XS_VERSION );
 
 Load();
 

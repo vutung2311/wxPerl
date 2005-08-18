@@ -4,7 +4,7 @@
 // Author:      Mattia Barbon
 // Modified by:
 // Created:     29/10/2000
-// RCS-ID:      $Id: Constant.xs,v 1.127 2005/08/17 00:59:31 mbarbon Exp $
+// RCS-ID:      $Id: Constant.xs,v 1.125 2005/07/24 17:46:58 mbarbon Exp $
 // Copyright:   (c) 2000-2005 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
@@ -310,6 +310,8 @@ static wxPlINH inherit[] =
     I( MultiChoiceDialog, Dialog )
 
     I( Validator,       EvtHandler )
+    I( TextValidator,   Validator )
+    I( GenericValidator, Validator )
     I( PlValidator,     Validator )
 
     I( Font,            GDIObject )
@@ -1619,9 +1621,6 @@ static double constant( const char *name, int arg )
     r( wxSIZE_AUTO );                   // window
     r( wxSIZE_USE_EXISTING );           // window
     r( wxSIZE_ALLOW_MINUS_ONE );        // window
-#if WXPERL_W_VERSION_GE( 2, 6, 2 )
-    r( wxSIZE_FORCE );                  // window
-#endif
 
     r( wxSIGNONE );                     // process
     r( wxSIGHUP );                      // process

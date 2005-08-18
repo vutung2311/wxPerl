@@ -12,39 +12,42 @@ my $ovl = lib_file( 'Wx/_Ovl.pm' );
 my $ovlc = File::Spec->catfile( qw(cpp ovl_const.cpp) );
 my $ovlh = File::Spec->catfile( qw(cpp ovl_const.h) );
 
+sub get_flags {
+  my $this = shift;
+  my %config;
+
+  $config{INC} .= '-I' . curdir . ' ';
+  $config{INC} .= '-I' . $this->get_api_directory . ' ';
+
+  unless( $this->_core ) {
+    $config{DEFINE} .= " -DWXPL_EXT ";
+  }
+
+  if( $this->_static ) {
+    $config{DEFINE} .= " -DWXPL_STATIC ";
+  }
+
+  return %config;
+}
+
 sub configure_core {
   my $this = shift;
-  my $cfg =
-    Wx::build::Config->new( Wx::build::Options->get_options( 'command_line' ),
-                            core => 1,
-                            get_saved_options => 0 );
-  my %config = $cfg->get_flags;
+  my %config = $this->get_flags;
 
   $config{clean} =
     { FILES => "$ovlc $ovlh .exists overload Opt copy_files files.lst" .
-               " cpp/setup.h cpp/plwindow.h cpp/artprov.h cpp/popupwin.h" };
+               " cpp/setup.h cpp/plwindow.h cpp/artprov.h cpp/popupwin.h" .
+               " fix_alien" };
 
   return %config;
 }
 
-sub configure_ext {
-  my $this = shift;
-  my $is_tree = Wx::build::MakeMaker::is_wxPerl_tree();
-  my $cfg =
-    Wx::build::Config->new( Wx::build::Options->get_options( $is_tree ?
-                                                             'command_line' :
-                                                             'saved' ),
-                            core => 0,
-                            get_saved_options => !$is_tree );
-  my %config = $cfg->get_flags;
-
-  return %config;
-}
+sub configure_ext { return $_[0]->get_flags }
 
 sub _depend_common {
   my $this = shift;
 
-  return xs_dependencies( $this, [ curdir, $this->wx_config->get_api_directory
+  return xs_dependencies( $this, [ curdir, $this->get_api_directory
                                  ] );
 }
 
@@ -120,6 +123,11 @@ overload :
 copy_files :
 \t\$(PERL) script/copy_files.pl files.lst
 \t\$(TOUCH) copy_files
+
+fix_alien : Wx.pm ext/pperl/splashfast/SplashFast.pm
+\t\$(PERL) script/fix_alien_path.pl Wx.pm blib/lib/Wx.pm
+\t\$(PERL) script/fix_alien_path.pl ext/pperl/splashfast/SplashFast.pm blib/lib/Wx/Perl/SplashFast.pm
+\t\$(TOUCH) fix_alien
 
 parser :
 	yapp -v -s -o script/XSP.pm script/XSP.yp
