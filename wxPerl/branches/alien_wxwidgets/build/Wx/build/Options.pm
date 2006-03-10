@@ -86,10 +86,14 @@ Usage: perl Makefile.PL [options]
   --[no-]wx-unicode    [Non-] Unicode wxWidgets
   --[no-]wx-mslu       [Non-] MSLU wxWidgets (Windows only)
   --wx-version=2.6[.1] 
-  --wx-toolkit=msw|gtk|gtk2|motif|mac|...
+  --wx-toolkit=msw|gtk|gtk2|motif|mac|wce|...
 HELP
 
     exit !$result;
+  }
+
+  if( $wx{toolkit} && $wx{toolkit} eq 'wce' ) {
+    $wx{compiler_kind} = 'evc';
   }
 
   Alien::wxWidgets->load( map  { $_ => $wx{$_} }
