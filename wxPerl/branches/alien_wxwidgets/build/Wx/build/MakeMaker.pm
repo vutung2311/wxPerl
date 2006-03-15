@@ -7,7 +7,7 @@ use base 'Exporter';
 use Config;
 use vars qw(@EXPORT $VERSION);
 
-$VERSION = '0.19';
+$VERSION = '0.28';
 @EXPORT = 'wxWriteMakefile';
 
 # sanitize File::Find on filesystems where nlink of directories is < 2

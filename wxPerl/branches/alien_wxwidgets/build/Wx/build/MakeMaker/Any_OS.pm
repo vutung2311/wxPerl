@@ -124,9 +124,8 @@ copy_files :
 \t\$(PERL) script/copy_files.pl files.lst
 \t\$(TOUCH) copy_files
 
-fix_alien : Wx.pm ext/pperl/splashfast/SplashFast.pm
-\t\$(PERL) script/fix_alien_path.pl Wx.pm blib/lib/Wx.pm
-\t\$(PERL) script/fix_alien_path.pl ext/pperl/splashfast/SplashFast.pm blib/lib/Wx/Perl/SplashFast.pm
+fix_alien : lib/Wx/Mini.pm
+\t\$(PERL) script/fix_alien_path.pl lib/Wx/Mini.pm blib/lib/Wx/Mini.pm
 \t\$(TOUCH) fix_alien
 
 parser :
