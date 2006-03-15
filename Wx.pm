@@ -4,7 +4,7 @@
 ## Author:      Mattia Barbon
 ## Modified by:
 ## Created:     01/10/2000
-## RCS-ID:      $Id: Wx.pm,v 1.80.2.3 2006/03/10 19:50:46 mbarbon Exp $
+## RCS-ID:      $Id: Wx.pm,v 1.80.2.4 2006/03/15 18:40:23 mbarbon Exp $
 ## Copyright:   (c) 2000-2005 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
@@ -90,30 +90,45 @@ sub _croak {
   goto &Carp::croak;
 }
 
-#
-# XSLoader/DynaLoader wrapper
-#
-sub wxPL_STATIC();
-sub wx_boot($$) {
-  local $ENV{PATH} = 'XXXALIENXXX' . $ENV{PATH} if $^O eq 'MSWin32';
-  if( $_[0] eq 'Wx' || !wxPL_STATIC ) {
-    if( $] < 5.006 ) {
-      require DynaLoader;
-      no strict 'refs';
-      push @{"$_[0]::ISA"}, 'DynaLoader';
-      $_[0]->bootstrap( $_[1] );
-    } else {
-      require XSLoader;
-      XSLoader::load( $_[0], $_[1] );
-    }
-  } else {
-    no strict 'refs';
-    my $t = $_[0]; $t =~ tr/:/_/;
-    &{"_boot_$t"}( $_[0], $_[1] );
-  }
+# Blech! (again...)
+# wxWidgets DLLs need to be installed in the same directory as Wx.dll,
+# but then LoadLibrary can't find them unless they are already loaded,
+# so we explicitly load them (on Win32 and wxWidgets 2.5.x+) just before
+# calling Wx::wx_boot. Finding the library requires determining the path
+# and the correct name
+our( $wx_path, $wx_pre, $wx_post );
+
+sub _load_file {
+  Wx::wxVERSION() < 2.005 ? DynaLoader::dl_load_file( $_[0], 0 ) :
+                            Wx::_load_plugin( $_[0] );
 }
 
-wx_boot( 'Wx', $XS_VERSION );
+my( $load_fun, $unload_fun ) = ( \&_load_dll, \&_unload_dll );
+
+sub set_load_function { $load_fun = shift }
+sub set_end_function { $unload_fun = shift }
+
+sub load_dll {
+  return if $^O ne 'MSWin32' || Wx::wxVERSION() < 2.005;
+  goto &$load_fun;
+}
+
+sub unload_dll {
+  return if $^O ne 'MSWin32' || Wx::wxVERSION() < 2.005;
+  goto &$unload_fun;
+}
+
+END { unload_dll() }
+
+sub _unload_dll { }
+
+sub _load_dll {
+  local $ENV{PATH} = $wx_path . ';' . $ENV{PATH};
+  return unless exists $dlls->{$_[0]};
+  Wx::_load_file( $dlls->{$_[0]} )
+}
+
+require Wx::Mini;
 
 {
   _boot_Constant( 'Wx', $XS_VERSION );
@@ -313,7 +328,7 @@ must be placed in the same directory as the executable file.
           <dependentAssembly>
               <assemblyIdentity
                   type="win32"
-                  name="Microsoft.Windows.Common-Controls"        
+                  name="Microsoft.Windows.Common-Controls"
                   version="6.0.0.0"
                   publicKeyToken="6595b64144ccf1df"
                   language="*"
