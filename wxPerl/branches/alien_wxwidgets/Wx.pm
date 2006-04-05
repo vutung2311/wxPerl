@@ -4,7 +4,7 @@
 ## Author:      Mattia Barbon
 ## Modified by:
 ## Created:     01/10/2000
-## RCS-ID:      $Id: Wx.pm,v 1.80.2.4 2006/03/15 18:40:23 mbarbon Exp $
+## RCS-ID:      $Id: Wx.pm,v 1.80.2.5 2006/04/05 17:43:50 mbarbon Exp $
 ## Copyright:   (c) 2000-2005 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
@@ -96,7 +96,11 @@ sub _croak {
 # so we explicitly load them (on Win32 and wxWidgets 2.5.x+) just before
 # calling Wx::wx_boot. Finding the library requires determining the path
 # and the correct name
-our( $wx_path, $wx_pre, $wx_post );
+use Wx::Mini;
+
+_start();
+
+our( $wx_path );
 
 sub _load_file {
   Wx::wxVERSION() < 2.005 ? DynaLoader::dl_load_file( $_[0], 0 ) :
@@ -109,12 +113,12 @@ sub set_load_function { $load_fun = shift }
 sub set_end_function { $unload_fun = shift }
 
 sub load_dll {
-  return if $^O ne 'MSWin32' || Wx::wxVERSION() < 2.005;
+  return if $^O eq 'darwin' || Wx::wxVERSION() < 2.005;
   goto &$load_fun;
 }
 
 sub unload_dll {
-  return if $^O ne 'MSWin32' || Wx::wxVERSION() < 2.005;
+  return if $^O eq 'darwin' || Wx::wxVERSION() < 2.005;
   goto &$unload_fun;
 }
 
@@ -123,12 +127,12 @@ END { unload_dll() }
 sub _unload_dll { }
 
 sub _load_dll {
-  local $ENV{PATH} = $wx_path . ';' . $ENV{PATH};
-  return unless exists $dlls->{$_[0]};
-  Wx::_load_file( $dlls->{$_[0]} )
+  local $ENV{PATH} = $wx_path . ';' . $ENV{PATH} if $wx_path;
+  return unless exists $Wx::dlls->{$_[0]};
+  my $dll = $Wx::dlls->{$_[0]};
+  $dll = $wx_path . '/' . $dll if $wx_path;
+  Wx::_load_file( $dll );
 }
-
-require Wx::Mini;
 
 {
   _boot_Constant( 'Wx', $XS_VERSION );
