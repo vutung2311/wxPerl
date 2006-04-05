@@ -4,7 +4,7 @@
 ## Author:      Graciliano M. P.
 ## Modified by:
 ## Created:     30/06/2002
-## RCS-ID:      $Id: SplashFast.pm,v 1.21.2.4 2006/03/15 18:40:24 mbarbon Exp $
+## RCS-ID:      $Id: SplashFast.pm,v 1.21.2.5 2006/04/05 17:43:47 mbarbon Exp $
 ## Copyright:   (c) 2002-2006 Graciliano M. P.
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
@@ -55,6 +55,8 @@ sub OnInit { return 1 }
 ###############################################################################
 
 use Wx::Mini;
+
+Wx::_start();
 
 #######
 # END #

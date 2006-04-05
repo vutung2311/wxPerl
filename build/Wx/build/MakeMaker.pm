@@ -2,7 +2,7 @@ package Wx::build::MakeMaker;
 
 use strict;
 use ExtUtils::MakeMaker;
-use Alien::wxWidgets 0.03 ();
+use Alien::wxWidgets 0.04 ();
 use base 'Exporter';
 use Config;
 use vars qw(@EXPORT $VERSION);
@@ -344,7 +344,7 @@ sub _process_mm_arguments {
 
     m/^WX_CORE_LIB$/ and do {
       my @libs = split ' ', $v;
-      $args{LIBS} .= join ' ', __PACKAGE__->get_core_lib( @libs ) if $v=~/\S/;
+      $args{LIBS} .= ' ' . join ' ', __PACKAGE__->get_core_lib( @libs ) if $v=~/\S/;
       delete $args{$_};
     };
 
