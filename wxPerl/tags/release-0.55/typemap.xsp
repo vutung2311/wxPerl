@@ -1,0 +1,86 @@
+#############################################################################
+## Name:        typemap.xsp
+## Purpose:     Main typemap file for xsubppp.pl
+## Author:      Mattia Barbon
+## Modified by:
+## Created:     01/03/2003
+## RCS-ID:      $Id: typemap.xsp,v 1.19 2006/07/31 19:31:14 mbarbon Exp $
+## Copyright:   (c) 2003-2005 Mattia Barbon
+## Licence:     This program is free software; you can redistribute it and/or
+##              modify it under the same terms as Perl itself
+#############################################################################
+
+%typemap{void}{simple};
+%typemap{bool}{simple};
+%typemap{char}{simple};
+%typemap{short}{simple};
+%typemap{int}{simple};
+%typemap{unsigned}{simple};
+%typemap{long}{simple};
+%typemap{float}{simple};
+%typemap{double}{simple};
+
+%typemap{size_t}{simple};
+%typemap{time_t}{simple};
+
+%typemap{wxUint32}{simple};
+%typemap{wxByte}{simple};
+
+%typemap{wxImageList*}{simple};
+
+%typemap{wxWindowID}{simple};
+%typemap{wxCoord}{simple};
+%typemap{wxEventType}{simple};
+
+%typemap{const wxChar*}{simple};
+%typemap{PlClassName}{simple};
+
+%typemap{wxString}{simple};
+%typemap{wxString&}{parsed}{%wxString%};
+%typemap{const wxString&}{parsed}{%wxString%};
+%typemap{const wxPoint&}{parsed}{%wxPoint%};
+%typemap{const wxSize&}{parsed}{%wxSize%};
+%typemap{wxSize}{parsed}{%wxSize%};
+%typemap{wxPoint}{parsed}{%wxPoint%};
+%typemap{const wxArtID&}{parsed}{%wxString%};
+%typemap{const wxArtClient&}{parsed}{%wxString%};
+%typemap{wxArtProvider*}{simple};
+%typemap{wxArtProvider&}{reference};
+%typemap{wxBitmap}{reference};
+%typemap{const wxBitmap&}{reference};
+%typemap{wxCursor}{reference};
+%typemap{wxIcon}{reference};
+%typemap{wxFont}{reference};
+%typemap{wxFont*}{simple};
+%typemap{wxDC*}{simple};
+%typemap{const wxDC&}{reference};
+%typemap{const wxValidator&}{reference};
+
+%typemap{wxDateTime*}{simple};
+%typemap{wxDateTime&}{reference};
+%typemap{const wxDateTime&}{reference};
+%typemap{wxDateSpan*}{simple};
+%typemap{wxDateSpan&}{reference};
+%typemap{const wxDateSpan&}{reference};
+%typemap{wxTimeSpan*}{simple};
+%typemap{wxTimeSpan&}{reference};
+%typemap{const wxTimeSpan&}{reference};
+
+%typemap{wxObject*}{simple};
+%typemap{wxSplitterWindow*}{simple};
+%typemap{wxSplitterEvent*}{simple};
+%typemap{wxWindow*}{simple};
+%typemap{wxListView*}{simple};
+%typemap{wxSizer*}{simple};
+%typemap{wxIconBundle*}{simple};
+%typemap{wxFrame*}{simple};
+%typemap{wxDialog*}{simple};
+%typemap{wxChoice*}{simple};
+%typemap{wxTreeCtrl*}{simple};
+%typemap{wxToolBarBase*}{simple};
+%typemap{wxToolBar*}{simple};
+
+%typemap{wxColour}{reference};
+%typemap{const wxColour&}{reference};
+%typemap{const wxIcon&}{reference};
+%typemap{const wxFont&}{reference};
