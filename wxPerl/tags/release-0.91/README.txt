@@ -85,3 +85,4 @@ The following features have been deprecated and may disappear in the future
 
     toolkit: wxMSW, wxGTK, wxMOTIF, wxX11, wxMAC, wxUNIVERSAL
     misc:    wxUNICODE, wxVERSION
+
