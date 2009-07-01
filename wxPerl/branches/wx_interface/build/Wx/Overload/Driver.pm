@@ -129,17 +129,6 @@ sub _write {
     print $out <<EOT;
 // GENERATED FILE, DO NOT EDIT
 
-#ifndef _CPP_OVERLOAD_H
-#define _CPP_OVERLOAD_H
-
-enum
-{
-    wxPliOvl\_Dummy = 0,
-$enum
-};
-
-#endif
-
 EOT
 
     foreach my $i ( sort keys %constants ) {
@@ -156,10 +145,6 @@ EOT
 
     print $out <<EOT;
 // GENERATED FILE, DO NOT EDIT
-
-const char* wxPliOvl\_tnames[] = { 0,
-$cpp_types
-};
 
 extern void wxPli_set_ovl_constant( const char* name,
                                     const wxPliPrototype* value );
@@ -187,14 +172,20 @@ EOT
 
 EOT
 
+    foreach my $i ( grep { $name2type{$_} ne '1' } keys %name2type ) {
+      print $out <<EOT;
+#define wxPliOvl${i} "$name2type{$i}"
+EOT
+    }
+
     foreach my $i ( sort keys %constants ) {
       my $count = scalar @{$constants{$i}};
-      print $out "const unsigned char wxPliOvl_${i}_datadef\[\] = { ";
+      print $out "const char* wxPliOvl_${i}_datadef\[\] = { ";
       print $out join ", ", map { "wxPliOvl$_" } @{$constants{$i}};
       print $out " };\n";
       print $out <<EOT;
 const wxPliPrototype wxPliOvl_${i}
-    ( wxPliOvl\_tnames, wxPliOvl_${i}_datadef, $count );
+    ( wxPliOvl_${i}_datadef, $count );
 EOT
     }
 
