@@ -9,6 +9,7 @@ Changes
 
 build/Wx/Overload/Driver.pm
 build/Wx/Overload/Handle.pm
+build/Wx/Overload/XSP.pm
 build/Wx/build/MakeMaker/Any_OS.pm
 build/Wx/build/MakeMaker/Any_wx_config.pm
 build/Wx/build/MakeMaker/MacOSX_GCC.pm
@@ -149,6 +150,7 @@ XS/Icon.xs
 XS/IconBundle.xsp
 XS/Image.xs
 XS/ImageList.xs
+XS/Interface.xsp
 XS/ItemContainer.xsp
 XS/ItemContainerImmutable.xsp
 XS/ListBox.xs
@@ -526,3 +528,5 @@ ext/docview/t/01_load.t
 ext/docview/t/02_inheritance.t
 ext/docview/t/03_threads.t
 ext/docview/t/04_cmdproc.t
+
+interface/wx/generic/spinctrg.h
