@@ -16,7 +16,7 @@
 
 %module{Wx};
 %typemap{wxSpinCtrlDouble*}{simple};
-%require{build::Wx::Overload::XSP};
+%loadplugin{build::Wx::Overload::XSP};
 
 %include{interface/wx/generic/spinctrg.h};
 
