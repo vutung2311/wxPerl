@@ -156,6 +156,7 @@ XS/ListCtrl.xs
 XS/Listbook.xsp
 XS/Locale.xs
 XS/Log.xs
+XS/Mask.xs
 XS/Menu.xs
 XS/MessageDialog.xsp
 XS/MimeTypes.xsp

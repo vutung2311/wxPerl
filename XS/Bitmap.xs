@@ -1,63 +1,19 @@
-#############################################################################
-## Name:        XS/Bitmap.xs
-## Purpose:     XS for Wx::Bitmap and Wx::Mask
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     29/10/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2002, 2005-2007 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/Bitmap.xs
+// Purpose:     XS for Wx::Bitmap
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     29/10/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2002, 2005-2007, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
 #include <wx/bitmap.h>
+#include <wx/image.h>
 
-MODULE=Wx PACKAGE=Wx::Mask
-
-void
-wxMask::new( ... )
-  PPCODE:
-    BEGIN_OVERLOAD()
-        MATCH_REDISP( wxPliOvl_wbmp_wcol, newBitmapColour )
-        MATCH_REDISP( wxPliOvl_wbmp_n, newBitmapIndex )
-        MATCH_REDISP( wxPliOvl_wbmp, newBitmap )
-    END_OVERLOAD( Wx::Mask::new )
-
-wxMask*
-newBitmap( CLASS, bitmap )
-    SV* CLASS
-    wxBitmap* bitmap
-  CODE:
-    RETVAL = new wxMask( *bitmap );
-  OUTPUT:
-    RETVAL
-
-wxMask*
-newBitmapColour( CLASS, bitmap, colour )
-    SV* CLASS
-    wxBitmap* bitmap
-    wxColour* colour
-  CODE:
-    RETVAL = new wxMask( *bitmap, *colour );
-  OUTPUT:
-    RETVAL
-
-wxMask*
-newBitmapIndex( CLASS, bitmap, index )
-    SV* CLASS
-    wxBitmap* bitmap
-    int index
-  CODE:
-    RETVAL = new wxMask( *bitmap, index );
-  OUTPUT:
-    RETVAL
-
-void
-wxMask::Destroy()
-  CODE:
-    delete THIS;
-
-MODULE=Wx PACKAGE=Wx::Bitmap
+MODULE=Wx_Bitmap PACKAGE=Wx::Bitmap
 
 #if 0
 
