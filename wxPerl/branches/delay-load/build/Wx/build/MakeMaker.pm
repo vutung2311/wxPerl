@@ -342,6 +342,7 @@ _make_override( 'manifypods' );
 sub ppd { package MY; shift->SUPER::ppd( @_ ) }
 sub dynamic_lib { package MY; shift->SUPER::dynamic_lib( @_ ) }
 sub const_config { package MY; shift->SUPER::const_config( @_ ) }
+sub tool_xsubpp { package MY; shift->SUPER::tool_xsubpp( @_ ) }
 
 use vars qw(%args %additional_arguments $wx_top_file);
 sub _process_mm_arguments {
