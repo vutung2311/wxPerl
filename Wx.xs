@@ -35,6 +35,18 @@
 #endif
 #endif
 
+#define WXPLI_DELAY_LOAD 0
+
+#define DECLARE_PACKAGE( package ) \
+  XS( boot_Wx_##package )
+#if WXPLI_DELAY_LOAD
+#define LOAD_PACKAGE( package ) \
+  wxPli_delay_load( aTHX_ "Wx::" #package, boot_Wx_##package )
+#else
+#define LOAD_PACKAGE( package ) \
+  wxPli_call_boot( aTHX_ "Wx::" #package, boot_Wx_##package )
+#endif
+
 #if defined(__WXMSW__)
 #include <wx/msw/private.h>
 #endif
@@ -74,6 +86,11 @@ bool wxPli_always_utf8;
 #endif
 
 #undef THIS
+
+DECLARE_PACKAGE( Bitmap );
+DECLARE_PACKAGE( Mask );
+DECLARE_PACKAGE( Button );
+DECLARE_PACKAGE( BitmapButton );
 
 #ifdef __cplusplus
 extern "C" {
@@ -235,6 +252,11 @@ BOOT:
 #endif
   SV* tmp = get_sv( "Wx::_exports", 1 );
   sv_setiv( tmp, (IV)(void*)&st_wxPliHelpers );
+
+  LOAD_PACKAGE( Bitmap );
+  LOAD_PACKAGE( Mask );
+  LOAD_PACKAGE( Button );
+  LOAD_PACKAGE( BitmapButton );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )
