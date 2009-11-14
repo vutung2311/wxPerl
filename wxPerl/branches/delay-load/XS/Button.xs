@@ -1,16 +1,16 @@
-#############################################################################
-## Name:        XS/Button.xs
-## Purpose:     XS for Wx::Button
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     08/11/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2001, 2003 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/Button.xs
+// Purpose:     XS for Wx::Button
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     08/11/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2001, 2003, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-MODULE=Wx PACKAGE=Wx::Button
+MODULE=Wx_Button PACKAGE=Wx::Button
 
 #include <wx/button.h>
 

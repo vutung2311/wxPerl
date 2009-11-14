@@ -1,16 +1,16 @@
-#############################################################################
-## Name:        XS/BitmapButton.xs
-## Purpose:     XS for Wx::BitmapButton
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     31/10/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2003, 2006 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/BitmapButton.xs
+// Purpose:     XS for Wx::BitmapButton
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     31/10/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2003, 2006, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-MODULE=Wx PACKAGE=Wx::BitmapButton
+MODULE=Wx_BitmapButton PACKAGE=Wx::BitmapButton
 
 #include <wx/bmpbuttn.h>
 
@@ -126,4 +126,3 @@ wxBitmapButton::SetBitmapHover( bitmap )
   C_ARGS: *bitmap
 
 #endif
-

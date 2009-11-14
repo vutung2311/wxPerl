@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     29/10/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2008 Mattia Barbon
+// Copyright:   (c) 2000-2009 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -40,6 +40,9 @@
 #include "cpp/controls.cpp"
 #include "cpp/overload.h"
 
+#include "XS/BitmapButton.c"
+#include "XS/Button.c"
+
 WXPLI_BOOT_ONCE(Wx_Ctrl);
 #define boot_Wx_Ctrl wxPli_boot_Wx_Ctrl
 
@@ -60,7 +63,6 @@ wxControl::GetLabelText()
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ControlWithItems.xsp |
 
-INCLUDE: XS/BitmapButton.xs
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/AnimationCtrl.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/EditableListBox.xsp |
@@ -95,7 +97,6 @@ INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/DirCtrl.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/FileCtrl.xsp |
 
-INCLUDE: XS/Button.xs
 INCLUDE: XS/CheckBox.xs
 INCLUDE: XS/CheckListBox.xs
 INCLUDE: XS/Choice.xs
