@@ -6,11 +6,11 @@ use base 'Exporter';
 use File::Spec::Functions qw(curdir catdir catfile updir);
 use File::Find qw(find);
 use File::Path qw(mkpath);
-use File::Basename qw(dirname);
+use File::Basename qw(basename dirname);
 use Carp;
 
 use vars qw(@EXPORT @EXPORT_OK);
-@EXPORT_OK = qw(obj_from_src xs_dependencies write_string
+@EXPORT_OK = qw(obj_from_src c_from_xs xs_dependencies write_string
                 lib_file arch_file arch_auto_file
                 path_search files_with_overload files_with_constants
                 pipe_stderr read_file write_file);
@@ -70,6 +70,14 @@ sub obj_from_src {
   return wantarray ? @xs : $xs[0];
 }
 
+sub c_from_xs {
+  my @xs = @_;
+
+  foreach ( @xs ) { s[\.(?:xs|xsp)$][.c] }
+
+  return wantarray ? @xs : $xs[0];
+}
+
 sub src_dir {
   my( $file ) = @_;
   my $d = curdir;
@@ -119,10 +127,11 @@ sub scan_xs($$$) {
           push @cinclude, @$cinclude;
           push @xsinclude, @$xsinclude;
           last;
-        } elsif(    $file =~ m/ovl_const\.(?:cpp|h)/i
-                 || $file =~ m/v_cback_def\.h/i
-                 || $file =~ m/ItemContainer(?:Immutable)?\.xs/i
-                 || $file =~ m/Var[VH]{0,2}ScrollHelper(?:Base)?\.xs/i ) {
+        } elsif(    $file =~ m/ovl_const\.(?:cpp|h)$/i
+                 || $file =~ m/v_cback_def\.h$/i
+                 || $file =~ m/\.c$/i
+                 || $file =~ m/ItemContainer(?:Immutable)?\.xs$/i
+                 || $file =~ m/Var[VH]{0,2}ScrollHelper(?:Base)?\.xs$/i ) {
           push @$arr, ( ( $top_dir eq curdir() ) ?
                         $file :
                         catfile( $top_dir, $file ) );
