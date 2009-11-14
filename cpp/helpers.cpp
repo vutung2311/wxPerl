@@ -1666,6 +1666,118 @@ void wxPli_set_events( const struct wxPliEventDescription* events )
         CreateEventMacro( events[i].name, events[i].args, events[i].evtID );
 }
 
+struct method_entry
+{
+    const char* package;
+    XSPROTO( (* boot) );
+};
+
+static void wxPli_clean_class( pTHX_ HV* stash )
+{
+    // delete the AUTOLOAD glob
+    hv_delete( stash, "AUTOLOAD", 8, G_DISCARD );
+    // delete the new glob
+    hv_delete( stash, "new", 3, G_DISCARD );
+}
+
+static void wxPli_load_class( pTHX_ method_entry* desc )
+{
+    dSP;
+
+    char buffer[1024];
+    strcpy( buffer, desc->package );
+    strcat( buffer, "::_boot" );
+
+    PUSHMARK(SP);
+    PUSHs( sv_2mortal( newSVpv( "Wx", 0 ) ) );
+    PUSHs( sv_2mortal( newSVpv( VERSION, 0 ) ) );
+    PUTBACK;
+
+    call_pv( buffer, G_DISCARD|G_VOID );
+}
+
+XS(XS_Wx_AutoloadNew);
+XS(XS_Wx_AutoloadNew)
+{
+    dXSARGS;
+    method_entry* desc = (method_entry*)CvXSUBANY( cv ).any_ptr;
+
+    wxPli_clean_class( aTHX_ CvSTASH( cv ) );
+    wxPli_load_class( aTHX_ desc );
+
+    // restore the mark popped by dXSARGS
+    PUSHMARK(MARK);
+    call_method( "new", GIMME_V );
+}
+
+XS(XS_Wx_Autoload);
+XS(XS_Wx_Autoload)
+{
+    dXSARGS;
+    method_entry* desc = (method_entry*)CvXSUBANY( cv ).any_ptr;
+
+    // get method name
+    const char *meth = SvPVX( cv );
+
+    if( strcmp( meth, "DESTROY" ) == 0 )
+        return;
+
+    wxPli_clean_class( aTHX_ CvSTASH( cv ) );
+    wxPli_load_class( aTHX_ desc );
+
+    // restore the mark popped by dXSARGS
+    PUSHMARK(MARK);
+    call_method( meth, GIMME_V );
+}
+
+void wxPli_delay_load( pTHX_ const char* package, XSPROTO( (* boot) ) )
+{
+    char buffer[1024];
+    CV* cv;
+
+    method_entry* desc = new method_entry;
+    desc->package = package;
+    desc->boot = boot;
+
+    strcpy( buffer, package );
+    strcat( buffer, "::_boot" );
+
+    newXS( buffer, boot, (char*)"helpers.cpp" );
+
+    strcpy( buffer, package );
+    strcat( buffer, "::AUTOLOAD" );
+
+    cv = (CV*)newXS( buffer, XS_Wx_Autoload, (char*)"helpers.cpp" );
+    
+    CvXSUBANY(cv).any_ptr = desc;
+
+    strcpy( buffer, package );
+    strcat( buffer, "::new" );
+
+    cv = (CV*)newXS( buffer, XS_Wx_AutoloadNew, (char*)"helpers.cpp" );
+    
+    CvXSUBANY(cv).any_ptr = desc;
+}
+
+void wxPli_call_boot( pTHX_ const char* package, XSPROTO( (* boot) ) )
+{
+    char buffer[1024];
+
+    strcpy( buffer, package );
+    strcat( buffer, "::_boot" );
+
+    newXS( buffer, boot, (char*)"helpers.cpp" );
+
+    dSP;
+
+    PUSHMARK(SP);
+    PUSHs( sv_2mortal( newSVpv( "Wx", 0 ) ) );
+    PUSHs( sv_2mortal( newSVpv( VERSION, 0 ) ) );
+    PUTBACK;
+
+    call_pv( buffer, G_DISCARD|G_VOID );
+}
+
 // Local variables: //
 // mode: c++ //
 // End: //

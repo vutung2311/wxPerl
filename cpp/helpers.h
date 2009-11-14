@@ -41,6 +41,9 @@ typedef const char* PlClassName; // for typemap
 
 #include <stdarg.h>
 
+void wxPli_delay_load( pTHX_ const char* package, XSPROTO( (* boot) ) );
+void wxPli_call_boot( pTHX_ const char* package, XSPROTO( (* boot) ) );
+
 I32 my_looks_like_number( pTHX_ SV* sv );
 
 // helpers for UTF8 <-> wxString/wxChar
