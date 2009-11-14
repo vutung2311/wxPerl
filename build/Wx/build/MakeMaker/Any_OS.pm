@@ -302,6 +302,16 @@ sub manifypods_core {
     return $self->SUPER::manifypods_core;
 }
 
+sub tool_xsubpp {
+    my $self = shift;
+    my $text = $self->SUPER::tool_xsubpp( @_ );
+
+    $text =~ s{-typemap\s+(\S+)}
+              {'-typemap ' . File::Spec->rel2abs( $1 )}eg;
+
+    return $text;
+}
+
 1;
 
 # local variables:
