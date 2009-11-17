@@ -1669,7 +1669,7 @@ void wxPli_set_events( const struct wxPliEventDescription* events )
 struct method_entry
 {
     const char* package;
-    XSPROTO( (* boot) );
+    bool* booted;
 };
 
 static void wxPli_clean_class( pTHX_ HV* stash )
@@ -1682,6 +1682,9 @@ static void wxPli_clean_class( pTHX_ HV* stash )
 
 static void wxPli_load_class( pTHX_ method_entry* desc )
 {
+    if (*desc->booted)
+        return;
+
     dSP;
 
     char buffer[1024];
@@ -1694,6 +1697,7 @@ static void wxPli_load_class( pTHX_ method_entry* desc )
     PUTBACK;
 
     call_pv( buffer, G_DISCARD|G_VOID );
+    *desc->booted = true;
 }
 
 XS(XS_Wx_AutoloadNew);
@@ -1730,14 +1734,14 @@ XS(XS_Wx_Autoload)
     call_method( meth, GIMME_V );
 }
 
-void wxPli_delay_load( pTHX_ const char* package, XSPROTO( (* boot) ) )
+void wxPli_delay_load( pTHX_ const char* package, XSPROTO( (* boot) ), bool* booted )
 {
     char buffer[1024];
     CV* cv;
 
     method_entry* desc = new method_entry;
     desc->package = package;
-    desc->boot = boot;
+    desc->booted = booted;
 
     strcpy( buffer, package );
     strcat( buffer, "::_boot" );
@@ -1759,8 +1763,11 @@ void wxPli_delay_load( pTHX_ const char* package, XSPROTO( (* boot) ) )
     CvXSUBANY(cv).any_ptr = desc;
 }
 
-void wxPli_call_boot( pTHX_ const char* package, XSPROTO( (* boot) ) )
+void wxPli_call_boot( pTHX_ const char* package, XSPROTO( (* boot) ), bool* booted )
 {
+    if (*booted)
+        return;
+
     char buffer[1024];
 
     strcpy( buffer, package );
@@ -1776,6 +1783,7 @@ void wxPli_call_boot( pTHX_ const char* package, XSPROTO( (* boot) ) )
     PUTBACK;
 
     call_pv( buffer, G_DISCARD|G_VOID );
+    *booted = true;
 }
 
 // Local variables: //
