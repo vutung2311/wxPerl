@@ -10,9 +10,12 @@
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
 
-MODULE=Wx_Button PACKAGE=Wx::Button
-
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
 #include <wx/button.h>
+
+MODULE=Wx_Button PACKAGE=Wx::Button
 
 void
 new( ... )

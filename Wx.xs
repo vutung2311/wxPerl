@@ -38,13 +38,18 @@
 #define WXPLI_DELAY_LOAD 0
 
 #define DECLARE_PACKAGE( package ) \
+  static bool wxPli_##package##_booted = false; \
   XS( boot_Wx_##package )
 #if WXPLI_DELAY_LOAD
 #define LOAD_PACKAGE( package ) \
-  wxPli_delay_load( aTHX_ "Wx::" #package, boot_Wx_##package )
+  wxPli_delay_load( aTHX_ "Wx::" #package, boot_Wx_##package, &wxPli_##package##_booted )
+#define LOAD_PACKAGE2( boot, package ) \
+  wxPli_delay_load( aTHX_ "Wx::" #package, boot_Wx_##boot, &wxPli_##boot##_booted )
 #else
 #define LOAD_PACKAGE( package ) \
-  wxPli_call_boot( aTHX_ "Wx::" #package, boot_Wx_##package )
+  wxPli_call_boot( aTHX_ "Wx::" #package, boot_Wx_##package, &wxPli_##package##_booted )
+#define LOAD_PACKAGE2( boot, package ) \
+  wxPli_call_boot( aTHX_ "Wx::" #package, boot_Wx_##boot, &wxPli_##boot##_booted )
 #endif
 
 #if defined(__WXMSW__)
@@ -91,6 +96,10 @@ DECLARE_PACKAGE( Bitmap );
 DECLARE_PACKAGE( Mask );
 DECLARE_PACKAGE( Button );
 DECLARE_PACKAGE( BitmapButton );
+DECLARE_PACKAGE( Image );
+DECLARE_PACKAGE( ListCtrl );
+DECLARE_PACKAGE( TreeCtrl );
+DECLARE_PACKAGE( RadioBox );
 
 #ifdef __cplusplus
 extern "C" {
@@ -257,6 +266,17 @@ BOOT:
   LOAD_PACKAGE( Mask );
   LOAD_PACKAGE( Button );
   LOAD_PACKAGE( BitmapButton );
+  LOAD_PACKAGE( Image );
+  LOAD_PACKAGE( RadioBox );
+  LOAD_PACKAGE2( ListCtrl, ListEvent );
+  LOAD_PACKAGE2( ListCtrl, ListItem );
+  LOAD_PACKAGE2( ListCtrl, ListItemAttr );
+  LOAD_PACKAGE2( ListCtrl, ListCtrl );
+  LOAD_PACKAGE2( ListCtrl, ListView );
+  LOAD_PACKAGE2( TreeCtrl, TreeItemData );
+  LOAD_PACKAGE2( TreeCtrl, TreeItemId );
+  LOAD_PACKAGE2( TreeCtrl, TreeEvent );
+  LOAD_PACKAGE2( TreeCtrl, TreeCtrl );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )

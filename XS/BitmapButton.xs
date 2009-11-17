@@ -10,9 +10,12 @@
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
 
-MODULE=Wx_BitmapButton PACKAGE=Wx::BitmapButton
-
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
 #include <wx/bmpbuttn.h>
+
+MODULE=Wx_BitmapButton PACKAGE=Wx::BitmapButton
 
 void
 new( ... )
