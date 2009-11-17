@@ -10,6 +10,9 @@
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
 
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
 #include <wx/bitmap.h>
 #include <wx/image.h>
 

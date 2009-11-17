@@ -1,19 +1,21 @@
-#############################################################################
-## Name:        XS/RadioBox.xs
-## Purpose:     XS for Wx::RadioBox
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     31/10/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2003, 2006-2007 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/RadioBox.xs
+// Purpose:     XS for Wx::RadioBox
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     31/10/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2003, 2006-2007 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
 #include <wx/radiobox.h>
 #include <wx/tooltip.h>
 
-MODULE=Wx PACKAGE=Wx::RadioBox
+MODULE=Wx_RadioBox PACKAGE=Wx::RadioBox
 
 void
 new( ... )

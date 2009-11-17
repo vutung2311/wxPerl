@@ -1,23 +1,27 @@
-#############################################################################
-## Name:        XS/ListCtrl.xs
-## Purpose:     XS for Wx::ListCtrl, Wx::ListItem
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     04/02/2001
-## RCS-ID:      $Id$
-## Copyright:   (c) 2001-2007 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/ListCtrl.xs
+// Purpose:     XS for Wx::ListCtrl, Wx::ListItem
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     04/02/2001
+// RCS-ID:      $Id$
+// Copyright:   (c) 2001-2007 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-#include <wx/colour.h>
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
+#include "cpp/controls.h"
 #include <wx/listctrl.h>
+#include <wx/imaglist.h>
 
 #if WXPERL_W_VERSION_LT( 2, 6, 0 )
 #define wxListCtrlNameStr wxT("listCtrl")
 #endif
 
-MODULE=Wx_Evt PACKAGE=Wx::ListEvent
+MODULE=Wx_ListCtrl PACKAGE=Wx::ListEvent
 
 wxListEvent*
 wxListEvent::new( eventType = wxEVT_NULL, id = 0 )
@@ -75,7 +79,7 @@ wxListEvent::GetItem()
   OUTPUT:
     RETVAL
 
-MODULE=Wx PACKAGE=Wx::ListItem
+MODULE=Wx_ListCtrl PACKAGE=Wx::ListItem
 
 wxListItem*
 wxListItem::new()
@@ -199,7 +203,7 @@ wxListItem::GetFont()
   OUTPUT:
     RETVAL
 
-MODULE=Wx PACKAGE=Wx::ListItemAttr
+MODULE=Wx_ListCtrl PACKAGE=Wx::ListItemAttr
 
 wxListItemAttr*
 wxListItemAttr::new( ... )
@@ -280,7 +284,7 @@ wxListItemAttr::GetFont()
   OUTPUT:
     RETVAL
 
-MODULE=Wx PACKAGE=Wx::ListCtrl
+MODULE=Wx_ListCtrl PACKAGE=Wx::ListCtrl
 
 #!sub OnGetItemText
 #!sub OnGetItemImage
@@ -819,7 +823,7 @@ wxListCtrl::SortItems( function )
   OUTPUT:
     RETVAL
 
-MODULE=Wx PACKAGE=Wx::ListView
+MODULE=Wx_ListCtrl PACKAGE=Wx::ListView
 
 void
 new( ... )

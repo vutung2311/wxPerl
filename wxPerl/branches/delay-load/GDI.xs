@@ -31,12 +31,6 @@ typedef int wxMappingMode;
 typedef int wxPolygonFillMode;
 typedef int wxFloodFillStyle;
 #endif
-#if WXPERL_W_VERSION_LT( 2, 9, 1 )
-typedef int wxImageResizeQuality;
-#endif
-
-#include "XS/Bitmap.c"
-#include "XS/Mask.c"
 
 MODULE=Wx_GDI
 
@@ -50,7 +44,7 @@ INCLUDE: XS/Cursor.xs
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/DC.xs |
 INCLUDE: XS/Pen.xs
 INCLUDE: XS/Brush.xs
-INCLUDE: XS/Image.xs
+INCLUDE: XS/ImageHandler.xs
 INCLUDE: XS/Palette.xs
 
 INCLUDE: XS/GraphicsContext.xs

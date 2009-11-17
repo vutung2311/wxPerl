@@ -148,6 +148,7 @@ XS/HyperlinkCtrl.xsp
 XS/Icon.xs
 XS/IconBundle.xsp
 XS/Image.xs
+XS/ImageHandler.xs
 XS/ImageList.xs
 XS/ItemContainer.xsp
 XS/ItemContainerImmutable.xsp

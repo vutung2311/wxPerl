@@ -15,6 +15,7 @@
 #if WXPERL_W_VERSION_GE( 2, 9, 0 )
 
 #include <wx/editlbox.h>
+#include <wx/bmpbuttn.h>
 
 %typemap{wxEditableListBox*}{simple};
 %typemap{wxListCtrl*}{simple};

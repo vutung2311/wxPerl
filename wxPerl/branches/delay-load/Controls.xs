@@ -40,9 +40,6 @@
 #include "cpp/controls.cpp"
 #include "cpp/overload.h"
 
-#include "XS/BitmapButton.c"
-#include "XS/Button.c"
-
 WXPLI_BOOT_ONCE(Wx_Ctrl);
 #define boot_Wx_Ctrl wxPli_boot_Wx_Ctrl
 
@@ -103,9 +100,7 @@ INCLUDE: XS/Choice.xs
 INCLUDE: XS/ComboBox.xs
 INCLUDE: XS/Gauge.xs
 INCLUDE: XS/ListBox.xs
-INCLUDE: XS/ListCtrl.xs
 INCLUDE: XS/Notebook.xs
-INCLUDE: XS/RadioBox.xs
 INCLUDE: XS/RadioButton.xs
 INCLUDE: XS/ScrollBar.xs
 INCLUDE: XS/Slider.xs
@@ -116,7 +111,6 @@ INCLUDE: XS/StaticBox.xs
 INCLUDE: XS/StaticLine.xs
 INCLUDE: XS/StaticText.xs
 INCLUDE: XS/ToggleButton.xs
-INCLUDE: XS/TreeCtrl.xs
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/TextAttr.xsp |
 

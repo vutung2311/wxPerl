@@ -1,19 +1,24 @@
-#############################################################################
-## Name:        XS/TreeCtrl.xs
-## Purpose:     XS for Wx::TreeCtrl
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     04/02/2001
-## RCS-ID:      $Id$
-## Copyright:   (c) 2001-2007 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/TreeCtrl.xs
+// Purpose:     XS for Wx::TreeCtrl
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     04/02/2001
+// RCS-ID:      $Id$
+// Copyright:   (c) 2001-2007 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-#include <wx/treectrl.h>
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
 #include "cpp/overload.h"
+#include "cpp/controls.h"
+#include <wx/treectrl.h>
+#include <wx/imaglist.h>
+#include "cpp/helpers.h"
 
-MODULE=Wx PACKAGE=Wx::TreeItemData
+MODULE=Wx_TreeCtrl PACKAGE=Wx::TreeItemData
 
 wxTreeItemData*
 wxPliTreeItemData::new( data = 0 )
@@ -53,7 +58,7 @@ wxTreeItemData::SetId( id )
     wxTreeItemId* id
   C_ARGS: *id
 
-MODULE=Wx PACKAGE=Wx::TreeItemId
+MODULE=Wx_TreeCtrl PACKAGE=Wx::TreeItemId
 
 static void
 wxTreeItemId::CLONE()
@@ -94,7 +99,7 @@ tiid_spaceship( tid1, tid2, ... )
   OUTPUT:
     RETVAL
 
-MODULE=Wx PACKAGE=Wx::TreeEvent
+MODULE=Wx_TreeCtrl PACKAGE=Wx::TreeEvent
 
 wxTreeEvent*
 wxTreeEvent::new( commandType = wxEVT_NULL, id = 0 )
@@ -146,7 +151,7 @@ void
 wxTreeEvent::SetToolTip( tooltip )
     wxString tooltip
 
-MODULE=Wx PACKAGE=Wx::TreeCtrl
+MODULE=Wx_TreeCtrl PACKAGE=Wx::TreeCtrl
 
 void
 new( ... )
