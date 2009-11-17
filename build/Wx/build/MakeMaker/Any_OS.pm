@@ -4,7 +4,8 @@ use strict;
 use base 'Wx::build::MakeMaker';
 use File::Spec::Functions qw(curdir);
 use Wx::build::Options;
-use Wx::build::Utils qw(xs_dependencies lib_file);
+use Wx::build::Utils qw(xs_dependencies lib_file c_from_xs);
+use File::Basename qw(basename);
 
 my $exp = lib_file( 'Wx/Wx_Exp.pm' );
 my @generated_xs = qw(XS/ItemContainer.xs XS/ItemContainerImmutable.xs
@@ -60,6 +61,7 @@ sub configure_core {
                " cpp/setup.h cpp/plwindow.h cpp/artprov.h cpp/popupwin.h" .
                " fix_alien cpp/vlbox.h cpp/vscroll.h cpp/v_cback_def.h" .
                " " . join( " ", @generated_xs ) .
+               " *.c XS/*.c" .
                " cpp/vscrl.h overload.lst" };
 
   return %config;
@@ -235,6 +237,16 @@ EOT
 %s : %sp typemap.xsp
 	\$(PERL) -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp %sp > %s
 
+EOT
+  }
+
+  foreach my $f ( @Wx::build::MakeMaker::Core::module_xs ) {
+      my $c = c_from_xs( $f );
+      my $c_base = basename( $c );
+
+      $text .= <<EOT;
+$c_base : $c
+	\$(CP) $c $c_base
 EOT
   }
 
