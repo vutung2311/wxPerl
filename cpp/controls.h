@@ -13,6 +13,11 @@
 #ifndef _WXPERL_CONTROLS_H
 #define _WXPERL_CONTROLS_H
 
+#include "cpp/helpers.h"
+#include "cpp/v_cback.h"
+#include <wx/listctrl.h>
+#include <wx/treectrl.h>
+
 class wxPliListCtrl:public wxListCtrl
 {
     WXPLI_DECLARE_DYNAMIC_CLASS( wxPliListCtrl );
