@@ -18,8 +18,6 @@
 #include <wx/window.h>
 #include <wx/dcbuffer.h>
 
-#define wxNullBitmapPtr (wxBitmap*) &wxNullBitmap
-
 MODULE=Wx PACKAGE=Wx::DC
 
 static void

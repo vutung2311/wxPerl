@@ -924,6 +924,10 @@ struct wxPliEventDescription
 #define wxPli_StdEvent( NAME, ARGS )  { #NAME, ARGS, wx##NAME },
 #define wxPli_Event( NAME, ARGS, ID ) { #NAME, ARGS, ID },
 
+// helper definitions
+#define wxNullBitmapPtr (wxBitmap*) &wxNullBitmap
+#define wxDefaultValidatorPtr (wxValidator*)&wxDefaultValidator
+
 #endif // __CPP_HELPERS_H
 
 #if defined( _WX_CLNTDATAH__ )
