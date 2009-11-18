@@ -1678,8 +1678,6 @@ static void wxPli_clean_class( pTHX_ HV* stash )
     hv_delete( stash, "AUTOLOAD", 8, G_DISCARD );
     // delete the new glob
     hv_delete( stash, "new", 3, G_DISCARD );
-    // delete the _boot glob
-    hv_delete( stash, "_boot", 5, G_DISCARD );
 }
 
 static void wxPli_load_class( pTHX_ method_entry* desc )
