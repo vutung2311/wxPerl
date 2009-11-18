@@ -250,6 +250,16 @@ $c_base : $c
 EOT
   }
 
+  foreach my $f ( @Wx::build::MakeMaker::Core::module_xsp ) {
+      my $c_base = basename( c_from_xs( $f ) );
+      my $base = basename( $f, '.xsp' );
+
+      $text .= <<EOT;
+$c_base : $f
+	\$(PERL) -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp $f | \$(XSUBPPRUN) \$(XSPROTOARG) \$(XSUBPPARGS) \$(XSUBPP_EXTRA_ARGS) - > $base.xsc && \$(MV) $base.xsc $c_base
+EOT
+  }
+
   $text .= sprintf <<EOT, join( ' ', @generated_xs );
 generated : cpp/v_cback_def.h typemap %s overload
 
