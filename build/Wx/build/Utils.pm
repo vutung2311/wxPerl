@@ -65,7 +65,7 @@ sub obj_from_src {
   my @xs = @_;
   my $obj_ext = $Config{obj_ext} || $Config{_o};
 
-  foreach ( @xs ) { s[\.(?:xs|c|cc|cpp)$][$obj_ext] }
+  foreach ( @xs ) { s[\.(?:xs|xsp|c|cc|cpp)$][$obj_ext] }
 
   return wantarray ? @xs : $xs[0];
 }
