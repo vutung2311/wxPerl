@@ -12,8 +12,6 @@
 
 %{
 #include <wx/imaglist.h>
-
-#define wxNullBitmapPtr (wxBitmap*) &wxNullBitmap
 %}
 
 %module{Wx};

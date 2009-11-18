@@ -16,8 +16,6 @@
 #include "cpp/constants.h"
 #include "cpp/overload.h"
 
-#define wxNullBitmapPtr (wxBitmap*)&wxNullBitmap
-
 #undef THIS
 
 #include <wx/aui/framemanager.h>
