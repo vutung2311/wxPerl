@@ -35,7 +35,7 @@
 #endif
 #endif
 
-#define WXPLI_DELAY_LOAD 0
+#define WXPLI_DELAY_LOAD 1
 
 #define DECLARE_PACKAGE( package ) \
   static bool wxPli_##package##_booted = false; \
