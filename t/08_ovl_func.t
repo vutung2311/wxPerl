@@ -16,7 +16,13 @@ Wx::InitAllImageHandlers;
 sub hijack {
   while( @_ ) {
     my( $name, $code ) = ( shift, shift );
+    ( my $pack = $name ) =~ s/::[^:]+$//;
     no strict 'refs';
+    # force delayed loading
+    if( defined &{"${pack}::_boot"} ) {
+        &{"${pack}::_boot"}( $pack, $Wx::XS_VERSION );
+        delete ${"${pack}::"}{"_boot"};
+    }
     die $name unless defined &{$name};
     my $old = \&{$name};
     undef *{$name};
