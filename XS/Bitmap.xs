@@ -15,6 +15,8 @@
 #include "cpp/overload.h"
 #include <wx/bitmap.h>
 #include <wx/image.h>
+#include <wx/icon.h>
+#include <wx/palette.h>
 
 MODULE=Wx_Bitmap PACKAGE=Wx::Bitmap
 

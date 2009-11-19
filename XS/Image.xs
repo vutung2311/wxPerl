@@ -16,6 +16,7 @@
 #include "cpp/overload.h"
 #include <wx/image.h>
 #include <wx/bitmap.h>
+#include <wx/palette.h>
 
 #if WXPERL_W_VERSION_LT( 2, 9, 1 )
 typedef int wxImageResizeQuality;
