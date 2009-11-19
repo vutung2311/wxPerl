@@ -23,7 +23,7 @@ Wx::build::Utils - utility routines
 
 =head2 xs_dependencies
 
-  my %dependencies = xs_dependencies( $mm_object, [ 'dir1', 'dir2' ] );
+  my %dependencies = xs_dependencies( $xs_hash, [ 'dir1', 'dir2' ] );
 
 =cut
 
@@ -34,15 +34,15 @@ sub _uniq {
 }
 
 sub xs_dependencies {
-  my( $this, $dirs, $top_dir ) = @_;
+  my( $xs_map, $dirs, $top_dir ) = @_;
 
   my( %depend );
   my( $c, $o, $cinclude, $xsinclude );
 
-  foreach ( keys %{ $this->{XS} } ) {
+  foreach ( keys %$xs_map ) {
     ( $cinclude, $xsinclude ) = scan_xs( $_, $dirs, $top_dir );
 
-    $c = $this->{XS}{$_};
+    $c = $xs_map->{$_};
     $o = obj_from_src( $c );
 
     $depend{$c} = $_ . ' ' . join( ' ', _uniq( @$xsinclude ) );
