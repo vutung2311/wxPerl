@@ -108,8 +108,7 @@ sub _depend_common {
                  || 'Wx.pm';
   my( $ovlc, $ovlh ) = $this->{WX}{wx_overload} ?
     @{$this->{WX}{wx_overload}}{qw(source header)} : ();
-  return ( xs_dependencies( $this, [ curdir, $this->get_api_directory
-                                     ],
+  return ( xs_dependencies( $this->{XS}, [ curdir, $this->get_api_directory ],
                             Wx::build::Utils::src_dir( $top_file ) ),
            # overload
            ( $ovlc && $ovlh ?
@@ -123,8 +122,18 @@ sub _depend_common {
 sub depend_core {
   my $this = shift;
 
+  my $top_file =    $this->{WX}{wx_top}
+                 || $this->{ARGS}{VERSION_FROM}
+                 || $this->{ARGS}{ABSTRACT_FROM}
+                 || 'Wx.pm';
+  my %extra_xs = map { $_ => basename( c_from_xs( $_ ) ) }
+                     @Wx::build::MakeMaker::Core::module_xs,
+                     @Wx::build::MakeMaker::Core::module_xsp;
   my %files = $this->files_to_install();
   my %depend = ( _depend_common( $this ),
+                 xs_dependencies( \%extra_xs,
+                                  [ curdir, $this->get_api_directory ],
+                                  Wx::build::Utils::src_dir( $top_file ) ),
                  $exp              => join( ' ', $this->files_with_constants ),
                  '$(INST_STATIC)'  => "fix_alien $exp",
                  '$(INST_DYNAMIC)' => "fix_alien $exp",
