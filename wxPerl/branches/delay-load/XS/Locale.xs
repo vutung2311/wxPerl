@@ -12,6 +12,7 @@
 
 #define PERL_NO_GET_CONTEXT
 #include "cpp/wxapi.h"
+#include "cpp/overload.h"
 
 #include <wx/intl.h>
 
@@ -85,6 +86,14 @@ wxLanguageInfo::GetDescription()
   OUTPUT: RETVAL
 
 MODULE=Wx_Locale PACKAGE=Wx::Locale
+
+void
+wxLocale::new( ... )
+  PPCODE:
+    BEGIN_OVERLOAD()
+        MATCH_REDISP_COUNT_ALLOWMORE( wxPliOvl_n_n, newShort, 1 )
+        MATCH_REDISP_COUNT_ALLOWMORE( wxPliOvl_s_s_s_b_b, newLong, 1 )
+    END_OVERLOAD( Wx::Locale::new )
 
 wxLocale*
 newLong( name, shorts = NULL, locale = NULL, loaddefault = true, convertencoding = false )
