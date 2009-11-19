@@ -1,20 +1,25 @@
-#############################################################################
-## Name:        XS/ComboCtrl.xsp
-## Purpose:     XS++ for Wx::ComboCtrl
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     12/08/2007
-## RCS-ID:      $Id$
-## Copyright:   (c) 2007, 2009 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/ComboCtrl.xsp
+// Purpose:     XS++ for Wx::ComboCtrl
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     12/08/2007
+// RCS-ID:      $Id$
+// Copyright:   (c) 2007, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-%module{Wx};
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
+
+%module{Wx_ComboCtrl};
 
 #if WXPERL_W_VERSION_GE( 2, 7, 2 )
 
 #include <wx/combo.h>
+#include <wx/textctrl.h>
 
 %typemap{wxComboPopup*}{simple};
 %typemap{wxComboCtrl*}{simple};

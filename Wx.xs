@@ -100,6 +100,10 @@ DECLARE_PACKAGE( Image );
 DECLARE_PACKAGE( ListCtrl );
 DECLARE_PACKAGE( TreeCtrl );
 DECLARE_PACKAGE( RadioBox );
+DECLARE_PACKAGE( Log );
+DECLARE_PACKAGE( ComboCtrl );
+DECLARE_PACKAGE( ComboPopup );
+DECLARE_PACKAGE( OwnerDrawnComboBox );
 
 #ifdef __cplusplus
 extern "C" {
@@ -268,6 +272,9 @@ BOOT:
   LOAD_PACKAGE( BitmapButton );
   LOAD_PACKAGE( Image );
   LOAD_PACKAGE( RadioBox );
+  LOAD_PACKAGE( ComboCtrl );
+  LOAD_PACKAGE( ComboPopup );
+  LOAD_PACKAGE( OwnerDrawnComboBox );
   LOAD_PACKAGE2( ListCtrl, ListEvent );
   LOAD_PACKAGE2( ListCtrl, ListItem );
   LOAD_PACKAGE2( ListCtrl, ListItemAttr );
@@ -277,6 +284,16 @@ BOOT:
   LOAD_PACKAGE2( TreeCtrl, TreeItemId );
   LOAD_PACKAGE2( TreeCtrl, TreeEvent );
   LOAD_PACKAGE2( TreeCtrl, TreeCtrl );
+  LOAD_PACKAGE2( Log, Log );
+  LOAD_PACKAGE2( Log, PlLog );
+  LOAD_PACKAGE2( Log, LogTextCtrl );
+  LOAD_PACKAGE2( Log, LogNull );
+  LOAD_PACKAGE2( Log, LogGui );
+  LOAD_PACKAGE2( Log, LogWindow );
+  LOAD_PACKAGE2( Log, LogChain );
+  LOAD_PACKAGE2( Log, LogPassThrough );
+  LOAD_PACKAGE2( Log, PlLogPassThrough );
+  LOAD_PACKAGE2( Log, LogStderr );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )
@@ -450,7 +467,7 @@ INCLUDE: XS/App.xs
 INCLUDE: XS/Caret.xs
 INCLUDE: XS/Geom.xs
 INCLUDE: XS/Menu.xs
-INCLUDE: XS/Log.xs
+INCLUDE: XS/LogFunctions.xs
 INCLUDE: XS/ToolTip.xs
 INCLUDE: XS/Locale.xs
 INCLUDE: XS/Utils.xs
