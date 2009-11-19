@@ -20,7 +20,9 @@ use vars qw(@EXPORT @subdirs);
 my @top_level_xs = qw(Wx.xs Constant.xs Controls.xs Event.xs
                       Frames.xs GDI.xs Window.xs);
 our @module_xs = qw(XS/Bitmap.xs XS/Mask.xs XS/Button.xs XS/BitmapButton.xs
-                    XS/ListCtrl.xs XS/Image.xs XS/TreeCtrl.xs XS/RadioBox.xs);
+                    XS/ListCtrl.xs XS/Image.xs XS/TreeCtrl.xs XS/RadioBox.xs
+                    XS/Log.xs);
+our @module_xsp = qw(XS/ComboCtrl.xsp XS/ComboPopup.xsp XS/OwnerDrawnComboBox.xsp);
 @subdirs = qw(socket dnd filesys grid help html mdi print xrc stc docview
               calendar datetime media richtext aui dataview);
 my %subdirs;
@@ -111,7 +113,7 @@ sub wxWriteMakefile {
       $params{XSOPT}     = ' -nolinenumbers -noprototypes ';
       $params{CONFIGURE} = \&Wx::build::MakeMaker::configure;
       $params{OBJECT}    = join ' ', obj_from_src( @top_level_xs ),
-                                     obj_from_src( map basename( $_ ), @module_xs ), '';
+                                     obj_from_src( map basename( $_ ), @module_xs, @module_xsp ), '';
   }
 
   my $build = Wx::build::MakeMaker::_process_mm_arguments( \%params, $has_alien );

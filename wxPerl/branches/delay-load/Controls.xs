@@ -26,10 +26,8 @@
 // re-include for client data
 #include "cpp/helpers.h"
 
-#define wxDefaultValidatorPtr (wxValidator*)&wxDefaultValidator
 #define wxBLACKPtr (wxColour*)wxBLACK
 #define wxNORMAL_FONTPtr (wxFont*)wxNORMAL_FONT
-#define wxNullBitmapPtr (wxBitmap*) &wxNullBitmap
 #define wxNullAnimationPtr (wxAnimation*) &wxNullAnimation
 
 #undef THIS
@@ -79,12 +77,6 @@ INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/HyperlinkCtrl.x
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/VListBox.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/SearchCtrl.xsp |
-
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ComboPopup.xsp |
-
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ComboCtrl.xsp |
-
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/OwnerDrawnComboBox.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/CollapsiblePane.xsp |
 

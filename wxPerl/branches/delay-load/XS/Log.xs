@@ -1,19 +1,22 @@
-#############################################################################
-## Name:        XS/Log.xs
-## Purpose:     XS for Wx::Log and derived classes
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     29/10/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2003, 2005-2007, 2009 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/Log.xs
+// Purpose:     XS for Wx::Log and derived classes
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     29/10/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2003, 2005-2007, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-#include <wx/log.h>
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
 #include "cpp/log.h"
+#include <wx/log.h>
+#include <wx/frame.h>
 
-MODULE=Wx PACKAGE=Wx::Log
+MODULE=Wx_Log PACKAGE=Wx::Log
 
 void
 wxLog::Destroy()
@@ -131,7 +134,7 @@ GetTraceMask()
   OUTPUT:
     RETVAL
 
-MODULE=Wx PACKAGE=Wx::PlLog
+MODULE=Wx_Log PACKAGE=Wx::PlLog
 
 wxPlLog*
 wxPlLog::new()
@@ -140,13 +143,13 @@ wxPlLog::new()
   OUTPUT:
     RETVAL
 
-MODULE=Wx PACKAGE=Wx::LogTextCtrl
+MODULE=Wx_Log PACKAGE=Wx::LogTextCtrl
 
 wxLogTextCtrl*
 wxLogTextCtrl::new( ctrl )
     wxTextCtrl* ctrl
 
-MODULE=Wx PACKAGE=Wx::LogNull
+MODULE=Wx_Log PACKAGE=Wx::LogNull
 
 wxLogNull*
 wxLogNull::new()
@@ -163,12 +166,12 @@ wxLogNull::DESTROY()
     wxPli_thread_sv_unregister( aTHX_ "Wx::LogNull", THIS, ST(0) );
     delete THIS;
 
-MODULE=Wx PACKAGE=Wx::LogGui
+MODULE=Wx_Log PACKAGE=Wx::LogGui
 
 wxLogGui*
 wxLogGui::new()
 
-MODULE=Wx PACKAGE=Wx::LogWindow
+MODULE=Wx_Log PACKAGE=Wx::LogWindow
 
 wxLogWindow*
 wxLogWindow::new( parent, title, show = true, passtoold = true )
@@ -177,133 +180,7 @@ wxLogWindow::new( parent, title, show = true, passtoold = true )
     bool show
     bool passtoold
 
-MODULE=Wx PACKAGE=Wx
-
-# this is a test for INTERFACE:
-# in this specific case it saves around 256 bytes / function,
-# more for more complex typemaps / longer parameter lists
-
-#if 0
-
-#define XSINTERFACE__wxstring( _ret, _cv, _f ) \
-  ( ( void (*)( const wxString& ) ) _f)
-
-#define XSINTERFACE__wxstring_SET( _cv, _f ) \
-  ( CvXSUBANY( _cv ).any_ptr = (void*) _f ) 
-
-#undef dXSFUNCTION
-#define dXSFUNCTION( a ) \
-  void (*XSFUNCTION)( const wxString& )
-
-void
-interface__wxstring( string )
-    wxString string
-  INTERFACE_MACRO:
-    XSINTERFACE__wxstring
-    XSINTERFACE__wxstring_SET
-  INTERFACE:
-    wxLogError wxLogFatalError wxLogWarning
-    wxLogVerbose wxLogDebug
-    wxLogMessage
-    
-#else
-
-#if WXPERL_W_VERSION_GE( 2, 9, 0 )
-
-void
-wxLogError( string )
-    wxString string
-
-void
-wxLogFatalError( string )
-    wxString string
-
-void
-wxLogWarning( string )
-    wxString string
-
-void
-wxLogMessage( string )
-    wxString string
-
-void
-wxLogVerbose( string )
-    wxString string
-
-void
-wxLogDebug( string )
-    wxString string
-
-#else
-
-void
-wxLogError( string )
-    const wxChar* string
-
-void
-wxLogFatalError( string )
-    const wxChar* string
-
-void
-wxLogWarning( string )
-    const wxChar* string
-
-void
-wxLogMessage( string )
-    const wxChar* string
-
-void
-wxLogVerbose( string )
-    const wxChar* string
-
-void
-wxLogDebug( string )
-    const wxChar* string
-
-#endif
-
-#endif
-
-void
-wxLogStatusFrame( frame, string )
-    wxFrame* frame
-    const wxChar* string
-  CODE:
-    wxLogStatus( frame, string );
-
-void
-wxLogStatus( string )
-    const wxChar* string
-
-#if WXPERL_W_VERSION_LE( 2, 5, 0 )
-
-void
-wxLogTrace( string )
-    const wxChar* string
-
-#endif
-
-void
-wxLogTraceMask( mask, string )
-    const wxChar* mask
-    const wxChar* string
-  CODE:
-    wxLogTrace( mask, string );
-
-void
-wxLogSysError( string )
-    const wxChar* string
-
-MODULE=Wx PACKAGE=Wx PREFIX=wx
-
-unsigned long
-wxSysErrorCode()
-
-const wxChar*
-wxSysErrorMsg( errCode = 0 )
-    unsigned long errCode
-
-MODULE=Wx PACKAGE=Wx::LogChain
+MODULE=Wx_Log PACKAGE=Wx::LogChain
 
 wxLogChain*
 wxLogChain::new( logger )
@@ -323,12 +200,12 @@ void
 wxLogChain::SetLog( logger )
     wxLog* logger
 
-MODULE=Wx PACKAGE=Wx::LogPassThrough
+MODULE=Wx_Log PACKAGE=Wx::LogPassThrough
 
 wxLogPassThrough*
 wxLogPassThrough::new()
 
-MODULE=Wx PACKAGE=Wx::PlLogPassThrough
+MODULE=Wx_Log PACKAGE=Wx::PlLogPassThrough
 
 wxPlLogPassThrough*
 wxPlLogPassThrough::new()
@@ -337,7 +214,7 @@ wxPlLogPassThrough::new()
   OUTPUT:
     RETVAL
 
-MODULE=Wx PACKAGE=Wx::LogStderr
+MODULE=Wx_Log PACKAGE=Wx::LogStderr
 
 wxLogStderr*
 wxLogStderr::new( fp = NULL )

@@ -10,6 +10,8 @@
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
 
+#include "cpp/helpers.h"
+#include "cpp/v_cback.h"
 #include <wx/log.h>
 
 class wxPlLog : public wxLog
