@@ -111,6 +111,11 @@ DECLARE_PACKAGE( TextCtrl );
 DECLARE_PACKAGE( ArtProvider );
 DECLARE_PACKAGE( Config );
 DECLARE_PACKAGE( VScrolledWindow );
+DECLARE_PACKAGE( ToolBar );
+DECLARE_PACKAGE( DC );
+DECLARE_PACKAGE( MimeTypes );
+DECLARE_PACKAGE( Display );
+DECLARE_PACKAGE( Locale );
 
 #ifdef __cplusplus
 extern "C" {
@@ -232,9 +237,6 @@ void wxEntryCleanup()
 
 DEFINE_PLI_HELPERS( st_wxPliHelpers );
 
-#include <wx/confbase.h>
-typedef wxConfigBase::EntryType EntryType;
-
 WXPLI_BOOT_ONCE_EXP(Wx);
 #define boot_Wx wxPli_boot_Wx
 
@@ -319,6 +321,28 @@ BOOT:
   LOAD_PACKAGE2( VScrolledWindow, PlHScrolledWindow );
   LOAD_PACKAGE2( VScrolledWindow, PlVScrolledWindow );
   LOAD_PACKAGE2( VScrolledWindow, PlHVScrolledWindow );
+  LOAD_PACKAGE2( ToolBar, ToolBarToolBase );
+  LOAD_PACKAGE2( ToolBar, ToolBarBase );
+  LOAD_PACKAGE2( ToolBar, ToolBar );
+  LOAD_PACKAGE2( DC, DC );
+  LOAD_PACKAGE2( DC, ScreenDC );
+  LOAD_PACKAGE2( DC, WindowDC );
+  LOAD_PACKAGE2( DC, PaintDC );
+  LOAD_PACKAGE2( DC, MemoryDC );
+  LOAD_PACKAGE2( DC, ClientDC );
+  LOAD_PACKAGE2( DC, BufferedDC );
+  LOAD_PACKAGE2( DC, BufferedPaintDC );
+  LOAD_PACKAGE2( DC, AutoBufferedPaintDC );
+  LOAD_PACKAGE2( DC, MirrorDC );
+  LOAD_PACKAGE2( DC, DCClipper );
+  LOAD_PACKAGE2( MimeTypes, IconLocation );
+  LOAD_PACKAGE2( MimeTypes, FileTypeInfo );
+  LOAD_PACKAGE2( MimeTypes, FileType );
+  LOAD_PACKAGE2( MimeTypes, MimeTypesManager );
+  LOAD_PACKAGE2( Display, VideoMode );
+  LOAD_PACKAGE2( Display, Display );
+  LOAD_PACKAGE2( Locale, LanguageInfo );
+  LOAD_PACKAGE2( Locale, Locale );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )
@@ -494,7 +518,6 @@ INCLUDE: XS/Geom.xs
 INCLUDE: XS/Menu.xs
 INCLUDE: XS/LogFunctions.xs
 INCLUDE: XS/ToolTip.xs
-INCLUDE: XS/Locale.xs
 INCLUDE: XS/Utils.xs
 INCLUDE: XS/Timer.xs
 INCLUDE: XS/Stream.xs
@@ -504,15 +527,11 @@ INCLUDE: XS/FontMapper.xs
 INCLUDE: XS/FontEnumerator.xs
 INCLUDE: XS/Wave.xs
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/MimeTypes.xsp |
-
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Sound.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Power.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ClassInfo.xs |
-
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Display.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/StandardPaths.xsp |
 

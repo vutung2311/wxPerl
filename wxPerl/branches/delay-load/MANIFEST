@@ -119,7 +119,7 @@ XS/Config.xs
 XS/Constraint.xs
 XS/ControlWithItems.xsp
 XS/Cursor.xs
-XS/DC.xs
+XS/DC.xsp
 XS/Dialog.xs
 XS/DirCtrl.xsp
 XS/DirDialog.xs

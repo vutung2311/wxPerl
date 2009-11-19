@@ -1,19 +1,22 @@
-#############################################################################
-## Name:        XS/ToolBar.xs
-## Purpose:     XS for Wx::ToolBar
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     29/10/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2008 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/ToolBar.xs
+// Purpose:     XS for Wx::ToolBar
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     29/10/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
 #include <wx/toolbar.h>
 #include <wx/menu.h>
 
-MODULE=Wx PACKAGE=Wx::ToolBarToolBase
+MODULE=Wx_ToolBar PACKAGE=Wx::ToolBarToolBase
 
 void
 wxToolBarToolBase::Destroy()
@@ -167,7 +170,7 @@ wxToolBarToolBase::GetDropdownMenu()
 
 #endif
 
-MODULE=Wx PACKAGE=Wx::ToolBarBase
+MODULE=Wx_ToolBar PACKAGE=Wx::ToolBarBase
 
 void
 wxToolBarBase::Destroy()
@@ -546,7 +549,7 @@ wxToolBarBase::SetDropdownMenu( toolid, menu )
 
 #endif
 
-MODULE=Wx PACKAGE=Wx::ToolBar
+MODULE=Wx_ToolBar PACKAGE=Wx::ToolBar
 
 void
 new( ... )

@@ -28,7 +28,6 @@ INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Dialog.xs |
 
 INCLUDE: XS/Frame.xs
 INCLUDE: XS/StatusBar.xs
-INCLUDE: XS/ToolBar.xs
 INCLUDE: XS/Wizard.xs
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/IconBundle.xsp |
