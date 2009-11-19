@@ -41,7 +41,6 @@ INCLUDE: XS/Font.xs
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ImageList.xs |
 INCLUDE: XS/Icon.xs
 INCLUDE: XS/Cursor.xs
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/DC.xs |
 INCLUDE: XS/Pen.xs
 INCLUDE: XS/Brush.xs
 INCLUDE: XS/ImageHandler.xs

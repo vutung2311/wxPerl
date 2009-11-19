@@ -1,18 +1,21 @@
-#############################################################################
-## Name:        XS/Locale.xs
-## Purpose:     XS for Wx::Locale
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     30/11/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2007 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/Locale.xs
+// Purpose:     XS for Wx::Locale
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     30/11/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2007, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
+
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
 
 #include <wx/intl.h>
 
-MODULE=Wx PACKAGE=Wx::LanguageInfo
+MODULE=Wx_Locale PACKAGE=Wx::LanguageInfo
 
 wxLanguageInfo*
 wxLanguageInfo::new( language, canonicalName, winLang, winSublang, descr )
@@ -81,7 +84,7 @@ wxLanguageInfo::GetDescription()
     RETVAL = THIS->Description;
   OUTPUT: RETVAL
 
-MODULE=Wx PACKAGE=Wx::Locale
+MODULE=Wx_Locale PACKAGE=Wx::Locale
 
 wxLocale*
 newLong( name, shorts = NULL, locale = NULL, loaddefault = true, convertencoding = false )
@@ -249,7 +252,7 @@ GetLanguageInfo( language )
   CLEANUP:
     wxPli_object_set_deleteable( aTHX_ ST(0), false );
 
-MODULE=Wx PACKAGE=Wx PREFIX=wx
+MODULE=Wx_Locale PACKAGE=Wx PREFIX=wx
 
 const wxChar*
 wxGetTranslation( string )

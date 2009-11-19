@@ -1,20 +1,24 @@
-#############################################################################
-## Name:        XS/MimeTypes.xsp
-## Purpose:     XS++ for wxMimeTypesManager and related classes
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     28/03/2005
-## RCS-ID:      $Id$
-## Copyright:   (c) 2005-2009 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/MimeTypes.xsp
+// Purpose:     XS++ for wxMimeTypesManager and related classes
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     28/03/2005
+// RCS-ID:      $Id$
+// Copyright:   (c) 2005-2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-%module{Wx};
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+
+%module{Wx_MimeTypes};
 
 %{
 #if wxUSE_MIMETYPE
 #include <wx/mimetype.h>
+#include <wx/icon.h>
 %}
         
 %typemap{wxMimeTypesManager*}{simple};
