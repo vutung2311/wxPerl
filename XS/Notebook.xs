@@ -1,22 +1,25 @@
-#############################################################################
-## Name:        XS/Notebook.xs
-## Purpose:     XS for Wx::Notebook
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     29/10/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2003, 2006 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/Notebook.xs
+// Purpose:     XS for Wx::Notebook
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     29/10/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2003, 2006, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
 #include <wx/notebook.h>
 
 #if WXPERL_W_VERSION_LT( 2, 6, 0 )
 #define wxNotebookNameStr wxT("notebook")
 #endif
 
-MODULE=Wx_Evt PACKAGE=Wx::NotebookEvent
+MODULE=Wx_Notebook PACKAGE=Wx::NotebookEvent
 
 wxNotebookEvent*
 wxNotebookEvent::new( eventType = wxEVT_NULL, id = 0, sel = -1, oldSel = -1 )
@@ -43,7 +46,7 @@ wxNotebookEvent::SetSelection( oldSel )
 
 #endif
 
-MODULE=Wx PACKAGE=Wx::Notebook
+MODULE=Wx_Notebook PACKAGE=Wx::Notebook
 
 void
 new( ... )

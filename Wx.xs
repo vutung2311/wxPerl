@@ -104,6 +104,10 @@ DECLARE_PACKAGE( Log );
 DECLARE_PACKAGE( ComboCtrl );
 DECLARE_PACKAGE( ComboPopup );
 DECLARE_PACKAGE( OwnerDrawnComboBox );
+DECLARE_PACKAGE( ComboBox );
+DECLARE_PACKAGE( Notebook );
+DECLARE_PACKAGE( TextAttr );
+DECLARE_PACKAGE( TextCtrl );
 
 #ifdef __cplusplus
 extern "C" {
@@ -275,6 +279,8 @@ BOOT:
   LOAD_PACKAGE( ComboCtrl );
   LOAD_PACKAGE( ComboPopup );
   LOAD_PACKAGE( OwnerDrawnComboBox );
+  LOAD_PACKAGE( ComboBox );
+  LOAD_PACKAGE( TextAttr );
   LOAD_PACKAGE2( ListCtrl, ListEvent );
   LOAD_PACKAGE2( ListCtrl, ListItem );
   LOAD_PACKAGE2( ListCtrl, ListItemAttr );
@@ -294,6 +300,11 @@ BOOT:
   LOAD_PACKAGE2( Log, LogPassThrough );
   LOAD_PACKAGE2( Log, PlLogPassThrough );
   LOAD_PACKAGE2( Log, LogStderr );
+  LOAD_PACKAGE2( Notebook, Notebook );
+  LOAD_PACKAGE2( Notebook, NotebookEvent );
+  LOAD_PACKAGE2( TextCtrl, TextUrlEvent );
+  LOAD_PACKAGE2( TextCtrl, TextCtrlBase );
+  LOAD_PACKAGE2( TextCtrl, TextCtrl );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )

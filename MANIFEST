@@ -112,7 +112,7 @@ XS/Colour.xs
 XS/ColourDatabase.xs
 XS/ColourDialog.xs
 XS/ColourPickerCtrl.xsp
-XS/ComboBox.xs
+XS/ComboBox.xsp
 XS/ComboCtrl.xsp
 XS/ComboPopup.xsp
 XS/Config.xs
@@ -199,7 +199,7 @@ XS/Stream.xs
 XS/SVGFileDC.xsp
 XS/TaskBarIcon.xs
 XS/TextAttr.xsp
-XS/TextCtrl.xs
+XS/TextCtrl.xsp
 XS/TextEntryDialog.xs
 XS/Timer.xs
 XS/ToggleButton.xs

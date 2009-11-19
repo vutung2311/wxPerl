@@ -89,10 +89,8 @@ INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/FileCtrl.xsp |
 INCLUDE: XS/CheckBox.xs
 INCLUDE: XS/CheckListBox.xs
 INCLUDE: XS/Choice.xs
-INCLUDE: XS/ComboBox.xs
 INCLUDE: XS/Gauge.xs
 INCLUDE: XS/ListBox.xs
-INCLUDE: XS/Notebook.xs
 INCLUDE: XS/RadioButton.xs
 INCLUDE: XS/ScrollBar.xs
 INCLUDE: XS/Slider.xs
@@ -103,10 +101,6 @@ INCLUDE: XS/StaticBox.xs
 INCLUDE: XS/StaticLine.xs
 INCLUDE: XS/StaticText.xs
 INCLUDE: XS/ToggleButton.xs
-
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/TextAttr.xsp |
-
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/TextCtrl.xs |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/PickerCtrl.xsp |
 
