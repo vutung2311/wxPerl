@@ -1,18 +1,22 @@
-#############################################################################
-## Name:        XS/Config.xs
-## Purpose:     XS for Wx::*Config*
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     13/12/2001
-## RCS-ID:      $Id$
-## Copyright:   (c) 2001-2002, 2004, 2007 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/Config.xs
+// Purpose:     XS for Wx::*Config*
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     13/12/2001
+// RCS-ID:      $Id$
+// Copyright:   (c) 2001-2002, 2004, 2007, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
 #include <wx/confbase.h>
 
-MODULE=Wx PACKAGE=Wx::ConfigBase
+typedef wxConfigBase::EntryType EntryType;
+
+MODULE=Wx_Config PACKAGE=Wx::ConfigBase
 
 void
 wxConfigBase::Destroy()
@@ -288,7 +292,7 @@ wxConfigBase::WriteBinary( key, value )
 
 #endif
 
-MODULE=Wx PACKAGE=Wx::RegConfig
+MODULE=Wx_Config PACKAGE=Wx::RegConfig
 
 #if defined(__WXMSW__)
 
@@ -304,7 +308,7 @@ wxRegConfig::new( appName = wxEmptyString, vendorName = wxEmptyString, localFile
 
 #endif
 
-MODULE=Wx PACKAGE=Wx::FileConfig
+MODULE=Wx_Config PACKAGE=Wx::FileConfig
 
 #include <wx/fileconf.h>
 
