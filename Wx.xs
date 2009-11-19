@@ -108,6 +108,9 @@ DECLARE_PACKAGE( ComboBox );
 DECLARE_PACKAGE( Notebook );
 DECLARE_PACKAGE( TextAttr );
 DECLARE_PACKAGE( TextCtrl );
+DECLARE_PACKAGE( ArtProvider );
+DECLARE_PACKAGE( Config );
+DECLARE_PACKAGE( VScrolledWindow );
 
 #ifdef __cplusplus
 extern "C" {
@@ -305,6 +308,17 @@ BOOT:
   LOAD_PACKAGE2( TextCtrl, TextUrlEvent );
   LOAD_PACKAGE2( TextCtrl, TextCtrlBase );
   LOAD_PACKAGE2( TextCtrl, TextCtrl );
+  LOAD_PACKAGE2( ArtProvider, ArtProvider );
+  LOAD_PACKAGE2( ArtProvider, PlArtProvider );
+  LOAD_PACKAGE2( Config, ConfigBase );
+  LOAD_PACKAGE2( Config, RegConfig );
+  LOAD_PACKAGE2( Config, FileConfig );
+  LOAD_PACKAGE2( VScrolledWindow, HScrolledWindow );
+  LOAD_PACKAGE2( VScrolledWindow, VScrolledWindow );
+  LOAD_PACKAGE2( VScrolledWindow, HVScrolledWindow );
+  LOAD_PACKAGE2( VScrolledWindow, PlHScrolledWindow );
+  LOAD_PACKAGE2( VScrolledWindow, PlVScrolledWindow );
+  LOAD_PACKAGE2( VScrolledWindow, PlHVScrolledWindow );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )
@@ -485,12 +499,10 @@ INCLUDE: XS/Utils.xs
 INCLUDE: XS/Timer.xs
 INCLUDE: XS/Stream.xs
 INCLUDE: XS/TaskBarIcon.xs
-INCLUDE: XS/Config.xs
 INCLUDE: XS/Process.xs
 INCLUDE: XS/FontMapper.xs
 INCLUDE: XS/FontEnumerator.xs
 INCLUDE: XS/Wave.xs
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ArtProvider.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/MimeTypes.xsp |
 

@@ -1,16 +1,20 @@
-#############################################################################
-## Name:        XS/ArtProvider.xsp
-## Purpose:     XS++ for wxArtProvider class
-## Author:      Matthew "Cheetah" Gabeler-Lee
-## Modified by:
-## Created:     10/01/2005
-## RCS-ID:      $Id$
-## Copyright:   (c) 2005-2008 Matthew Gabeler-Lee
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/ArtProvider.xsp
+// Purpose:     XS++ for wxArtProvider class
+// Author:      Matthew "Cheetah" Gabeler-Lee
+// Modified by:
+// Created:     10/01/2005
+// RCS-ID:      $Id$
+// Copyright:   (c) 2005-2009 Matthew Gabeler-Lee
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-%module{Wx};
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
+
+%module{Wx_ArtProvider};
 
 %typemap{wxPlArtProvider*}{simple};
 
@@ -94,7 +98,7 @@ WXPLI_IMPLEMENT_DYNAMIC_CLASS( wxPlArtProvider, wxObject );
 #include <wx/artprov.h>
 #include "cpp/artprov.h"
 
-MODULE=Wx PACKAGE=Wx::ArtProvider
+MODULE=Wx_ArtProvider PACKAGE=Wx::ArtProvider
 
 #!sub CreateBitmap
 #!sub CreateIconBundle
@@ -185,7 +189,7 @@ DeleteProvider( provider )
 
 #endif
 
-MODULE=Wx PACKAGE=Wx::PlArtProvider
+MODULE=Wx_ArtProvider PACKAGE=Wx::PlArtProvider
 
 wxPlArtProvider*
 wxPlArtProvider::new()
