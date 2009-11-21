@@ -1731,7 +1731,22 @@ XS(XS_Wx_Autoload)
 
     // restore the mark popped by dXSARGS
     PUSHMARK(MARK);
-    call_method( meth, GIMME_V );
+    // try to guess if we were called as a subroutine or as a method
+    // if we have at least a parameter, and the first parameter is
+    // a subclass of desc->package, assume it is a method call
+    if( items > 0 && sv_derived_from( ST(0), desc->package ) )
+        // method call
+        call_method( meth, GIMME_V );
+    else
+    {
+        // sub call
+        char buffer[1024];
+        strcpy( buffer, desc->package );
+        strcat( buffer, "::" );
+        strcat( buffer, meth );
+
+        call_pv( buffer, GIMME_V );
+    }
 }
 
 void wxPli_delay_load( pTHX_ const char* package, XSPROTO( (* boot) ), bool* booted )
