@@ -178,6 +178,7 @@ XS/ProgressDialog.xs
 XS/PropertySheetDialog.xsp
 XS/RadioBox.xs
 XS/RadioButton.xs
+XS/Region.xs
 XS/SashWindow.xs
 XS/ScrollBar.xs
 XS/ScrolledWindow.xs

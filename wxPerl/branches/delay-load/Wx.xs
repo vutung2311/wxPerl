@@ -117,6 +117,7 @@ DECLARE_PACKAGE( MimeTypes );
 DECLARE_PACKAGE( Display );
 DECLARE_PACKAGE( Locale );
 DECLARE_PACKAGE( ClassInfo );
+DECLARE_PACKAGE( Region );
 
 #ifdef __cplusplus
 extern "C" {
@@ -288,6 +289,7 @@ BOOT:
   LOAD_PACKAGE( ComboBox );
   LOAD_PACKAGE( TextAttr );
   LOAD_PACKAGE( ClassInfo );
+  LOAD_PACKAGE( Region );
   LOAD_PACKAGE2( ListCtrl, ListEvent );
   LOAD_PACKAGE2( ListCtrl, ListItem );
   LOAD_PACKAGE2( ListCtrl, ListItemAttr );
