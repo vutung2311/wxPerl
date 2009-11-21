@@ -189,7 +189,7 @@ XS/Slider.xs
 XS/Sound.xsp
 XS/SpinButton.xs
 XS/SpinCtrl.xs
-XS/SplitterWindow.xs
+XS/SplitterWindow.xsp
 XS/StandardPaths.xsp
 XS/StaticBitmap.xs
 XS/StaticBox.xs
