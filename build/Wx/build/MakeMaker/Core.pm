@@ -22,7 +22,7 @@ my @top_level_xs = qw(Wx.xs Constant.xs Controls.xs Event.xs
 our @module_xs = qw(XS/Bitmap.xs XS/Mask.xs XS/Button.xs XS/BitmapButton.xs
                     XS/ListCtrl.xs XS/Image.xs XS/TreeCtrl.xs XS/RadioBox.xs
                     XS/Log.xs XS/Notebook.xs XS/Config.xs XS/ToolBar.xs
-                    XS/Locale.xs);
+                    XS/Locale.xs XS/Region.xs);
 our @module_xsp = qw(XS/ComboCtrl.xsp XS/ComboPopup.xsp XS/ComboBox.xsp
                      XS/OwnerDrawnComboBox.xsp XS/TextAttr.xsp XS/TextCtrl.xsp
                      XS/ArtProvider.xsp XS/VScrolledWindow.xsp XS/DC.xsp
