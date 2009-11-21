@@ -118,6 +118,7 @@ DECLARE_PACKAGE( Display );
 DECLARE_PACKAGE( Locale );
 DECLARE_PACKAGE( ClassInfo );
 DECLARE_PACKAGE( Region );
+DECLARE_PACKAGE( Caret );
 
 #ifdef __cplusplus
 extern "C" {
@@ -290,6 +291,7 @@ BOOT:
   LOAD_PACKAGE( TextAttr );
   LOAD_PACKAGE( ClassInfo );
   LOAD_PACKAGE( Region );
+  LOAD_PACKAGE( Caret );
   LOAD_PACKAGE2( ListCtrl, ListEvent );
   LOAD_PACKAGE2( ListCtrl, ListItem );
   LOAD_PACKAGE2( ListCtrl, ListItemAttr );
@@ -517,7 +519,6 @@ CLONE( CLASS )
     SetConstants();
 
 INCLUDE: XS/App.xs
-INCLUDE: XS/Caret.xs
 INCLUDE: XS/Geom.xs
 INCLUDE: XS/Menu.xs
 INCLUDE: XS/LogFunctions.xs
