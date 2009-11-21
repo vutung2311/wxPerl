@@ -106,7 +106,7 @@ XS/CheckBox.xs
 XS/CheckListBox.xs
 XS/Choice.xs
 XS/Choicebook.xsp
-XS/ClassInfo.xs
+XS/ClassInfo.xsp
 XS/CollapsiblePane.xsp
 XS/Colour.xs
 XS/ColourDatabase.xs
