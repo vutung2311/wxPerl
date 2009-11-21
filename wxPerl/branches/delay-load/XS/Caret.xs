@@ -1,18 +1,22 @@
-#############################################################################
-## Name:        XS/Caret.xs
-## Purpose:     XS for Wx::Caret
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     29/12/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2002, 2004, 2007 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/Caret.xs
+// Purpose:     XS for Wx::Caret
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     29/12/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2002, 2004, 2007, 2009 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
+
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
 
 #include <wx/caret.h>
 
-MODULE=Wx PACKAGE=Wx::Caret
+MODULE=Wx_Caret PACKAGE=Wx::Caret
 
 void
 wxCaret::new( ... )
