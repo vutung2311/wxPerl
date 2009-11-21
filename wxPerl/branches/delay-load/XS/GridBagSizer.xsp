@@ -1,16 +1,20 @@
-#############################################################################
-## Name:        XS/GridBagSizer.xsp
-## Purpose:     XS for Wx::GridBagSizer
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     310/11/2003
-## RCS-ID:      $Id$
-## Copyright:   (c) 2003, 2005-2007 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/GridBagSizer.xsp
+// Purpose:     XS for Wx::GridBagSizer
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     310/11/2003
+// RCS-ID:      $Id$
+// Copyright:   (c) 2003, 2005-2007 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-%module{Wx};
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
+
+%module{Wx_GridBagSizer};
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 
@@ -246,7 +250,7 @@ wxGridBagSizer::CheckForIntersection( ... )
 };
 
 {%
-MODULE=Wx PACKAGE=Wx::GridBagSizer
+MODULE=Wx_GridBagSizer PACKAGE=Wx::GridBagSizer
 
 void
 wxGridBagSizer::Add( ... )

@@ -1263,8 +1263,6 @@ INCLUDE: XS/Constraint.xs
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Sizer.xs |
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/GridBagSizer.xsp |
-
 INCLUDE: XS/SashWindow.xs
 
 MODULE=Wx_Win PACKAGE=Wx::Window

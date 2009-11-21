@@ -120,6 +120,7 @@ DECLARE_PACKAGE( ClassInfo );
 DECLARE_PACKAGE( Region );
 DECLARE_PACKAGE( Caret );
 DECLARE_PACKAGE( SplitterWindow );
+DECLARE_PACKAGE( GridBagSizer );
 
 #ifdef __cplusplus
 extern "C" {
@@ -352,6 +353,10 @@ BOOT:
   LOAD_PACKAGE2( Locale, Locale );
   LOAD_PACKAGE2( SplitterWindow, SplitterWindow );
   LOAD_PACKAGE2( SplitterWindow, SplitterEvent );
+  LOAD_PACKAGE2( GridBagSizer, GridBagSizer );
+  LOAD_PACKAGE2( GridBagSizer, GBPosition );
+  LOAD_PACKAGE2( GridBagSizer, GBSpan );
+  LOAD_PACKAGE2( GridBagSizer, GBSizerItem );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )

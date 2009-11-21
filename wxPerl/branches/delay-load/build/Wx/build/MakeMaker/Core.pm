@@ -27,7 +27,7 @@ our @module_xsp = qw(XS/ComboCtrl.xsp XS/ComboPopup.xsp XS/ComboBox.xsp
                      XS/OwnerDrawnComboBox.xsp XS/TextAttr.xsp XS/TextCtrl.xsp
                      XS/ArtProvider.xsp XS/VScrolledWindow.xsp XS/DC.xsp
                      XS/MimeTypes.xsp XS/Display.xsp XS/ClassInfo.xsp
-                     XS/SplitterWindow.xsp);
+                     XS/SplitterWindow.xsp XS/GridBagSizer.xsp);
 @subdirs = qw(socket dnd filesys grid help html mdi print xrc stc docview
               calendar datetime media richtext aui dataview);
 my %subdirs;
