@@ -116,6 +116,7 @@ DECLARE_PACKAGE( DC );
 DECLARE_PACKAGE( MimeTypes );
 DECLARE_PACKAGE( Display );
 DECLARE_PACKAGE( Locale );
+DECLARE_PACKAGE( ClassInfo );
 
 #ifdef __cplusplus
 extern "C" {
@@ -286,6 +287,7 @@ BOOT:
   LOAD_PACKAGE( OwnerDrawnComboBox );
   LOAD_PACKAGE( ComboBox );
   LOAD_PACKAGE( TextAttr );
+  LOAD_PACKAGE( ClassInfo );
   LOAD_PACKAGE2( ListCtrl, ListEvent );
   LOAD_PACKAGE2( ListCtrl, ListItem );
   LOAD_PACKAGE2( ListCtrl, ListItemAttr );
@@ -530,8 +532,6 @@ INCLUDE: XS/Wave.xs
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Sound.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Power.xsp |
-
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ClassInfo.xs |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/StandardPaths.xsp |
 
