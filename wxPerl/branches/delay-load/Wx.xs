@@ -119,6 +119,7 @@ DECLARE_PACKAGE( Locale );
 DECLARE_PACKAGE( ClassInfo );
 DECLARE_PACKAGE( Region );
 DECLARE_PACKAGE( Caret );
+DECLARE_PACKAGE( SplitterWindow );
 
 #ifdef __cplusplus
 extern "C" {
@@ -349,6 +350,8 @@ BOOT:
   LOAD_PACKAGE2( Display, Display );
   LOAD_PACKAGE2( Locale, LanguageInfo );
   LOAD_PACKAGE2( Locale, Locale );
+  LOAD_PACKAGE2( SplitterWindow, SplitterWindow );
+  LOAD_PACKAGE2( SplitterWindow, SplitterEvent );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )

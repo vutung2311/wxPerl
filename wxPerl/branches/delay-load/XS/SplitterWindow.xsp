@@ -1,20 +1,21 @@
-#############################################################################
-## Name:        XS/SplitterWindow.xs
-## Purpose:     XS for Wx::SplitterWindow
-## Author:      Mattia Barbon
-## Modified by:
-## Created:     02/12/2000
-## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2003, 2005-2006 Mattia Barbon
-## Licence:     This program is free software; you can redistribute it and/or
-##              modify it under the same terms as Perl itself
-#############################################################################
+/////////////////////////////////////////////////////////////////////////////
+// Name:        XS/SplitterWindow.xs
+// Purpose:     XS for Wx::SplitterWindow
+// Author:      Mattia Barbon
+// Modified by:
+// Created:     02/12/2000
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2003, 2005-2006 Mattia Barbon
+// Licence:     This program is free software; you can redistribute it and/or
+//              modify it under the same terms as Perl itself
+/////////////////////////////////////////////////////////////////////////////
 
-%{
+#define PERL_NO_GET_CONTEXT
+#include "cpp/wxapi.h"
+#include "cpp/overload.h"
 #include <wx/splitter.h>
-%}
 
-%module{Wx};
+%module{Wx_SplitterWindow};
 
 %name{Wx::SplitterEvent} class wxSplitterEvent
 {
