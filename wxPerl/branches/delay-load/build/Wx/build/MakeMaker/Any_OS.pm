@@ -265,7 +265,7 @@ EOT
 
       $text .= <<EOT;
 $c_base : $f
-	\$(PERL) -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp $f | \$(XSUBPPRUN) \$(XSPROTOARG) \$(XSUBPPARGS) \$(XSUBPP_EXTRA_ARGS) - > $base.xsc && \$(MV) $base.xsc $c_base
+	\$(PERL) -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp --xsubpp "\$(XSUBPPRUN)" --xsubpp-args "\$(XSPROTOARG) \$(XSUBPPARGS) \$(XSUBPP_EXTRA_ARGS)" $f > $base.xsc && \$(MV) $base.xsc $c_base
 EOT
   }
 
