@@ -96,7 +96,8 @@ wxLocale::new( ... )
     END_OVERLOAD( Wx::Locale::new )
 
 wxLocale*
-newLong( name, shorts = NULL, locale = NULL, loaddefault = true, convertencoding = false )
+newLong( CLASS, name, shorts = NULL, locale = NULL, loaddefault = true, convertencoding = false )
+    PlClassName CLASS
     const wxChar* name
     const wxChar* shorts = NO_INIT
     const wxChar* locale = NO_INIT
@@ -126,7 +127,8 @@ newLong( name, shorts = NULL, locale = NULL, loaddefault = true, convertencoding
     RETVAL
 
 wxLocale*
-newShort( language, flags = wxLOCALE_LOAD_DEFAULT|wxLOCALE_CONV_ENCODING )
+newShort( CLASS, language, flags = wxLOCALE_LOAD_DEFAULT|wxLOCALE_CONV_ENCODING )
+    PlClassName CLASS
     int language
     int flags
   CODE:
