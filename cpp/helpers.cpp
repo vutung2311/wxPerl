@@ -1669,6 +1669,7 @@ void wxPli_set_events( const struct wxPliEventDescription* events )
 struct method_entry
 {
     const char* package;
+    const char* module;
     bool* booted;
 };
 
@@ -1687,16 +1688,24 @@ static void wxPli_load_class( pTHX_ method_entry* desc )
 
     dSP;
 
-    char buffer[1024];
-    strcpy( buffer, desc->package );
-    strcat( buffer, "::_boot" );
+    if( desc->module )
+    {
+        load_module( 0, newSVpv( desc->module, 0 ), NULL, NULL );
+    }
+    else
+    {
+        char buffer[1024];
+        strcpy( buffer, desc->package );
+        strcat( buffer, "::_boot" );
 
-    PUSHMARK(SP);
-    PUSHs( sv_2mortal( newSVpv( "Wx", 0 ) ) );
-    PUSHs( sv_2mortal( newSVpv( VERSION, 0 ) ) );
-    PUTBACK;
+        PUSHMARK(SP);
+        PUSHs( sv_2mortal( newSVpv( "Wx", 0 ) ) );
+        PUSHs( sv_2mortal( newSVpv( VERSION, 0 ) ) );
+        PUTBACK;
 
-    call_pv( buffer, G_DISCARD|G_VOID );
+        call_pv( buffer, G_DISCARD|G_VOID );
+    }
+
     *desc->booted = true;
 }
 
@@ -1756,12 +1765,38 @@ void wxPli_delay_load( pTHX_ const char* package, XSPROTO( (* boot) ), bool* boo
 
     method_entry* desc = new method_entry;
     desc->package = package;
+    desc->module = NULL;
     desc->booted = booted;
 
     strcpy( buffer, package );
     strcat( buffer, "::_boot" );
 
     newXS( buffer, boot, (char*)"helpers.cpp" );
+
+    strcpy( buffer, package );
+    strcat( buffer, "::AUTOLOAD" );
+
+    cv = (CV*)newXS( buffer, XS_Wx_Autoload, (char*)"helpers.cpp" );
+    
+    CvXSUBANY(cv).any_ptr = desc;
+
+    strcpy( buffer, package );
+    strcat( buffer, "::new" );
+
+    cv = (CV*)newXS( buffer, XS_Wx_AutoloadNew, (char*)"helpers.cpp" );
+    
+    CvXSUBANY(cv).any_ptr = desc;
+}
+
+void wxPli_delay_module( pTHX_ const char* package, const char* module, bool* booted )
+{
+    char buffer[1024];
+    CV* cv;
+
+    method_entry* desc = new method_entry;
+    desc->package = package;
+    desc->module = module;
+    desc->booted = booted;
 
     strcpy( buffer, package );
     strcat( buffer, "::AUTOLOAD" );
