@@ -61,7 +61,7 @@ sub configure_core {
                " cpp/setup.h cpp/plwindow.h cpp/artprov.h cpp/popupwin.h" .
                " fix_alien cpp/vlbox.h cpp/vscroll.h cpp/v_cback_def.h" .
                " " . join( " ", @generated_xs ) .
-               " *.c XS/*.c" .
+               " *.c XS/*.c cpp/delayload.cpp" .
                " cpp/vscrl.h overload.lst" };
 
   return %config;
@@ -88,6 +88,14 @@ sub files_with_constants {
     if $this->{wx_files_with_constants};
   return @{$this->{wx_files_with_constants} =
              [ Wx::build::Utils::files_with_constants ]};
+}
+
+sub files_with_delayload {
+  my( $this ) = @_;
+  return @{$this->{wx_files_with_delayload}}
+    if $this->{wx_files_with_delayload};
+  return @{$this->{wx_files_with_delayload} =
+             [ Wx::build::Utils::files_with_delayload ]};
 }
 
 sub files_with_overload {
@@ -135,6 +143,7 @@ sub depend_core {
                                   [ curdir, $this->get_api_directory ],
                                   Wx::build::Utils::src_dir( $top_file ) ),
                  $exp              => join( ' ', $this->files_with_constants ),
+                 'cpp/overload.cpp'=> join( ' ', $this->files_with_delayload ),
                  '$(INST_STATIC)'  => "fix_alien $exp",
                  '$(INST_DYNAMIC)' => "fix_alien $exp",
                  'fix_alien'       => 'pm_to_blib',
@@ -207,13 +216,25 @@ overload :
 EOT
 }
 
+sub postamble_delayload {
+  my( $this ) = @_;
+
+  my @files = $this->files_with_delayload;
+
+  return <<EOT;
+cpp/delayload.cpp : script/make_delayload.pl @files
+	\$(PERL) script/make_delayload.pl @files > cpp/delayload.cpp
+
+EOT
+}
+
 sub postamble_core {
   my $this = shift;
   my %files = $this->files_to_install();
 
   Wx::build::Utils::write_string( 'files.lst',
                                   Data::Dumper->Dump( [ \%files ] ) );
-  my $text = <<EOT . $this->postamble_overload;
+  my $text = <<EOT . $this->postamble_overload . $this->postamble_delayload;
 
 $exp :
 \t\$(PERL) script/make_exp_list.pl $exp @{[$this->files_with_constants]}
