@@ -4,7 +4,7 @@
 // Author:      Marcus Friedlaender and Mattia Barbon
 // Created:     23/05/2002
 // RCS-ID:      $Id$
-// Copyright:   (c) 2002-2006, 2008 Marcus Friedlaender and Mattia Barbon
+// Copyright:   (c) 2002-2006, 2008-2009 Marcus Friedlaender and Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -14,6 +14,7 @@
 double stc_constant( const char* name, int arg )
 {
     // !package: Wx
+    // !module: Wx::STC
     // !parser: sub { $_[0] =~ m<^\s*r\w*\(\s*(\w+)\s*\);\s*(?://(.*))?$> }
     // !tag: stc
 #define r( n ) \

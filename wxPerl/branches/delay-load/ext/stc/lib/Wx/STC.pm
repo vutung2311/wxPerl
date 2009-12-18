@@ -5,7 +5,7 @@
 ## Modified by:
 ## Created:     23/05/2002
 ## RCS-ID:      $Id$
-## Copyright:   (c) 2002-2005 Mattia Barbon
+## Copyright:   (c) 2002-2005, 2009 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
 #############################################################################
@@ -28,8 +28,11 @@ Wx::wx_boot( 'Wx::STC', $VERSION );
 
 no strict;
 
-package Wx::StyledTextCtrl;   @ISA = qw(Wx::Control);
-package Wx::StyledTextEvent;  @ISA = qw(Wx::CommandEvent);
+# !module: Wx::STC
+# BEGIN packages
+package Wx::StyledTextCtrl;   @ISA = qw(Wx::Control);      undef *AUTOLOAD;
+package Wx::StyledTextEvent;  @ISA = qw(Wx::CommandEvent); undef *AUTOLOAD;
+# END packages
 
 package Wx::Event;
 
