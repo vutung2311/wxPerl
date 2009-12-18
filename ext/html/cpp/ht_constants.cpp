@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     21/03/2001
 // RCS-ID:      $Id$
-// Copyright:   (c) 2001, 2003-2008 Mattia Barbon
+// Copyright:   (c) 2001, 2003-2009 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -15,6 +15,7 @@
 double html_constant( const char* name, int arg )
 {
     // !package: Wx
+    // !module: Wx::Html
     // !parser: sub { $_[0] =~ m<^\s*r\w*\(\s*(\w+)\s*\);\s*(?://(.*))?$> }
     // !tag: html
 #define r( n ) \
