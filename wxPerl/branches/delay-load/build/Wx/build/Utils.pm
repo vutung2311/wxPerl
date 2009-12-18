@@ -13,7 +13,7 @@ use vars qw(@EXPORT @EXPORT_OK);
 @EXPORT_OK = qw(obj_from_src c_from_xs xs_dependencies write_string
                 lib_file arch_file arch_auto_file
                 path_search files_with_overload files_with_constants
-                pipe_stderr read_file write_file);
+                files_with_delayload pipe_stderr read_file write_file);
 
 =head1 NAME
 
@@ -128,6 +128,7 @@ sub scan_xs($$$) {
           push @xsinclude, @$xsinclude;
           last;
         } elsif(    $file =~ m/ovl_const\.(?:cpp|h)$/i
+                 || $file =~ m/delayload\.cpp$/i
                  || $file =~ m/v_cback_def\.h$/i
                  || $file =~ m/\.c$/i
                  || $file =~ m/ItemContainer(?:Immutable)?\.xs$/i
@@ -258,6 +259,36 @@ sub files_with_constants {
       open IN, "< $_" || warn "unable to open '$_'";
       while( defined( $line = <IN> ) ) {
         $line =~ m/^\W+\!\w+:/ && do {
+          push @files, $name;
+          return;
+        };
+      };
+    };
+  };
+
+  find( $wanted, curdir );
+
+  return @files;
+}
+
+=head2 files_with_delayload
+
+  my @files = files_with_delayload;
+
+Finds files containing information for module delayed loading
+
+=cut
+
+sub files_with_delayload {
+  my @files;
+
+  my $wanted = sub {
+    my $name = $File::Find::name;
+
+    m/\.(?:pm|xsp?|cpp|h)$/i && do {
+      open my $in, "<", $_ or warn "unable to open '$_': $!";
+      while( defined( my $line = <$in> ) ) {
+        $line =~ m/^\W+\!module:/ && do {
           push @files, $name;
           return;
         };
