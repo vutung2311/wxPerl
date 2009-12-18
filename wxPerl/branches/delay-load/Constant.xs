@@ -2943,8 +2943,13 @@ static double constant( const char *name, int arg )
     {
       func = node->GetData();
       ret = (*func)( name, arg );
-      if( !errno )
+      if( errno == 0 )
         return ret;
+      else if( errno == EAGAIN )
+      {
+        wxPli_remove_constant_function( func );
+        return constant( name, arg );
+      }
     }
   }
 

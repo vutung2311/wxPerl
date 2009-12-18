@@ -40,16 +40,24 @@
 #define DECLARE_PACKAGE( package ) \
   static bool wxPli_##package##_booted = false; \
   XS( boot_Wx_##package )
+#define DECLARE_MODULE( module ) \
+  static bool wxPli_##module##_booted = false; \
+  XS( boot_Wx_##module )
+
 #if WXPLI_DELAY_LOAD
 #define LOAD_PACKAGE( package ) \
   wxPli_delay_load( aTHX_ "Wx::" #package, boot_Wx_##package, &wxPli_##package##_booted )
 #define LOAD_PACKAGE2( boot, package ) \
   wxPli_delay_load( aTHX_ "Wx::" #package, boot_Wx_##boot, &wxPli_##boot##_booted )
+#define LOAD_MODULE( module, package ) \
+  wxPli_delay_module( aTHX_ "Wx::" #package, "Wx::" #module, &wxPli_##module##_booted )
 #else
 #define LOAD_PACKAGE( package ) \
   wxPli_call_boot( aTHX_ "Wx::" #package, boot_Wx_##package, &wxPli_##package##_booted )
 #define LOAD_PACKAGE2( boot, package ) \
   wxPli_call_boot( aTHX_ "Wx::" #package, boot_Wx_##boot, &wxPli_##boot##_booted )
+#define LOAD_MODULE( module, package )
+#define 
 #endif
 
 #if defined(__WXMSW__)
@@ -121,6 +129,8 @@ DECLARE_PACKAGE( Region );
 DECLARE_PACKAGE( Caret );
 DECLARE_PACKAGE( SplitterWindow );
 DECLARE_PACKAGE( GridBagSizer );
+
+#include "cpp/delayload.cpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -279,6 +289,8 @@ BOOT:
 #endif
   SV* tmp = get_sv( "Wx::_exports", 1 );
   sv_setiv( tmp, (IV)(void*)&st_wxPliHelpers );
+
+  DelayLoadModules(aTHX);
 
   LOAD_PACKAGE( Bitmap );
   LOAD_PACKAGE( Mask );
