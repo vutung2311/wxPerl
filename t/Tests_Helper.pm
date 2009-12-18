@@ -143,9 +143,17 @@ sub test_inheritance {
 {
   my %classes_skip;
 
+  sub _stub {
+    return 1 if    exists $Wx::{$_[0]}->{AUTOLOAD}
+                && defined &{$Wx::{$_[0]}->{AUTOLOAD}}
+                && !exists $Wx::{$_[0]}->{_boot};
+    return 0;
+  }
+
   sub test_inheritance_start {
     foreach my $i ( keys %Wx:: ) {
       next unless $i =~ m/^([^_].*)::$/;
+      next if _stub $i;
       $classes_skip{$1} = 1;
     }
   }
@@ -155,6 +163,7 @@ sub test_inheritance {
 
     foreach my $i ( keys %Wx:: ) {
       next unless $i =~ m/^([^_].*)::$/;
+      next if _stub $i;
       next if exists $classes_skip{$1};
       push @classes, $1;
     }
@@ -168,6 +177,7 @@ sub test_inheritance_all {
 
   foreach my $i ( keys %Wx:: ) {
     next unless $i =~ m/^([^_].*)::$/;
+    next if _stub $i;
     push @classes, $1;
   }
 
