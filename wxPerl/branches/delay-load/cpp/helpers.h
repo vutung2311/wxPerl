@@ -42,6 +42,7 @@ typedef const char* PlClassName; // for typemap
 #include <stdarg.h>
 
 void wxPli_delay_load( pTHX_ const char* package, XSPROTO( (* boot) ), bool* booted );
+void wxPli_delay_module( pTHX_ const char* package, const char* module, bool* booted );
 void wxPli_call_boot( pTHX_ const char* package, XSPROTO( (* boot) ), bool* booted );
 
 I32 my_looks_like_number( pTHX_ SV* sv );
