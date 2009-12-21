@@ -1,3 +1,5 @@
+%module{Wx};
+
 /////////////////////////////////////////////////////////////////////////////
 // Name:        spinctrg.h
 // Purpose:     interface of wxSpinCtrlDouble
@@ -5,6 +7,12 @@
 // RCS-ID:      $Id: spinctrg.h 60266 2009-04-21 11:21:36Z FM $
 // Licence:     wxWindows license
 /////////////////////////////////////////////////////////////////////////////
+
+#if WXPERL_W_VERSION_GE( 2, 9, 0 )
+
+#include <wx/spinctrl.h>
+
+%loadplugin{build::Wx::Overload::XSP};
 
 /**
     @class wxSpinCtrlDouble
@@ -135,3 +143,4 @@ public:
     void SetValue(double value);
 };
 
+#endif
