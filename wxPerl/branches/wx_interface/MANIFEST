@@ -150,7 +150,6 @@ XS/Icon.xs
 XS/IconBundle.xsp
 XS/Image.xs
 XS/ImageList.xs
-XS/Interface.xsp
 XS/ItemContainer.xsp
 XS/ItemContainerImmutable.xsp
 XS/ListBox.xs

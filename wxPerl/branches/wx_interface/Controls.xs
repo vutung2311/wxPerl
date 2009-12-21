@@ -95,6 +95,8 @@ INCLUDE: xspp -t typemap.xsp XS/DirCtrl.xsp |
 
 INCLUDE: xspp -t typemap.xsp XS/FileCtrl.xsp |
 
+INCLUDE: xspp -t typemap.xsp interface/wx/generic/spinctrg.h |
+
 INCLUDE: XS/Button.xs
 INCLUDE: XS/CheckBox.xs
 INCLUDE: XS/CheckListBox.xs

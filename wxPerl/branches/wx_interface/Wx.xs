@@ -438,8 +438,6 @@ INCLUDE: xspp -t typemap.xsp XS/Variant.xsp |
 
 INCLUDE: xspp -t typemap.xsp XS/NotificationMessage.xsp |
 
-INCLUDE: xspp -t typemap.xsp XS/Interface.xsp |
-
 ##  //FIXME// tricky
 ##if defined(__WXMSW__)
 ##undef XS
