@@ -6,15 +6,13 @@
 ## Modified by:
 ## Created:     01/03/2003
 ## RCS-ID:      $Id$
-## Copyright:   (c) 2003-2004, 2006, 2008 Mattia Barbon
+## Copyright:   (c) 2003-2004, 2006, 2008-2009 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
 #############################################################################
 
-use FindBin;
-
 use strict;
-use lib "$FindBin::RealBin/../build";
+use ExtUtils::XSpp::Cmd;
 
 =head1 NAME
 
@@ -26,21 +24,8 @@ wxperl_xspp - XS++ preprocessor
 
 =head1 DOCUMENTATION
 
-See C<XSpp.pod> in the wxPerl distribution.
+See L<ExtUtils::XSpp>.
 
 =cut
 
-use Getopt::Long;
-
-use Wx::XSP::Driver;
-
-my @typemap_files;
-GetOptions( 'typemap=s' => \@typemap_files );
-
-my $driver = Wx::XSP::Driver->new
-  ( typemaps   => \@typemap_files,
-    file       => shift @ARGV,
-    );
-$driver->process;
-
-exit 0;
+exit xspp;

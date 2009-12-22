@@ -18,6 +18,10 @@
 
 #undef bool
 
+#if defined( __WXMSW__ )
+#define STRICT
+#endif
+
 #include <wx/defs.h>
 
 #include "cpp/compat.h"
@@ -92,6 +96,11 @@ inline CV* wxPli_newXS(pTHX_ const char* name, XSUBADDR_t addr,
 #undef malloc
 #undef realloc
 #undef free
+#undef open
+#undef seekdir
+#undef close
+#undef feof
+#undef ferror
 #endif
 #undef do_open
 #undef do_close
