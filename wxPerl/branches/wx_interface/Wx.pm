@@ -21,7 +21,7 @@ use vars qw(@ISA $VERSION $XS_VERSION $AUTOLOAD @EXPORT_OK %EXPORT_TAGS
 $_msw = 1; $_gtk = 2; $_motif = 3; $_mac = 4; $_x11 = 5;
 
 @ISA = qw(Exporter);
-$VERSION = '0.91_02';
+$VERSION = '0.95';
 $XS_VERSION = $VERSION;
 $VERSION = eval $VERSION;
 
@@ -114,12 +114,12 @@ sub set_load_function { $load_fun = shift }
 sub set_end_function { $unload_fun = shift }
 
 sub load_dll {
-  return if $^O eq 'darwin' || Wx::wxVERSION() < 2.005;
+  return if $^O ne 'MSWin32';
   goto &$load_fun;
 }
 
 sub unload_dll {
-  return if $^O eq 'darwin' || Wx::wxVERSION() < 2.005;
+  return if $^O ne 'MSWin32';
   goto &$unload_fun;
 }
 
