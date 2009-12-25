@@ -33,7 +33,7 @@
 
     @see wxSpinButton, wxSpinCtrl, wxControl
 */
-%name{Wx::SpinCtrlDouble} class wxSpinCtrlDouble : public wxControl
+%name{Wx::SpinCtrlDouble} class wxSpinCtrlDouble : public %name{Wx::Control} wxControl
 {
 public:
     /**
