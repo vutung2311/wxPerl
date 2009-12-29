@@ -1,5 +1,8 @@
 Revision history for Perl extension Wx.
 
+	- Added wxSpinCtrlDouble (2.9).
+	- Added wxDataViewListCtrl (2.9).
+
 0.95
 	- Only preload wxWidgets' DLL under Windows.
 

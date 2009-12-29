@@ -41,6 +41,22 @@ static wxPliEventDescription evts[] =
     { 0, 0, 0 }
 };
 
+// TODO XS++ needs a way to move these inside the typemap
+#include <wx/vector.h>
+#include <wx/variant.h>
+
+typedef wxVector<wxVariant> wxVectorVariant;
+
+class wxPli_convert_variant
+{
+public:
+    bool operator()( pTHX_ wxVariant& dest, SV* src ) const
+    {
+        dest = wxPli_sv_2_wxvariant( aTHX_ src );
+        return true;
+    }
+};
+
 MODULE=Wx__DataView
 
 BOOT:
@@ -65,6 +81,10 @@ INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t ../../typemap.xsp -t typemap.x
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t ../../typemap.xsp -t typemap.xsp XS/DataViewTreeStore.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t ../../typemap.xsp -t typemap.xsp XS/DataViewTreeCtrl.xsp |
+
+INCLUDE: perl -I../.. -MExtUtils::XSpp::Cmd -e xspp -- -t ../../typemap.xsp -t typemap.xsp ../../interface/wx/dataview/dataviewlistctrl.h |
+
+INCLUDE: perl -I../.. -MExtUtils::XSpp::Cmd -e xspp -- -t ../../typemap.xsp -t typemap.xsp ../../interface/wx/dataview/dataviewliststore.h |
 
 MODULE=Wx__DataView PACKAGE=Wx::DataView
 
