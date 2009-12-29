@@ -44,5 +44,5 @@ wxVectorVariant          T_VECTORVARIANT
 
 INPUT
 T_VECTORVARIANT
-    wxPli_av_2_thingarray( aTHX_ $arg, & $var, wxPli_convert_variant(),
-                           wxPli_vector_allocator<wxVector<wxVariant>, wxVariant>( & $var ) );
+    wxPli_av_2_arrayany( aTHX_ $arg, & $var, wxPli_convert_variant(),
+                         wxPli_vector_allocator<wxVector<wxVariant>, wxVariant>( & $var ) );
