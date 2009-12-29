@@ -222,6 +222,7 @@ XS/Wizard.xs
 XS/Window.xsp
 
 cpp/app.h
+cpp/array_helpers.h
 cpp/chkconfig.h
 cpp/compat.h
 cpp/constants.h
