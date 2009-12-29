@@ -75,6 +75,7 @@ wxPenStyle              T_ENUM
 wxPenCap                T_ENUM
 wxPenJoin               T_ENUM
 wxBrushStyle            T_ENUM
+wxShowEffect            T_ENUM
 
 wxDialogLayoutAdaptationMode T_ENUM
 
@@ -210,6 +211,7 @@ wxDirPickerCtrl *       O_WXEVTHANDLER
 wxFontPickerCtrl *      O_WXEVTHANDLER
 wxCollapsiblePane *     O_WXEVTHANDLER
 wxBitmapComboBox *      O_WXEVTHANDLER
+wxInfoBar *             O_WXEVTHANDLER
 
 wxWizard *              O_WXOBJECT
 wxWizardPage *          O_WXOBJECT
