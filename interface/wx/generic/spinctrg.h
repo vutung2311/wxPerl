@@ -39,8 +39,9 @@ public:
     /**
        Default constructor.
     */
-    wxSpinCtrlDouble();
-    
+    wxSpinCtrlDouble()
+        %postcall{% wxPli_create_evthandler( aTHX_ RETVAL, CLASS ); %};
+
     /**
         Constructor, creating and showing a spin control.
 
@@ -78,7 +79,8 @@ public:
                long style = wxSP_ARROW_KEYS,
                double min = 0, double max = 100,
                double initial = 0, double inc = 1,
-               const wxString& name = _T("wxSpinCtrlDouble"));
+               const wxString& name = _T("wxSpinCtrlDouble"))
+        %postcall{% wxPli_create_evthandler( aTHX_ RETVAL, CLASS ); %};
 
     /**
         Creation function called by the spin control constructor.
