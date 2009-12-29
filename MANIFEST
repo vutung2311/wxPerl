@@ -530,4 +530,6 @@ ext/docview/t/02_inheritance.t
 ext/docview/t/03_threads.t
 ext/docview/t/04_cmdproc.t
 
+interface/wx/dataview/dataviewlistctrl.h
+interface/wx/dataview/dataviewliststore.h
 interface/wx/generic/spinctrg.h
