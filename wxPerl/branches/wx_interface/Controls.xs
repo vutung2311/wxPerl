@@ -95,7 +95,7 @@ INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/DirCtrl.xsp |
 
 INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/FileCtrl.xsp |
 
-INCLUDE: xspp -t typemap.xsp interface/wx/generic/spinctrg.h |
+INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp interface/wx/generic/spinctrg.h |
 
 INCLUDE: XS/Button.xs
 INCLUDE: XS/CheckBox.xs
