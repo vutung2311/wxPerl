@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     01/10/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2002, 2004-2009 Mattia Barbon
+// Copyright:   (c) 2000-2002, 2004-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,6 @@ bool wxPli_always_utf8;
 
 #undef THIS
 
-DECLARE_PACKAGE( Bitmap );
 DECLARE_PACKAGE( Mask );
 DECLARE_PACKAGE( Button );
 DECLARE_PACKAGE( BitmapButton );
@@ -120,15 +119,12 @@ DECLARE_PACKAGE( ArtProvider );
 DECLARE_PACKAGE( Config );
 DECLARE_PACKAGE( VScrolledWindow );
 DECLARE_PACKAGE( ToolBar );
-DECLARE_PACKAGE( DC );
 DECLARE_PACKAGE( MimeTypes );
 DECLARE_PACKAGE( Display );
-DECLARE_PACKAGE( Locale );
 DECLARE_PACKAGE( ClassInfo );
 DECLARE_PACKAGE( Region );
 DECLARE_PACKAGE( Caret );
 DECLARE_PACKAGE( SplitterWindow );
-DECLARE_PACKAGE( GridBagSizer );
 
 #include "cpp/delayload.cpp"
 
@@ -292,7 +288,6 @@ BOOT:
 
   DelayLoadModules(aTHX);
 
-  LOAD_PACKAGE( Bitmap );
   LOAD_PACKAGE( Mask );
   LOAD_PACKAGE( Button );
   LOAD_PACKAGE( BitmapButton );
@@ -344,31 +339,14 @@ BOOT:
   LOAD_PACKAGE2( ToolBar, ToolBarToolBase );
   LOAD_PACKAGE2( ToolBar, ToolBarBase );
   LOAD_PACKAGE2( ToolBar, ToolBar );
-  LOAD_PACKAGE2( DC, DC );
-  LOAD_PACKAGE2( DC, ScreenDC );
-  LOAD_PACKAGE2( DC, WindowDC );
-  LOAD_PACKAGE2( DC, PaintDC );
-  LOAD_PACKAGE2( DC, MemoryDC );
-  LOAD_PACKAGE2( DC, ClientDC );
-  LOAD_PACKAGE2( DC, BufferedDC );
-  LOAD_PACKAGE2( DC, BufferedPaintDC );
-  LOAD_PACKAGE2( DC, AutoBufferedPaintDC );
-  LOAD_PACKAGE2( DC, MirrorDC );
-  LOAD_PACKAGE2( DC, DCClipper );
   LOAD_PACKAGE2( MimeTypes, IconLocation );
   LOAD_PACKAGE2( MimeTypes, FileTypeInfo );
   LOAD_PACKAGE2( MimeTypes, FileType );
   LOAD_PACKAGE2( MimeTypes, MimeTypesManager );
   LOAD_PACKAGE2( Display, VideoMode );
   LOAD_PACKAGE2( Display, Display );
-  LOAD_PACKAGE2( Locale, LanguageInfo );
-  LOAD_PACKAGE2( Locale, Locale );
   LOAD_PACKAGE2( SplitterWindow, SplitterWindow );
   LOAD_PACKAGE2( SplitterWindow, SplitterEvent );
-  LOAD_PACKAGE2( GridBagSizer, GridBagSizer );
-  LOAD_PACKAGE2( GridBagSizer, GBPosition );
-  LOAD_PACKAGE2( GridBagSizer, GBSpan );
-  LOAD_PACKAGE2( GridBagSizer, GBSizerItem );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )
