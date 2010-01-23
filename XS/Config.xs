@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     13/12/2001
 // RCS-ID:      $Id$
-// Copyright:   (c) 2001-2002, 2004, 2007, 2009 Mattia Barbon
+// Copyright:   (c) 2001-2002, 2004, 2007, 2009-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -15,6 +15,8 @@
 #include <wx/confbase.h>
 
 typedef wxConfigBase::EntryType EntryType;
+
+// delayload
 
 MODULE=Wx_Config PACKAGE=Wx::ConfigBase
 

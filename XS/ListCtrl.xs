@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     04/02/2001
 // RCS-ID:      $Id$
-// Copyright:   (c) 2001-2007 Mattia Barbon
+// Copyright:   (c) 2001-2007, 2009-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -20,6 +20,8 @@
 #if WXPERL_W_VERSION_LT( 2, 6, 0 )
 #define wxListCtrlNameStr wxT("listCtrl")
 #endif
+
+// delayload
 
 MODULE=Wx_ListCtrl PACKAGE=Wx::ListEvent
 
