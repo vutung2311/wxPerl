@@ -14,6 +14,8 @@
 #include "cpp/wxapi.h"
 #include "cpp/overload.h"
 
+// delayload
+
 %module{Wx_GridBagSizer};
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
