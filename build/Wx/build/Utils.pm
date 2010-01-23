@@ -250,6 +250,7 @@ sub files_with_constants {
   my @files;
 
   my $wanted = sub {
+    $File::Find::prune = 1, return if -d $_ and $_ eq 'blib';
     my $name = $File::Find::name;
 
     m/\.(?:pm|xsp?|cpp|h)$/i && do {
@@ -283,12 +284,17 @@ sub files_with_delayload {
   my @files;
 
   my $wanted = sub {
+    $File::Find::prune = 1, return if -d $_ and $_ eq 'blib';
     my $name = $File::Find::name;
 
     m/\.(?:pm|xsp?|cpp|h)$/i && do {
       open my $in, "<", $_ or warn "unable to open '$_': $!";
       while( defined( my $line = <$in> ) ) {
         $line =~ m/^\W+\!module:/ && do {
+          push @files, $name;
+          return;
+        };
+        $line =~ m/^\/\/ delayload$/ && do {
           push @files, $name;
           return;
         };
@@ -313,6 +319,7 @@ sub files_with_overload {
   my @files;
 
   my $wanted = sub {
+    $File::Find::prune = 1, return if -d $_ and $_ eq 'blib';
     my $name = $File::Find::name;
 
     m/\.pm$/i && do {

@@ -6,7 +6,7 @@
 ## Modified by:
 ## Created:     07/12/2009
 ## RCS-ID:      $Id: make_exp_list.pl 2057 2007-06-18 23:03:00Z mbarbon $
-## Copyright:   (c) 2009 Mattia Barbon
+## Copyright:   (c) 2009-2010 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
 #############################################################################
@@ -16,7 +16,7 @@ use warnings;
 
 use File::Basename;
 
-my( %packages, %constants );
+my( %packages, %constants, %modules );
 
 foreach my $arg ( @ARGV ) {
     open my $in, '<', $arg or die "Unable to open $arg: $!";
@@ -54,6 +54,28 @@ foreach my $arg ( @ARGV ) {
 
             $constants{$module}{$values[0]} = 1;
         }
+    } elsif( $arg =~ /\.xsp?$/ ) {
+        my( $module, $has_delayload );
+
+        while( <$in> ) {
+            m/^\/\/ delayload$/ && do {
+                $has_delayload = 1;
+            };
+            $has_delayload && m/^\%module{Wx_(\w+)};$/ && do {
+                $module = $1;
+            };
+            $has_delayload && m/^MODULE=Wx_(\w+)/ && do {
+                $module = $1;
+            };
+            next unless $module;
+
+            m/\bclass wx(\w+)/ && do {
+                $modules{$module}{$1} ||= 1;
+            };
+            m/\bPACKAGE=Wx::(\w+)/ && do {
+                $modules{$module}{$1} ||= 1;
+            };
+        }
     }
 }
 
@@ -62,6 +84,10 @@ print <<EOT;
 #include "cpp/constants.h"
 
 EOT
+
+foreach my $module ( keys %modules ) {
+    print "DECLARE_PACKAGE( $module );\n";
+}
 
 foreach my $module ( keys %packages ) {
     print "DECLARE_MODULE( $module );\n";
@@ -109,6 +135,12 @@ print "{\n";
 foreach my $module ( keys %packages ) {
     foreach my $package ( keys %{$packages{$module}} ) {
         print "    LOAD_MODULE( $module, $package );\n";
+    }
+}
+
+foreach my $module ( keys %modules ) {
+    foreach my $package ( keys %{$modules{$module}} ) {
+        print "    LOAD_PACKAGE2( $module, $package );\n";
     }
 }
 
