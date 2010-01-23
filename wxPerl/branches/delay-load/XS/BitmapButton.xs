@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     31/10/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2003, 2006, 2009 Mattia Barbon
+// Copyright:   (c) 2000-2003, 2006, 2009-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -14,6 +14,8 @@
 #include "cpp/wxapi.h"
 #include "cpp/overload.h"
 #include <wx/bmpbuttn.h>
+
+// delayload
 
 MODULE=Wx_BitmapButton PACKAGE=Wx::BitmapButton
 

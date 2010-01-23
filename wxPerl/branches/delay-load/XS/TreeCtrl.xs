@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     04/02/2001
 // RCS-ID:      $Id$
-// Copyright:   (c) 2001-2007 Mattia Barbon
+// Copyright:   (c) 2001-2007, 2009-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -17,6 +17,8 @@
 #include <wx/treectrl.h>
 #include <wx/imaglist.h>
 #include "cpp/helpers.h"
+
+// delayload
 
 MODULE=Wx_TreeCtrl PACKAGE=Wx::TreeItemData
 

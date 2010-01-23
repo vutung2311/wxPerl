@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     02/12/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2003, 2005-2009 Mattia Barbon
+// Copyright:   (c) 2000-2003, 2005-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -21,6 +21,8 @@
 #if WXPERL_W_VERSION_LT( 2, 9, 1 )
 typedef int wxImageResizeQuality;
 #endif
+
+// delayload
 
 MODULE=Wx_Image PACKAGE=Wx::Image
 
