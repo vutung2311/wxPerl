@@ -57,10 +57,17 @@ _alien_path();
 sub _start {
     wx_boot( 'Wx', $XS_VERSION );
 
+    _boot_Misc( 'Wx', $XS_VERSION );
     _boot_Constant( 'Wx', $XS_VERSION );
     _boot_GDI( 'Wx', $XS_VERSION );
 
     Load();
+}
+
+sub _start_threads {
+    wx_boot( 'Wx', $XS_VERSION );
+
+    _boot_Threading( 'Wx', $XS_VERSION );
 }
 
 1;

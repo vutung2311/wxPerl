@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     29/10/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2009 Mattia Barbon
+// Copyright:   (c) 2000-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -337,7 +337,6 @@ struct wxPlINH
 
 static wxPlINH inherit[] =
 {
-    I( EvtHandler,      Object )
     I( Window,          EvtHandler )
     I( PopupWindow,     Window )
     I( PopupTransientWindow, PopupWindow )
@@ -347,7 +346,6 @@ static wxPlINH inherit[] =
     I( PlControl,       Control )
     I( MenuBar,         Window )
     I( TopLevelWindow,  Window )
-    I( _App,            EvtHandler )
     I( Panel,           Window )
     I( Control,         Window )
     I( Button,          Control )
@@ -652,7 +650,6 @@ static wxPlINH inherit[] =
     // Events
     ///////////////////////////////////////////
     I( PlEvent,         Event )
-    I( PlThreadEvent,   Event )
     I( PlCommandEvent,  CommandEvent )
     I( ActivateEvent,   Event )
     I( CommandEvent,    Event )

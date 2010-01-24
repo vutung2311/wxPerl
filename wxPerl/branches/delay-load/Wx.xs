@@ -35,31 +35,6 @@
 #endif
 #endif
 
-#define WXPLI_DELAY_LOAD 1
-
-#define DECLARE_PACKAGE( package ) \
-  static bool wxPli_##package##_booted = false; \
-  XS( boot_Wx_##package )
-#define DECLARE_MODULE( module ) \
-  static bool wxPli_##module##_booted = false; \
-  XS( boot_Wx_##module )
-
-#if WXPLI_DELAY_LOAD
-#define LOAD_PACKAGE( package ) \
-  wxPli_delay_load( aTHX_ "Wx::" #package, boot_Wx_##package, &wxPli_##package##_booted )
-#define LOAD_PACKAGE2( boot, package ) \
-  wxPli_delay_load( aTHX_ "Wx::" #package, boot_Wx_##boot, &wxPli_##boot##_booted )
-#define LOAD_MODULE( module, package ) \
-  wxPli_delay_module( aTHX_ "Wx::" #package, "Wx::" #module, &wxPli_##module##_booted )
-#else
-#define LOAD_PACKAGE( package ) \
-  wxPli_call_boot( aTHX_ "Wx::" #package, boot_Wx_##package, &wxPli_##package##_booted )
-#define LOAD_PACKAGE2( boot, package ) \
-  wxPli_call_boot( aTHX_ "Wx::" #package, boot_Wx_##boot, &wxPli_##boot##_booted )
-#define LOAD_MODULE( module, package )
-#define 
-#endif
-
 #if defined(__WXMSW__)
 #include <wx/msw/private.h>
 #endif
@@ -99,37 +74,6 @@ bool wxPli_always_utf8;
 #endif
 
 #undef THIS
-
-#include "cpp/delayload.cpp"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-    XS( boot_Wx_Const );
-    XS( boot_Wx_Ctrl );
-    XS( boot_Wx_Evt );
-    XS( boot_Wx_Win );
-    XS( boot_Wx_Wnd );
-    XS( boot_Wx_GDI );
-#if defined( WXPL_STATIC )
-    XS( boot_Wx__DocView );
-#if wxPERL_USE_STC
-    XS( boot_Wx__STC );
-#endif
-#if wxPERL_USE_XRC
-    XS( boot_Wx__XRC );
-#endif
-    XS( boot_Wx__Print );
-    XS( boot_Wx__MDI );
-    XS( boot_Wx__Html );
-    XS( boot_Wx__Help );
-    XS( boot_Wx__Grid );
-    XS( boot_Wx__FS );
-    XS( boot_Wx__DND );
-#endif
-#ifdef __cplusplus
-}
-#endif
 
 extern void SetConstants();
 extern void SetConstantsOnce();
@@ -220,47 +164,18 @@ void wxEntryCleanup()
 
 #endif
 
-DEFINE_PLI_HELPERS( st_wxPliHelpers );
-
-WXPLI_BOOT_ONCE_EXP(Wx);
-#define boot_Wx wxPli_boot_Wx
+WXPLI_BOOT_ONCE_EXP(Wx_Misc);
+#define boot_Wx_Misc wxPli_boot_Wx_Misc
 
 extern bool Wx_booted, Wx_Const_booted, Wx_Ctrl_booted,
-    Wx_Evt_booted, Wx_Wnd_booted, Wx_GDI_booted, Wx_Win_booted;
+    Wx_Evt_booted, Wx_Wnd_booted, Wx_GDI_booted, Wx_Win_booted,
+    Wx_Threading_booted, Wx_Misc_booted;
 
 #if WXPERL_W_VERSION_LT( 2, 9, 0 )
 typedef int wxPolygonFillMode;
 #endif
 
-MODULE=Wx PACKAGE=Wx
-
-BOOT:
-  newXSproto( "Wx::_boot_Constant", boot_Wx_Const, file, "$$" );
-  newXSproto( "Wx::_boot_Controls", boot_Wx_Ctrl, file, "$$" );
-  newXSproto( "Wx::_boot_Events", boot_Wx_Evt, file, "$$" );
-  newXSproto( "Wx::_boot_Window", boot_Wx_Win, file, "$$" );
-  newXSproto( "Wx::_boot_Frames", boot_Wx_Wnd, file, "$$" );
-  newXSproto( "Wx::_boot_GDI", boot_Wx_GDI, file, "$$" );
-#if defined( WXPL_STATIC )
-  newXSproto( "Wx::_boot_Wx__DocView", boot_Wx__DocView, file, "$$" );
-#if wxPERL_USE_STC
-  newXSproto( "Wx::_boot_Wx__STC", boot_Wx__STC, file, "$$" );
-#endif
-#if wxPERL_USE_XRC
-  newXSproto( "Wx::_boot_Wx__XRC", boot_Wx__XRC, file, "$$" );
-#endif
-  newXSproto( "Wx::_boot_Wx__Print", boot_Wx__Print, file, "$$" );
-  newXSproto( "Wx::_boot_Wx__MDI", boot_Wx__MDI, file, "$$" );
-  newXSproto( "Wx::_boot_Wx__Html", boot_Wx__Html, file, "$$" );
-  newXSproto( "Wx::_boot_Wx__Help", boot_Wx__Help, file, "$$" );
-  newXSproto( "Wx::_boot_Wx__Grid", boot_Wx__Grid, file, "$$" );
-  newXSproto( "Wx::_boot_Wx__FS", boot_Wx__FS, file, "$$" );
-  newXSproto( "Wx::_boot_Wx__DND", boot_Wx__DND, file, "$$" );
-#endif
-  SV* tmp = get_sv( "Wx::_exports", 1 );
-  sv_setiv( tmp, (IV)(void*)&st_wxPliHelpers );
-
-  DelayLoadModules(aTHX);
+MODULE=Wx_Misc PACKAGE=Wx
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )
@@ -348,8 +263,9 @@ void
 UnLoad()
   CODE:
     wxPerlAppCreated = wxTheApp != NULL;
-    Wx_booted = Wx_Const_booted = Wx_Ctrl_booted =
-        Wx_Evt_booted = Wx_Wnd_booted = Wx_GDI_booted = Wx_Win_booted = false;
+    Wx_booted = Wx_Const_booted = Wx_Ctrl_booted = Wx_Threading_booted =
+        Wx_Evt_booted = Wx_Wnd_booted = Wx_GDI_booted = Wx_Win_booted =
+        Wx_Misc_booted = false;
     if( wxPerlInitialized && !wxPerlAppCreated )
         wxEntryCleanup();
     wxPerlInitialized = false;
@@ -460,7 +376,7 @@ INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/NotificationMes
 ##define XS( name ) WXXS( name )
 ##endif
 
-MODULE=Wx PACKAGE=Wx
+MODULE=Wx_Misc PACKAGE=Wx
 
 #!irrelevant class wxArray
 #!irrelevant class wxArray<T>

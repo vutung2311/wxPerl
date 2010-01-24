@@ -17,7 +17,8 @@ use vars qw(@EXPORT @subdirs);
 
 @EXPORT = 'wxWriteMakefile';
 
-my @top_level_xs = qw(Wx.xs Constant.xs Controls.xs Event.xs
+my @top_level_xs = qw(Threading.xs Core.xs
+                      Wx.xs Constant.xs Controls.xs Event.xs
                       Frames.xs GDI.xs Window.xs);
 @subdirs = qw(socket dnd filesys grid help html mdi print xrc stc docview
               calendar datetime media richtext aui dataview);

@@ -64,6 +64,7 @@ lib/Wx/Menu.pm
 lib/Wx/Mini.pm
 lib/Wx/RadioBox.pm
 lib/Wx/Thread.pod
+lib/Wx/Threading.pm
 lib/Wx/Timer.pm
 
 samples/README.txt
@@ -84,11 +85,13 @@ wxpl.xpm
 
 Constant.xs
 Controls.xs
+Core.xs
 Event.xs
 Frames.xs
 GDI.xs
 Window.xs
 Wx.xs
+Threading.xs
 
 XS/AboutDialog.xsp
 XS/Accelerators.xs
@@ -243,6 +246,7 @@ cpp/scrolledwindow.h
 cpp/singlechoicedialog.h
 cpp/sizer.h
 cpp/streams.h
+cpp/threadevent.h
 cpp/timer.h
 cpp/tipprovider.h
 cpp/validators.h
