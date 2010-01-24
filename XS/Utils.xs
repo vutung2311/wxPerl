@@ -5,7 +5,7 @@
 ## Modified by:
 ## Created:     09/02/2001
 ## RCS-ID:      $Id$
-## Copyright:   (c) 2001-2003, 2005-2008 Mattia Barbon
+## Copyright:   (c) 2001-2003, 2005-2008, 2010 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
 #############################################################################
@@ -498,9 +498,6 @@ wxGetOsDescription()
 
 long
 wxNewId()
-
-wxEventType
-wxNewEventType()
 
 void
 wxRegisterId( id )

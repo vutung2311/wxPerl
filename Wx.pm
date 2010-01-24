@@ -35,7 +35,6 @@ sub BEGIN{
 #
 sub wxPOINT  { Wx::Point->new( $_[0], $_[1] ) }
 sub wxSIZE   { Wx::Size->new( $_[0], $_[1] )  }
-sub wxTheApp { $Wx::wxTheApp }
 
 sub AUTOLOAD {
   my( $constname );
@@ -98,6 +97,7 @@ sub _croak {
 # calling Wx::wx_boot. Finding the library requires determining the path
 # and the correct name
 use Wx::Mini;
+use Wx::Threading;
 
 _start();
 
@@ -136,6 +136,7 @@ sub _load_dll {
 }
 
 {
+  _boot_Misc( 'Wx', $XS_VERSION );
   _boot_Constant( 'Wx', $XS_VERSION );
   _boot_Events( 'Wx', $XS_VERSION );
   _boot_Window( 'Wx', $XS_VERSION );
@@ -195,9 +196,6 @@ require Wx::Timer;
 require Wx::Wx_Exp;
 # for Wx::Stream & co.
 require Tie::Handle;
-
-package Wx::GDIObject; # warning for non-existent package
-package Wx::Object;    # likewise
 
 #
 # overloading for Wx::TreeItemId
@@ -302,11 +300,6 @@ my $ts_buf;
 sub Wx::Log::SetTimestamp {
     Wx::Log::_SetTimestamp( $_[0], $ts_buf );
 }
-
-package Wx::PlThreadEvent;
-
-our %stash : shared;
-SetStash( \%stash );
 
 1;
 
