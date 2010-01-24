@@ -92,10 +92,23 @@ sub files_with_constants {
 
 sub files_with_delayload {
   my( $this ) = @_;
+  return Wx::build::Utils::files_with_delayload unless ref $this;
   return @{$this->{wx_files_with_delayload}}
     if $this->{wx_files_with_delayload};
   return @{$this->{wx_files_with_delayload} =
              [ Wx::build::Utils::files_with_delayload ]};
+}
+
+sub xs_with_delayload {
+  my( $this ) = @_;
+
+  return grep /\.xs$/, $this->files_with_delayload;
+}
+
+sub xsp_with_delayload {
+  my( $this ) = @_;
+
+  return grep /\.xsp$/, $this->files_with_delayload;
 }
 
 sub files_with_overload {
@@ -135,8 +148,8 @@ sub depend_core {
                  || $this->{ARGS}{ABSTRACT_FROM}
                  || 'Wx.pm';
   my %extra_xs = map { $_ => basename( c_from_xs( $_ ) ) }
-                     @Wx::build::MakeMaker::Core::module_xs,
-                     @Wx::build::MakeMaker::Core::module_xsp;
+                     $this->xs_with_delayload,
+                     $this->xsp_with_delayload;
   my %files = $this->files_to_install();
   my %depend = ( _depend_common( $this ),
                  xs_dependencies( \%extra_xs,
@@ -270,7 +283,7 @@ EOT
 EOT
   }
 
-  foreach my $f ( @Wx::build::MakeMaker::Core::module_xs ) {
+  foreach my $f ( $this->xs_with_delayload ) {
       my $c = c_from_xs( $f );
       my $c_base = basename( $c );
 
@@ -280,7 +293,7 @@ $c_base : $c
 EOT
   }
 
-  foreach my $f ( @Wx::build::MakeMaker::Core::module_xsp ) {
+  foreach my $f ( $this->xsp_with_delayload ) {
       my $c_base = basename( c_from_xs( $f ) );
       my $base = basename( $f, '.xsp' );
 
