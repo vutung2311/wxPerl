@@ -19,15 +19,6 @@ use vars qw(@EXPORT @subdirs);
 
 my @top_level_xs = qw(Wx.xs Constant.xs Controls.xs Event.xs
                       Frames.xs GDI.xs Window.xs);
-our @module_xs = qw(XS/Bitmap.xs XS/Mask.xs XS/Button.xs XS/BitmapButton.xs
-                    XS/ListCtrl.xs XS/Image.xs XS/TreeCtrl.xs XS/RadioBox.xs
-                    XS/Log.xs XS/Notebook.xs XS/Config.xs XS/ToolBar.xs
-                    XS/Locale.xs XS/Region.xs XS/Caret.xs);
-our @module_xsp = qw(XS/ComboCtrl.xsp XS/ComboPopup.xsp XS/ComboBox.xsp
-                     XS/OwnerDrawnComboBox.xsp XS/TextAttr.xsp XS/TextCtrl.xsp
-                     XS/ArtProvider.xsp XS/VScrolledWindow.xsp XS/DC.xsp
-                     XS/MimeTypes.xsp XS/Display.xsp XS/ClassInfo.xsp
-                     XS/SplitterWindow.xsp XS/GridBagSizer.xsp);
 @subdirs = qw(socket dnd filesys grid help html mdi print xrc stc docview
               calendar datetime media richtext aui dataview);
 my %subdirs;
@@ -115,10 +106,15 @@ sub wxWriteMakefile {
   local $Wx::build::MakeMaker::is_core = 1;
 
   if( $has_alien ) {
+      require Wx::build::MakeMaker::Any_OS;
+
+      my @delayload_xs = ( Wx::build::MakeMaker::Any_OS->xs_with_delayload,
+                           Wx::build::MakeMaker::Any_OS->xsp_with_delayload );
       $params{XSOPT}     = ' -nolinenumbers -noprototypes ';
       $params{CONFIGURE} = \&Wx::build::MakeMaker::configure;
       $params{OBJECT}    = join ' ', obj_from_src( @top_level_xs ),
-                                     obj_from_src( map basename( $_ ), @module_xs, @module_xsp ), '';
+                                     obj_from_src( map basename( $_ ),
+                                                   @delayload_xs ), '';
   }
 
   my $build = Wx::build::MakeMaker::_process_mm_arguments( \%params, $has_alien );
