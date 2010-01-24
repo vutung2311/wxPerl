@@ -69,7 +69,7 @@ foreach my $arg ( @ARGV ) {
             };
             next unless $module;
 
-            m/\bclass wx(\w+)/ && do {
+            m/^\%name{Wx::(\w+)} class wx\w+/ && do {
                 $modules{$module}{$1} ||= 1;
             };
             m/\bPACKAGE=Wx::(\w+)/ && do {
