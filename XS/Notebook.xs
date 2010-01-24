@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     29/10/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2003, 2006, 2009 Mattia Barbon
+// Copyright:   (c) 2000-2003, 2006, 2009-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -18,6 +18,8 @@
 #if WXPERL_W_VERSION_LT( 2, 6, 0 )
 #define wxNotebookNameStr wxT("notebook")
 #endif
+
+// delayload
 
 MODULE=Wx_Notebook PACKAGE=Wx::NotebookEvent
 

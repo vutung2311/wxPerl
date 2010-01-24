@@ -100,18 +100,6 @@ bool wxPli_always_utf8;
 
 #undef THIS
 
-DECLARE_PACKAGE( RadioBox );
-DECLARE_PACKAGE( ComboCtrl );
-DECLARE_PACKAGE( ComboPopup );
-DECLARE_PACKAGE( OwnerDrawnComboBox );
-DECLARE_PACKAGE( ComboBox );
-DECLARE_PACKAGE( Notebook );
-DECLARE_PACKAGE( Display );
-DECLARE_PACKAGE( ClassInfo );
-DECLARE_PACKAGE( Region );
-DECLARE_PACKAGE( Caret );
-DECLARE_PACKAGE( SplitterWindow );
-
 #include "cpp/delayload.cpp"
 
 #ifdef __cplusplus
@@ -273,21 +261,6 @@ BOOT:
   sv_setiv( tmp, (IV)(void*)&st_wxPliHelpers );
 
   DelayLoadModules(aTHX);
-
-  LOAD_PACKAGE( RadioBox );
-  LOAD_PACKAGE( ComboCtrl );
-  LOAD_PACKAGE( ComboPopup );
-  LOAD_PACKAGE( OwnerDrawnComboBox );
-  LOAD_PACKAGE( ComboBox );
-  LOAD_PACKAGE( ClassInfo );
-  LOAD_PACKAGE( Region );
-  LOAD_PACKAGE( Caret );
-  LOAD_PACKAGE2( Notebook, Notebook );
-  LOAD_PACKAGE2( Notebook, NotebookEvent );
-  LOAD_PACKAGE2( Display, VideoMode );
-  LOAD_PACKAGE2( Display, Display );
-  LOAD_PACKAGE2( SplitterWindow, SplitterWindow );
-  LOAD_PACKAGE2( SplitterWindow, SplitterEvent );
 
 #if WXPERL_W_VERSION_GE( 2, 5, 1 )
 #define wxPliEntryStart( argc, argv ) wxEntryStart( (argc), (argv) )

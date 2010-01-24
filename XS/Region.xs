@@ -4,8 +4,8 @@
 // Author:      Mattia Barbon
 // Modified by:
 // Created:     29/10/2000
-// RCS-ID:      $Id: Geom.xs 2527 2009-02-07 17:44:57Z mbarbon $
-// Copyright:   (c) 2000-2003, 2006-2009 Mattia Barbon
+// RCS-ID:      $Id$
+// Copyright:   (c) 2000-2003, 2006-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -16,6 +16,8 @@
 #include <wx/region.h>
 #include <wx/bitmap.h>
 #include <wx/colour.h>
+
+// delayload
 
 MODULE=Wx_Region PACKAGE=Wx::Region
 
