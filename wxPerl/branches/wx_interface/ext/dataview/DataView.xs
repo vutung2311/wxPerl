@@ -86,6 +86,8 @@ INCLUDE: perl -I../.. -MExtUtils::XSpp::Cmd -e xspp -- -t ../../typemap.xsp -t t
 
 INCLUDE: perl -I../.. -MExtUtils::XSpp::Cmd -e xspp -- -t ../../typemap.xsp -t typemap.xsp ../../interface/wx/dataview/dataviewliststore.h |
 
+INCLUDE: perl -I../.. -MExtUtils::XSpp::Cmd -e xspp -- -t ../../typemap.xsp -t typemap.xsp ../../interface/wx/dataview/dataviewvirtuallistmodel.h |
+
 MODULE=Wx__DataView PACKAGE=Wx::DataView
 
 void
