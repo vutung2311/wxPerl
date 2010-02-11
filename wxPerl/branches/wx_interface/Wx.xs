@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     01/10/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2002, 2004-2009 Mattia Barbon
+// Copyright:   (c) 2000-2002, 2004-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -340,8 +340,11 @@ SetAlwaysUTF8( always_utf8 = true )
 
 #include <wx/dynload.h>
 
-bool
-_load_plugin( string )
+## this has the same interface as DynaLoader::dl_load_files, but since
+## internally it uses wxPluginModule, it ensures proper initialization for
+## wxModule, wxRTTI and (hopefully) any other internal wxWidgets' data structure
+IV
+_load_plugin( string, int flags = 0 /* to be compatible with dl_load_file */ )
     wxString string
   CODE:
 #ifdef HACK
@@ -350,7 +353,8 @@ _load_plugin( string )
     delete new wxMediaCtrl();
 #endif
 #endif
-    RETVAL = wxPluginManager::LoadLibrary( string, wxDL_VERBATIM );
+    wxDynamicLibrary *lib = wxPluginManager::LoadLibrary( string, wxDL_VERBATIM );
+    RETVAL = PTR2IV( lib->GetLibHandle() );
   OUTPUT:
     RETVAL
 
@@ -420,23 +424,23 @@ INCLUDE: XS/Process.xs
 INCLUDE: XS/FontMapper.xs
 INCLUDE: XS/FontEnumerator.xs
 INCLUDE: XS/Wave.xs
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ArtProvider.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ArtProvider.xsp
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/MimeTypes.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/MimeTypes.xsp
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Sound.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Sound.xsp
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Power.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Power.xsp
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ClassInfo.xs |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ClassInfo.xs
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Display.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Display.xsp
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/StandardPaths.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/StandardPaths.xsp
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Variant.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Variant.xsp
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/NotificationMessage.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/NotificationMessage.xsp
 
 ##  //FIXME// tricky
 ##if defined(__WXMSW__)

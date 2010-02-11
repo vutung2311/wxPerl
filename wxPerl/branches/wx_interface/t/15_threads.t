@@ -26,6 +26,7 @@ sub check_undef {
 my $app = Wx::App->new( sub { 1 } );
 # ancillary
 my $frame = Wx::Frame->new( undef, -1, 'Test frame' );
+$frame->Show; # otherwise overlay tests fail
 my $treectrl = Wx::TreeCtrl->new( $frame, -1 );
 my $textctrl = Wx::TextCtrl->new( $frame, -1, 'Some text' );
 my $point = Wx::Point->new( 100, 100 );
@@ -105,6 +106,18 @@ check_init { Wx::FontEnumerator->new };
 check_init { Wx::AcceleratorEntry->new( 0, 1, 1 ) };
 check_init { Wx::AcceleratorTable->new };
 check_init { Wx::PlValidator->new };
+
+# Wx::Overlay / Wx::DCOverlay thread tests
+# creation / destruction order is important
+my $overlay1 = Wx::Overlay->new;
+my $overlay2 = Wx::Overlay->new;
+my $checkdc1 = Wx::ClientDC->new( $frame );
+my $checkdc2 = Wx::ClientDC->new( $frame );
+my $dcoverlay1 =  Wx::DCOverlay->new($overlay1,  $checkdc1);
+my $dcoverlay2 =  Wx::DCOverlay->new($overlay2,  $checkdc2);
+undef $dcoverlay1;
+undef $checkdc1;
+undef $overlay1;
 
 # check the ref hash is safe!
 undef $color2;

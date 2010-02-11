@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     21/09/2002
 // RCS-ID:      $Id$
-// Copyright:   (c) 2002-2003, 2005-2009 Mattia Barbon
+// Copyright:   (c) 2002-2003, 2005-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -86,25 +86,48 @@ inline CV* wxPli_newXS(pTHX_ const char* name, XSUBADDR_t addr,
 #undef Seek
 #undef Stat
 #undef Error
-#if defined( __WXMSW__ )
-#undef read
-#undef write
-#undef eof
-#undef form
-#undef vform
-#undef setbuf
-#undef malloc
-#undef realloc
-#undef free
-#undef open
-#undef seekdir
-#undef close
-#undef feof
-#undef ferror
-#endif
 #undef do_open
 #undef do_close
 #undef utf8_length
+#if defined( PERL_IMPLICIT_SYS )
+#undef abort
+#undef clearerr
+#undef close
+#undef eof
+#undef exit
+#undef fclose
+#undef feof
+#undef ferror
+#undef fflush
+#undef fgetpos
+#undef fopen
+#undef form
+#undef fputc
+#undef fputs
+#undef fread
+#undef free
+#undef freopen
+#undef fseek
+#undef fsetpos
+#undef ftell
+#undef fwrite
+#undef getc
+#undef getenv
+#undef malloc
+#undef open
+#undef read
+#undef realloc
+#undef rename
+#undef seekdir
+#undef setbuf
+#undef setvbuf
+#undef tmpfile
+#undef tmpnam
+#undef ungetc
+#undef vform
+#undef vfprintf
+#undef write
+#endif
 
 #if __VISUALC__
 #pragma warning ( disable: 4800 )
@@ -119,6 +142,9 @@ inline CV* wxPli_newXS(pTHX_ const char* name, XSUBADDR_t addr,
 
 // some helper functions/classes/macros
 #include "cpp/helpers.h"
+
+// temporary, for recent XS++ versions
+#include <exception>
 
 // 0.01 -> 0010; 1.01 -> 1010, etc
 #define WXPL_API_VERSION 0150

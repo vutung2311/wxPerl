@@ -2,10 +2,25 @@ Revision history for Perl extension Wx.
 
 	- Added wxSpinCtrlDouble (2.9).
 	- Added wxDataViewListCtrl (2.9).
+	- Added wxDataViewVirtualListModel (2.9).
 	- Added wxInfoBar (2.9).
 
-0.95
+0.9701 Thu Feb 11 16:03:42 CET 2010
+	- Bump the required version of ExtUtils::XSpp and ExtUtils::ParseXS.
+
+0.97  Tue Feb  9 22:57:14 CET 2010
+	- Added wxOverlay and wxDCOverlay (2.8) (thanks to Mark Dootson).
+        - Added Wx::Loader - allows PPM distributions and packagers to
+          override wx dll loading (see Wx::Loader pod)
+	- Loading plugins - local override of dl_load_file now uses
+	  Wx::_load_plugin during XSLoader::load
+
+0.96  Sat Jan  9 10:40:00 CET 2010
+	- Fixed Windows MSVC 6 build.
+
+0.95  Fri Dec 25 18:24:44 CET 2009
 	- Only preload wxWidgets' DLL under Windows.
+	- Some Windows build fixes.
 
 0.94  Sun Nov  8 14:10:32 CET 2009
 	- Remove the last use of the xspp command line script.
