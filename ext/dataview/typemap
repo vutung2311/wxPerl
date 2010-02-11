@@ -26,6 +26,8 @@ wxDataViewItem *        O_NON_WXOBJECT
 wxDataViewItemAttr *    O_NON_WXOBJECT
 wxDataViewIndexListModel* O_NON_WXOBJECT
 wxPlDataViewIndexListModel* O_NON_WXOBJECT
+wxDataViewVirtualListModel* O_NON_WXOBJECT
+wxPlDataViewVirtualListModel * O_NON_WXOBJECT
 wxDataViewRenderer *    O_WXOBJECT_THR
 wxDataViewEvent *       O_WXOBJECT_THR
 wxDataViewModelNotifier * O_NON_WXOBJECT
