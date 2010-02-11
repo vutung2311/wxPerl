@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     29/10/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2009 Mattia Barbon
+// Copyright:   (c) 2000-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -464,7 +464,8 @@ static wxPlINH inherit[] =
     I( BufferedPaintDC, BufferedDC )
     I( SVGFileDC,       DC )
     I( MirrorDC,        DC )
-
+    I( GCDC,            DC )
+    
     I( BMPHandler,      ImageHandler )
     I( PNGHandler,      ImageHandler )
     I( JPEGHandler,     ImageHandler )
@@ -490,7 +491,10 @@ static wxPlINH inherit[] =
 #ifdef __WXMSW__
     I( GDIPlusContext,  GraphicsContext )
 #endif
-
+#ifdef __WXMAC__
+    I( MacCoreGraphicsContext,  GraphicsContext )
+    I( MacCoreGraphicsRenderer, GraphicsRenderer )
+#endif
     I( LogTextCtrl,     Log )
     I( LogWindow,       Log )
     I( LogGui,          Log )
@@ -745,7 +749,7 @@ void SetInheritance()
 // !package: Wx
 // !tag:
 
-static double constant( const char *name, int arg ) 
+static double constant( const char* name, int arg ) 
 {
   WX_PL_CONSTANT_INIT();
 
@@ -3322,9 +3326,16 @@ WXPLI_BOOT_ONCE(Wx_Const);
 MODULE=Wx_Const PACKAGE=Wx
 
 double
-constant(name,arg)
+constant( name, arg, error )
     const char* name
     int arg
+    int error = NO_INIT
+  CODE:
+    RETVAL = constant( name, arg );
+    error = errno;
+  OUTPUT:
+    RETVAL
+    error
 
 void
 UnsetConstants()

@@ -6,7 +6,7 @@
 ## Modified by:
 ## Created:     01/10/2000
 ## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2009 Mattia Barbon
+## Copyright:   (c) 2000-2010 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
 #############################################################################
@@ -40,7 +40,8 @@ my $build_requires =
     'ExtUtils::MakeMaker'    => 6.17,
     'Alien::wxWidgets'       => 0.25,
     'if'                     => 0.03,
-    'ExtUtils::XSpp'         => 0.06,
+    'ExtUtils::XSpp'         => 0.09,
+    'ExtUtils::ParseXS'      => 2.2202,
     };
 
 eval {
@@ -57,6 +58,12 @@ eval {
                               },
           configure_requires => { 'Alien::wxWidgets' => 0.25,
                                   },
+          resources       => { 'license'       => 'http://dev.perl.org/licenses/',
+                               'homepage'      => 'http://wxperl.eu/',
+                               'bugtracker'    => 'http://rt.cpan.org/NoAuth/Bugs.html?Dist=Wx',
+                               'repository'    => 'https://wxperl.svn.sourceforge.net/svnroot/wxperl/wxPerl',
+                               'MailingList'   => 'http://lists.perl.org/list/wxperl-users.html',
+                               },
           } );
 };
 
