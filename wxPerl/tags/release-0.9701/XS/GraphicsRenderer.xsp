@@ -1,0 +1,74 @@
+#############################################################################
+## Name:        XS/GraphicsRenderer.xsp
+## Purpose:     XS for Wx::GraphicsRenderer
+## Author:      Mattia Barbon
+## Modified by:
+## Created:     30/09/2007
+## RCS-ID:      $Id$
+## Copyright:   (c) 2007 Klaas Hartmann
+## Licence:     This program is free software; you can redistribute it and/or
+##              modify it under the same terms as Perl itself
+#############################################################################
+
+%module{Wx};
+
+#if wxUSE_GRAPHICS_CONTEXT
+
+#include <wx/graphics.h>
+
+## DECLARE_OVERLOAD( wmdc, Wx::MemoryDC )
+## DECLARE_OVERLOAD( wwdc, Wx::WindowDC )
+## DECLARE_OVERLOAD( wpdc, Wx::PrinterDC )
+
+%name{Wx::GraphicsRenderer} class wxGraphicsRenderer
+{
+%{
+wxGraphicsRenderer*
+GetDefaultRenderer()
+  CODE:
+    RETVAL = wxGraphicsRenderer::GetDefaultRenderer();
+  OUTPUT: RETVAL
+
+void
+CreateContext( ... )
+  PPCODE:
+    BEGIN_OVERLOAD()
+        MATCH_REDISP_FUNCTION( wxPliOvl_wwin, CreateFromWindow )   
+        MATCH_REDISP_FUNCTION( wxPliOvl_wwdc, CreateFromWindowDC )
+#if defined(__WXMSW__) || WXPERL_W_VERSION_GE( 2, 9, 0 )       
+        MATCH_REDISP_FUNCTION( wxPliOvl_wmdc, CreateFromMemoryDC)
+#endif     
+#if wxPERL_USE_PRINTING_ARCHITECTURE && WXPERL_W_VERSION_GE( 2, 9, 0 )     
+        MATCH_REDISP_FUNCTION( wxPliOvl_wpdc, CreateFromPrinterDC)
+#endif                  
+    END_OVERLOAD( "Wx::GraphicsRenderer::CreateContext" )
+%}
+
+    %name{CreateFromWindowDC} wxGraphicsContext* CreateContext( const wxWindowDC& dc );
+    %name{CreateFromWindow} wxGraphicsContext* CreateContext( wxWindow* window );
+#if defined(__WXMSW__) || WXPERL_W_VERSION_GE( 2, 9, 0 )           
+    %name{CreateFromMemoryDC} wxGraphicsContext* CreateContext( const wxMemoryDC& dc );
+#endif
+#if wxPERL_USE_PRINTING_ARCHITECTURE && WXPERL_W_VERSION_GE( 2, 9, 0 )     
+    %name{CreateFromPrinterDC} wxGraphicsContext* CreateContext( const wxPrinterDC& dc );
+#endif
+    wxGraphicsContext* CreateMeasuringContext();
+    const wxGraphicsPath& CreatePath();
+    const wxGraphicsMatrix& CreateMatrix( wxDouble a=1.0, wxDouble b=0.0,
+                                          wxDouble c=0.0, wxDouble d=1.0,
+                                          wxDouble tx=0.0, wxDouble ty=0.0 );
+    const wxGraphicsPen& CreatePen( const wxPen& pen );
+    const wxGraphicsBrush& CreateBrush( const wxBrush& brush );
+    const wxGraphicsBrush& CreateLinearGradientBrush( wxDouble x1, wxDouble y1,
+                                                      wxDouble x2, wxDouble y2,
+                                                      const wxColour&c1, const wxColour&c2 );
+    const wxGraphicsBrush& CreateRadialGradientBrush( wxDouble xo, wxDouble yo,
+                                                      wxDouble xc, wxDouble yc,
+                                                      wxDouble radius,
+                                                      const wxColour &oColor, const wxColour &cColor );
+#define wxBLACKPtr (wxColour*)wxBLACK
+    const wxGraphicsFont& CreateFont( const wxFont& font,
+                                      const wxColour& col = wxBLACKPtr );
+};
+
+#endif
