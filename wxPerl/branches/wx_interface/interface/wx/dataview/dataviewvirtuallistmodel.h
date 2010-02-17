@@ -9,7 +9,6 @@
 /////////////////////////////////////////////////////////////////////////////
 
 %loadplugin{build::Wx::Virtual::XSP};
-%typemap{wxPlDataViewVirtualListModel*}{simple}; # TODO kill
 
 #include <wx/dataview.h>
 
@@ -43,8 +42,8 @@ public:
     unsigned int GetCount() const;
 
     // pure virtual methods from base class
-    virtual unsigned int GetColumnCount() const %Virtual{%pure%};
-    virtual wxString GetColumnType(unsigned int column) const %Virtual{%pure%};
-    virtual void GetValueByRow(wxVariant& value, unsigned int row, unsigned int col) const %Virtual{%pure%};
-    virtual bool SetValueByRow(const wxVariant& value, unsigned int row, unsigned int col) %Virtual{%pure%};
+    virtual unsigned int GetColumnCount() const %Virtual{pure};
+    virtual wxString GetColumnType(unsigned int column) const %Virtual{pure};
+    virtual void GetValueByRow(wxVariant& value, unsigned int row, unsigned int col) const %Virtual{pure};
+    virtual bool SetValueByRow(const wxVariant& value, unsigned int row, unsigned int col) %Virtual{pure};
 };
