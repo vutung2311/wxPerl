@@ -201,6 +201,7 @@ EOT
         print $h_file join "\n", @cpp_code;
         close $h_file;
 
+        ExtUtils::XSpp::Typemap::add_default_class_typemaps( $cpp_class );
         my $new_class = ExtUtils::XSpp::Node::Class->new
                             ( cpp_name     => $cpp_class,
                               perl_name    => $perl_class,
