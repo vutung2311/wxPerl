@@ -105,7 +105,7 @@ sub scan_xs($$$) {
 
     m/^\#\s*include\s+"([^"]*)"\s*$/ and $file = $1 and $arr = \@cinclude;
     m/^\s*INCLUDE:\s+(.*)$/ and $file = $1 and $arr = \@xsinclude;
-    m/^\s*INCLUDE_COMMAND:\s+.*\s(\S+\.xsp?)\s*/ and $file = $1 and
+    m/^\s*INCLUDE_COMMAND:\s+.*\s(\S+\.(?:xsp?|h))\s*/ and $file = $1 and
       $arr = \@xsinclude;
     m/^\s*\%include{([^}]+)}\s*;\s*$/ and $file = $1 and $arr = \@xsinclude;
 
