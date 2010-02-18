@@ -212,6 +212,10 @@ wxFontPickerCtrl *      O_WXEVTHANDLER
 wxCollapsiblePane *     O_WXEVTHANDLER
 wxBitmapComboBox *      O_WXEVTHANDLER
 wxInfoBar *             O_WXEVTHANDLER
+wxHeaderCtrl *          O_WXEVTHANDLER
+wxHeaderCtrlSimple *    O_WXEVTHANDLER
+wxHeaderColumn *        O_NON_WXOBJECT_THR
+wxHeaderColumnSimple *  O_NON_WXOBJECT_THR
 
 wxWizard *              O_WXOBJECT
 wxWizardPage *          O_WXOBJECT
@@ -453,6 +457,7 @@ wxFontPickerEvent *     O_WXOBJECT_THR
 wxWindowCreateEvent *   O_WXOBJECT_THR
 wxWindowDestroyEvent *  O_WXOBJECT_THR
 wxCollapsiblePaneEvent * O_WXOBJECT_THR
+wxHeaderCtrlEvent *     O_WXOBJECT_THR
 
 wxPlEvent *             O_WXOBJECT_THR
 wxPlCommandEvent *      O_WXOBJECT_THR
