@@ -5,7 +5,7 @@
 // Modified by:
 // Created:     29/10/2000
 // RCS-ID:      $Id$
-// Copyright:   (c) 2000-2003, 2005-2009 Mattia Barbon
+// Copyright:   (c) 2000-2003, 2005-2010 Mattia Barbon
 // Licence:     This program is free software; you can redistribute it and/or
 //              modify it under the same terms as Perl itself
 /////////////////////////////////////////////////////////////////////////////
@@ -34,13 +34,14 @@ typedef int wxFloodFillStyle;
 
 MODULE=Wx_GDI
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Animation.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/Animation.xsp
 INCLUDE: XS/Colour.xs
 INCLUDE: XS/ColourDatabase.xs
 INCLUDE: XS/Font.xs
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ImageList.xs |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/ImageList.xs
 INCLUDE: XS/Icon.xs
 INCLUDE: XS/Cursor.xs
+INCLUDE: XS/Overlay.xs
 INCLUDE: XS/Pen.xs
 INCLUDE: XS/Brush.xs
 INCLUDE: XS/ImageHandler.xs
@@ -50,9 +51,9 @@ INCLUDE: XS/GraphicsContext.xs
 INCLUDE: XS/GraphicsPath.xs
 INCLUDE: XS/GraphicsMatrix.xs
 INCLUDE: XS/GraphicsObject.xs
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/GraphicsRenderer.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/GraphicsRenderer.xsp
 
-INCLUDE: perl -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/SVGFileDC.xsp |
+INCLUDE_COMMAND: $^X -MExtUtils::XSpp::Cmd -e xspp -- -t typemap.xsp XS/SVGFileDC.xsp
 
 MODULE=Wx PACKAGE=Wx PREFIX=wx
 

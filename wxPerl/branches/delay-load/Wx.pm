@@ -5,7 +5,7 @@
 ## Modified by:
 ## Created:     01/10/2000
 ## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2009 Mattia Barbon
+## Copyright:   (c) 2000-2010 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
 #############################################################################
@@ -21,7 +21,7 @@ use vars qw(@ISA $VERSION $XS_VERSION $AUTOLOAD @EXPORT_OK %EXPORT_TAGS
 $_msw = 1; $_gtk = 2; $_motif = 3; $_mac = 4; $_x11 = 5;
 
 @ISA = qw(Exporter);
-$VERSION = '0.95';
+$VERSION = '0.9701';
 $XS_VERSION = $VERSION;
 $VERSION = eval $VERSION;
 
@@ -37,14 +37,14 @@ sub wxPOINT  { Wx::Point->new( $_[0], $_[1] ) }
 sub wxSIZE   { Wx::Size->new( $_[0], $_[1] )  }
 
 sub AUTOLOAD {
-  my( $constname );
+  my( $constname, $error );
 
   ($constname = $AUTOLOAD) =~ s<^.*::>{};
   return 0 if $constname eq 'wxVERSION';
 
-  my( $val ) = constant($constname, 0 );
+  my( $val ) = constant( $constname, 0, $error );
 
-  if ($! != 0) {
+  if( $error != 0 ) {
 # re-add this if need support for autosplitted subroutines
 #    $AutoLoader::AUTOLOAD = $AUTOLOAD;
 #    goto &AutoLoader::AUTOLOAD;
@@ -102,38 +102,22 @@ use Wx::Threading;
 _start();
 
 our( $wx_path );
+our( $wx_binary_loader );
 
+# back compat only
 sub _load_file {
-  Wx::wxVERSION() < 2.005 ? DynaLoader::dl_load_file( $_[0], 0 ) :
-                            Wx::_load_plugin( $_[0] );
+  Wx::_load_plugin( $_[0] );
 }
 
-my( $load_fun, $unload_fun ) = ( \&_load_dll, \&_unload_dll );
-
-sub set_load_function { $load_fun = shift }
-sub set_end_function { $unload_fun = shift }
-
 sub load_dll {
-  return if $^O eq 'darwin' || Wx::wxVERSION() < 2.005;
-  goto &$load_fun;
+  $wx_binary_loader->load_dll(@_);
 }
 
 sub unload_dll {
-  return if $^O eq 'darwin' || Wx::wxVERSION() < 2.005;
-  goto &$unload_fun;
+  $wx_binary_loader->unload_dll(@_);
 }
 
 END { unload_dll() }
-
-sub _unload_dll { }
-
-sub _load_dll {
-  local $ENV{PATH} = $wx_path . ';' . $ENV{PATH} if $wx_path;
-  return unless exists $Wx::dlls->{$_[0]} && $Wx::dlls->{$_[0]};
-  my $dll = $Wx::dlls->{$_[0]};
-  $dll = $wx_path . '/' . $dll if $wx_path;
-  Wx::_load_file( $dll );
-}
 
 {
   _boot_Misc( 'Wx', $XS_VERSION );
@@ -241,6 +225,7 @@ sub GetMultipleChoices {
     return @s;
   }
 
+  $dialog->Destroy;
   return;
 }
 
