@@ -35,8 +35,9 @@
     int GetWidestItem();
 };
 
-INCLUDE: perl -pe "s/ItemContainerImmutable/OwnerDrawnComboBox/g" XS/ItemContainerImmutable.xs |
-INCLUDE: perl -pe "s/ItemContainer/OwnerDrawnComboBox/g" XS/ItemContainer.xs |
+INCLUDE_COMMAND: $^X -pe "s/ItemContainerImmutable/OwnerDrawnComboBox/g" XS/ItemContainerImmutable.xs
+
+INCLUDE_COMMAND: $^X -pe "s/ItemContainer/OwnerDrawnComboBox/g" XS/ItemContainer.xs
 
 %file{cpp/odcombo.h};
 %{
@@ -60,7 +61,7 @@ INCLUDE: perl -pe "s/ItemContainer/OwnerDrawnComboBox/g" XS/ItemContainer.xs |
                                              p3, p4 ) );                     \
             return;                                                          \
         } else                                                               \
-            return BASE::METHOD( p1, p2, p3, p4 );                           \
+            BASE::METHOD( p1, p2, p3, p4 );                                  \
     }
 
 class wxPlOwnerDrawnComboBox : public wxOwnerDrawnComboBox {

@@ -92,7 +92,7 @@ sub src_dir {
 
 #
 # quick and dirty method for creating dependencies:
-# considers files included via #include "..." or INCLUDE: ...
+# considers files included via #include "...", INCLUDE: or INCLUDE_COMMAND:
 # (not #include <...>) and does not take into account preprocessor directives
 #
 sub scan_xs($$$);
@@ -113,7 +113,7 @@ sub scan_xs($$$) {
 
     m/^\#\s*include\s+"([^"]*)"\s*$/ and $file = $1 and $arr = \@cinclude;
     m/^\s*INCLUDE:\s+(.*)$/ and $file = $1 and $arr = \@xsinclude;
-    m/^\s*INCLUDE:\s+.*\s(\S+\.xsp?)\s*\|/ and $file = $1 and
+    m/^\s*INCLUDE_COMMAND:\s+.*\s(\S+\.xsp?)\s*/ and $file = $1 and
       $arr = \@xsinclude;
 
     if( defined $file ) {

@@ -462,7 +462,8 @@ static wxPlINH inherit[] =
     I( BufferedPaintDC, BufferedDC )
     I( SVGFileDC,       DC )
     I( MirrorDC,        DC )
-
+    I( GCDC,            DC )
+    
     I( BMPHandler,      ImageHandler )
     I( PNGHandler,      ImageHandler )
     I( JPEGHandler,     ImageHandler )
@@ -477,7 +478,7 @@ static wxPlINH inherit[] =
     I( ANIHandler,      CURHandler )
     I( TGAHandler,      ImageHandler )
 
-    I( GraphicsContext, Object )
+    I( GraphicsContext, GraphicsObject )
     I( GraphicsRenderer, Object )
     I( GraphicsObject,  Object )
     I( GraphicsPath,    GraphicsObject )
@@ -488,7 +489,10 @@ static wxPlINH inherit[] =
 #ifdef __WXMSW__
     I( GDIPlusContext,  GraphicsContext )
 #endif
-
+#ifdef __WXMAC__
+    I( MacCoreGraphicsContext,  GraphicsContext )
+    I( MacCoreGraphicsRenderer, GraphicsRenderer )
+#endif
     I( LogTextCtrl,     Log )
     I( LogWindow,       Log )
     I( LogGui,          Log )
@@ -742,7 +746,7 @@ void SetInheritance()
 // !package: Wx
 // !tag:
 
-static double constant( const char *name, int arg ) 
+static double constant( const char* name, int arg ) 
 {
   WX_PL_CONSTANT_INIT();
 
@@ -3323,10 +3327,18 @@ WXPLI_BOOT_ONCE(Wx_Const);
 
 MODULE=Wx_Const PACKAGE=Wx
 
+## this used to be written using a CODE: section, but it seems to tickle
+## an optimizer bug with g++ 4.2, -O2, no threads, on Mac OS X
 double
-constant(name,arg)
+constant( name, arg, error )
     const char* name
     int arg
+    int error = NO_INIT
+  PPCODE:
+    RETVAL = constant( name, arg );
+    XPUSHs( sv_2mortal( newSViv( RETVAL ) ) );
+    sv_setiv_mg( ST(2), errno );
+    XSRETURN( 1 );
 
 void
 UnsetConstants()
