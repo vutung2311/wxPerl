@@ -58,6 +58,7 @@ wxAnimationType         T_ENUM
 wxUpdateUIMode          T_ENUM
 wxWindowVariant         T_ENUM
 wxImageResizeQuality    T_ENUM
+wxAlignment             T_ENUM
 
 wxFindReplaceDialogStyles T_ENUM
 wxFindReplaceFlags      T_ENUM
@@ -215,6 +216,7 @@ wxInfoBar *             O_WXEVTHANDLER
 wxHeaderCtrl *          O_WXEVTHANDLER
 wxHeaderCtrlSimple *    O_WXEVTHANDLER
 wxHeaderColumn *        O_NON_WXOBJECT_THR
+wxSettableHeaderColumn * O_NON_WXOBJECT_THR
 wxHeaderColumnSimple *  O_NON_WXOBJECT_THR
 
 wxWizard *              O_WXOBJECT
