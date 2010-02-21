@@ -19,6 +19,7 @@
 %typemap{const wxHeaderColumnSimple&}{reference};
 
 %loadplugin{build::Wx::Overload::XSP};
+%loadplugin{build::Wx::Virtual::XSP};
 
 /**
     @class wxHeaderCtrl
@@ -540,7 +541,8 @@ public:
 
         You must use Create() after creating the object using this constructor.
      */
-    wxHeaderCtrlSimple();
+    wxHeaderCtrlSimple()
+        %postcall{% wxPli_create_evthandler( aTHX_ RETVAL, CLASS ); %};
 
     /**
         Constructor creating the window.
@@ -553,7 +555,8 @@ public:
                        const wxPoint& pos = wxDefaultPosition,
                        const wxSize& size = wxDefaultSize,
                        long style = wxHD_DEFAULT_STYLE,
-                       const wxString& name = wxHeaderCtrlNameStr);
+                       const wxString& name = wxHeaderCtrlNameStr)
+        %postcall{% wxPli_create_evthandler( aTHX_ RETVAL, CLASS ); %};
 
     /**
         Insert the column at the given position.
@@ -650,7 +653,7 @@ protected:
         The base class version returns -1 indicating that this function is not
         implemented.
      */
-    virtual int GetBestFittingWidth(unsigned int idx) const;
+    virtual int GetBestFittingWidth(unsigned int idx) const %Virtual;
 };
 
 /**
