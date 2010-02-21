@@ -68,7 +68,8 @@ sub is_number {
     return grep $type->base_type eq $_,
                 ( 'int', 'unsigned', 'short', 'long',
                   'unsigned int', 'unsigned short',
-                  'unsigned long', 'float', 'double' );
+                  'unsigned long', 'float', 'double',
+                  'wxAlignment' );
 }
 
 sub is_value {
@@ -163,9 +164,15 @@ EOT
         $method->perl_name, join( ', ', @indices ),
         $method->perl_name, $method->perl_name, $method->perl_name, $method->perl_name;
 
-    return [ $init,
-             sprintf '        MATCH_REDISP( %s_proto, %s )',
-                     $method->perl_name, $method->perl_name ];
+    if( $min != $max ) {
+        return [ $init,
+                 sprintf '        MATCH_REDISP_COUNT_ALLOWMORE( %s_proto, %s, %d )',
+                         $method->perl_name, $method->perl_name, $min ];
+    } else {
+        return [ $init,
+                 sprintf '        MATCH_REDISP( %s_proto, %s )',
+                         $method->perl_name, $method->perl_name ];
+    }
 }
 
 sub _add_overload {
