@@ -4,6 +4,7 @@ Revision history for Perl extension Wx.
 	- Added wxDataViewListCtrl (2.9).
 	- Added wxDataViewVirtualListModel (2.9).
 	- Added wxInfoBar (2.9).
+	- Added wxHeaderCtrlSimple (2.9).
 
 0.9701 Thu Feb 11 16:03:42 CET 2010
 	- Bump the required version of ExtUtils::XSpp and ExtUtils::ParseXS.
