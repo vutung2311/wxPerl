@@ -13,8 +13,8 @@ sub register_plugin {
     my( $class, $parser ) = @_;
     my $instance = $class->new;
 
-    $parser->add_method_tag_plugin( $instance );
-    $parser->add_post_process_plugin( $instance );
+    $parser->add_method_tag_plugin( plugin => $instance, tag => 'Virtual' );
+    $parser->add_post_process_plugin( plugin => $instance );
 }
 
 sub handle_method_tag {
