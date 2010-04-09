@@ -120,7 +120,7 @@ sub post_process {
         } else {
             ( $perl_class = $cpp_class ) =~ s/^wxPl/Wx::/;
         }
-        my $file = lc "cpp/$cpp_class.h";
+        my $file = lc "xspp/$cpp_class.h";
 
         my $include = ExtUtils::XSpp::Node::Raw->new
                           ( rows => [ "#include \"$file\"" ] );
