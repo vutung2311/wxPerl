@@ -18,8 +18,8 @@
 %typemap{const wxHeaderColumn&}{reference};
 %typemap{const wxHeaderColumnSimple&}{reference};
 
-%loadplugin{build::Wx::Overload::XSP};
-%loadplugin{build::Wx::Virtual::XSP};
+%loadplugin{build::Wx::XSP::Overload};
+%loadplugin{build::Wx::XSP::Virtual};
 
 /**
     @class wxHeaderCtrl

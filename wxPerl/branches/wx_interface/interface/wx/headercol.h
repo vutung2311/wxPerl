@@ -15,8 +15,8 @@
 #include <wx/headerctrl.h>
 #include <wx/dataview.h> // wxDVC_DEFAULT_WIDTH
 
-%loadplugin{build::Wx::Overload::XSP};
-%loadplugin{build::Wx::Virtual::XSP};
+%loadplugin{build::Wx::XSP::Overload};
+%loadplugin{build::Wx::XSP::Virtual};
 %loadplugin{build::Wx::XSP::Enum};
 %typemap{wxAlignment}{simple};
 

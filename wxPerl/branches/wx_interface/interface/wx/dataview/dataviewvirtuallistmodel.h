@@ -8,7 +8,7 @@
 // Licence:     wxWindows license
 /////////////////////////////////////////////////////////////////////////////
 
-%loadplugin{build::Wx::Virtual::XSP};
+%loadplugin{build::Wx::XSP::Virtual};
 
 #include <wx/dataview.h>
 
