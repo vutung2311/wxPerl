@@ -206,7 +206,7 @@ sub postamble_core {
   my $text = <<EOT . $this->postamble_overload;
 
 $exp :
-\t\$(PERL) script/make_exp_list.pl $exp @{[$this->files_with_constants]}
+\t\$(PERL) script/make_exp_list.pl $exp @{[$this->files_with_constants]} xspp/*.h ext/*/xspp/*.h
 
 copy_files :
 \t\$(PERL) script/copy_files.pl files.lst
