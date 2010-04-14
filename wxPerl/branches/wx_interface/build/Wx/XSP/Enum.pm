@@ -42,6 +42,10 @@ static double %s_constant( const char* name, int arg )
 
     WX_PL_CONSTANT_INIT();
 
+    // !package: Wx
+    // !tag:
+    // !parser: sub { $_[0] =~ m<^\s*r\w*\(\s*(\w+)\s*\);\s*(?://(.*))?$> }
+
 //    switch( fl )
 //    {
 %s
