@@ -1,4 +1,4 @@
-package build::Wx::Virtual::XSP;
+package build::Wx::XSP::Virtual;
 
 use strict;
 use warnings;

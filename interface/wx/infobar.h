@@ -13,7 +13,7 @@
 
 #include <wx/infobar.h>
 
-%loadplugin{build::Wx::Overload::XSP};
+%loadplugin{build::Wx::XSP::Overload};
 
 %typemap{wxShowEffect}{simple};
 

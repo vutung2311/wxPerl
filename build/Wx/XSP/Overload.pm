@@ -1,4 +1,4 @@
-package build::Wx::Overload::XSP;
+package build::Wx::XSP::Overload;
 
 use strict;
 use warnings;

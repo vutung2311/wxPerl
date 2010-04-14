@@ -12,7 +12,7 @@
 
 #include <wx/spinctrl.h>
 
-%loadplugin{build::Wx::Overload::XSP};
+%loadplugin{build::Wx::XSP::Overload};
 
 /**
     @class wxSpinCtrlDouble

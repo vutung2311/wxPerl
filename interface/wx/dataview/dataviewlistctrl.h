@@ -10,7 +10,7 @@
 
 #include <wx/dataview.h>
 
-%loadplugin{build::Wx::Overload::XSP};
+%loadplugin{build::Wx::XSP::Overload};
 
 %typemap{const wxVector<wxVariant>&}{parsed}{%wxVectorVariant%};
 %typemap{wxClientData*}{parsed}{%wxPliUserDataCD*%};
