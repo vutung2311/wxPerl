@@ -17,6 +17,7 @@
 
 %loadplugin{build::Wx::Overload::XSP};
 %loadplugin{build::Wx::Virtual::XSP};
+%loadplugin{build::Wx::XSP::Enum};
 %typemap{wxAlignment}{simple};
 
 /**
