@@ -11,6 +11,7 @@ build/Wx/Overload/Driver.pm
 build/Wx/Overload/Handle.pm
 build/Wx/Overload/XSP.pm
 build/Wx/Virtual/XSP.pm
+build/Wx/XSP/Enum.pm
 build/Wx/build/MakeMaker/Any_OS.pm
 build/Wx/build/MakeMaker/Any_wx_config.pm
 build/Wx/build/MakeMaker/MacOSX_GCC.pm
