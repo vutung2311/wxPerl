@@ -253,6 +253,11 @@ sub files_with_constants {
           push @files, $name;
           return;
         };
+        # for XS++ files containing enums, see comment in Any_OS.pm
+        $line =~ m/^\s*enum\b/ && do {
+          push @files, $name;
+          return;
+        };
       };
     };
   };

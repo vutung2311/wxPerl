@@ -200,6 +200,10 @@ sub postamble_core {
   my $this = shift;
   my %files = $this->files_to_install();
 
+  # with the dependencies written that way there is no guarantee that
+  # the file with export will be built after all the .o files (and
+  # hence after the files in xspp/* are built); in practice it just
+  # works...
   require Data::Dumper;
   Wx::build::Utils::write_string( 'files.lst',
                                   Data::Dumper->Dump( [ \%files ] ) );
