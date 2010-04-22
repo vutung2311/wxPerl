@@ -123,9 +123,7 @@ sub depend_core {
 
   my %files = $this->files_to_install();
   my %depend = ( _depend_common( $this ),
-                 $exp              => join( ' ', $this->files_with_constants ),
-                 '$(INST_STATIC)'  => "fix_alien $exp",
-                 '$(INST_DYNAMIC)' => "fix_alien $exp",
+                 $exp              => join( ' ', $this->files_with_constants, ),
                  'fix_alien'       => 'pm_to_blib',
                  'pm_to_blib'      => 'copy_files',
                  'blibdirs'        => 'copy_files',
@@ -200,17 +198,22 @@ sub postamble_core {
   my $this = shift;
   my %files = $this->files_to_install();
 
-  # with the dependencies written that way there is no guarantee that
-  # the file with export will be built after all the .o files (and
-  # hence after the files in xspp/* are built); in practice it just
-  # works...
+  # not all the dependencies added in Utils.pm for Wx_Exp.pm are
+  # strictly necessary, but it's better to keep them in case the
+  # dependencies here are changed
   require Data::Dumper;
   Wx::build::Utils::write_string( 'files.lst',
                                   Data::Dumper->Dump( [ \%files ] ) );
   my $text = <<EOT . $this->postamble_overload;
 
-$exp :
+$exp : binary_\$(LINKTYPE)
 \t\$(PERL) script/make_exp_list.pl $exp @{[$this->files_with_constants]} xspp/*.h ext/*/xspp/*.h
+
+\$(LINKTYPE) :: fix_alien $exp
+
+binary_static : \$(INST_STATIC)
+
+binary_dynamic : \$(INST_DYNAMIC)
 
 copy_files :
 \t\$(PERL) script/copy_files.pl files.lst
