@@ -252,6 +252,13 @@ EOT
             } else {
                 my $ret_type_map = _virtual_typemap( $method->ret_type );
                 my $default = $pure ? $ret_type_map->{default_value} : $call_base;
+                # pure virtual without default value: abort
+                if( !defined $default ) {
+                    # TODO better error message
+                    $default = 'croak( "Must override" );';
+                } else {
+                    $default = 'return ' . $default;
+                }
                 my $convert = $ret_type_map->{convert_return};
                 push @cpp_code, sprintf <<EOT,
     // TODO wxPerl-specific
@@ -264,7 +271,7 @@ EOT
             return %s;
         }
         else
-            return %s;
+            %s;
     }
 EOT
                   $method->cpp_name, $arg_types, $cpp_parms, $convert, $default;
