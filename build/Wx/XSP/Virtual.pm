@@ -81,6 +81,11 @@ my %type_map =
                            type_char      => 'O',
                            arguments      => '&%s',
                            },
+    'const wxHeaderColumn&' =>
+                         { convert_return => '*(wxHeaderColumn*)wxPli_sv_2_object( aTHX_ ret, "Wx::HeaderColumn" )',
+                           type_char      => 'O',
+                           arguments      => '&%s',
+                           },
     );
 
 sub _virtual_typemap {
