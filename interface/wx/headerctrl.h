@@ -20,6 +20,7 @@
 
 %loadplugin{build::Wx::XSP::Overload};
 %loadplugin{build::Wx::XSP::Virtual};
+%loadplugin{build::Wx::XSP::Enum};
 
 enum
 {
