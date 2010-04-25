@@ -218,8 +218,8 @@ wxHeaderCtrlSimple *    O_WXEVTHANDLER
 wxHeaderColumn *        O_NON_WXOBJECT_THR
 wxSettableHeaderColumn * O_NON_WXOBJECT_THR
 wxHeaderColumnSimple *  O_NON_WXOBJECT_THR
-wxPlHeaderColumn *      O_NON_WXOBJECT_THR
-wxPlSettableHeaderColumn * O_NON_WXOBJECT_THR
+wxPlHeaderColumn *      O_NON_WXOBJECT_SELF
+wxPlSettableHeaderColumn * O_NON_WXOBJECT_SELF
 
 wxWizard *              O_WXOBJECT
 wxWizardPage *          O_WXOBJECT
@@ -607,6 +607,19 @@ O_USERDATACD
 
 O_USERDATAO
     $arg = ( $var == 0 ) ? &PL_sv_undef : $var->GetData();
+    SvREFCNT_inc( $arg ); // xsubpp mortalizes it...
+
+#
+# Objects with a self reference
+#
+
+INPUT
+O_NON_WXOBJECT_SELF
+    $var = (CPP_CLASS) wxPli_sv_2_object( aTHX_ $arg, PERL_CLASS );
+
+OUTPUT
+O_NON_WXOBJECT_SELF
+    $arg = ( $var == 0 ) ? &PL_sv_undef : $var->GetSelf();
     SvREFCNT_inc( $arg ); // xsubpp mortalizes it...
 
 #
