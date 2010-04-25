@@ -100,14 +100,28 @@ sub post_process {
     foreach my $node ( @copy ) {
         next unless $node->isa( 'ExtUtils::XSpp::Node::Class' );
         next if $self->{virtual_classes}{$node};
-        my @virtual;
-        my $abstract_class;
+        my( @virtual, $abstract_class, @classes, %redefined );
 
-        foreach my $method ( @{$node->methods} ) {
-            next unless $self->{virtual_methods}{$method};
+        @classes = $node;
+        # find virtual method in this class and in all base classes
+        while( @classes ) {
+            my $class = shift @classes;
+            foreach my $method ( @{$class->methods} ) {
+                next unless $method->isa( 'ExtUtils::XSpp::Node::Method' );
+                # do not generate virtual handling code for methods that
+                # are marked as virtual in a base class and redefined as
+                # non-virtual in this class
+                unless( $self->{virtual_methods}{$method} ) {
+                    $redefined{$method->cpp_name} ||= 1;
+                    next;
+                }
+                next if $redefined{$method->cpp_name};
 
-            push @virtual, $self->{virtual_methods}{$method};
-            $abstract_class ||= $virtual[-1][1];
+                push @virtual, $self->{virtual_methods}{$method};
+                $abstract_class ||= $virtual[-1][1];
+            }
+
+            push @classes, @{$class->base_classes};
         }
 
         next unless @virtual;
@@ -146,6 +160,15 @@ class %s : public %s
 public:
 EOC
           $cpp_class, $node->cpp_name;
+
+        # add the (implicit) default constructor
+        unless( @constructors ) {
+            push @constructors,
+                 ExtUtils::XSpp::Node::Constructor->new
+                     ( cpp_name   => $cpp_class,
+                       arguments  => [],
+                       );
+        }
 
         my @new_constructors;
         foreach my $constructor ( @constructors ) {
@@ -271,7 +294,7 @@ EOT
                                   perl_name    => $perl_class,
                                   base_classes => [ $node ],
                                   methods      => \@new_constructors,
-                                );
+                                  );
 
             push @$nodes, $new_class;
         } else {
