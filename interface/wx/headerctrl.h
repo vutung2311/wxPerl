@@ -154,28 +154,30 @@ enum
     @see wxGrid, wxListCtrl, wxDataViewCtrl
 */
 ## TODO plugin to add %postcall for constructors
-## TODO remove constructors for classes with pure virtual functions
 %name{Wx::HeaderCtrl} class wxHeaderCtrl : public %name{Wx::Control} wxControl
 {
+    %NoVirtualBase;
 public:
     /**
         Default constructor not creating the underlying window.
 
         You must use Create() after creating the object using this constructor.
      */
-##    wxHeaderCtrl();
+    wxHeaderCtrl()
+        %postcall{% wxPli_create_evthandler( aTHX_ RETVAL, CLASS ); %};
 
     /**
         Constructor creating the window.
 
         Please see Create() for the parameters documentation.
      */
-##    wxHeaderCtrl(wxWindow *parent,
-##                 wxWindowID winid = wxID_ANY,
-##                 const wxPoint& pos = wxDefaultPosition,
-##                 const wxSize& size = wxDefaultSize,
-##                 long style = wxHD_DEFAULT_STYLE,
-##                 const wxString& name = wxHeaderCtrlNameStr);
+    wxHeaderCtrl(wxWindow *parent,
+                 wxWindowID winid = wxID_ANY,
+                 const wxPoint& pos = wxDefaultPosition,
+                 const wxSize& size = wxDefaultSize,
+                 long style = wxHD_DEFAULT_STYLE,
+                 const wxString& name = wxHeaderCtrlNameStr)
+        %postcall{% wxPli_create_evthandler( aTHX_ RETVAL, CLASS ); %};
 
     /**
         Create the header control window.
@@ -412,7 +414,7 @@ protected:
             The column index, between 0 and the value last passed to
             SetColumnCount().
      */
-    virtual const wxHeaderColumn& GetColumn(unsigned int idx) const = 0;
+    virtual const wxHeaderColumn& GetColumn(unsigned int idx) const = 0 %Virtual{pure};
 
     /**
         Method called when the column visibility is changed by the user.
