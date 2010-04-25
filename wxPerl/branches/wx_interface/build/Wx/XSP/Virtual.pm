@@ -6,6 +6,7 @@ use warnings;
 sub new {
     return bless { virtual_methods => {},
                    virtual_classes => {},
+                   skip_virtual_base => {},
                    }, $_[0];
 }
 
@@ -13,8 +14,17 @@ sub register_plugin {
     my( $class, $parser ) = @_;
     my $instance = $class->new;
 
+    $parser->add_class_tag_plugin( plugin => $instance, tag => 'NoVirtualBase' );
     $parser->add_method_tag_plugin( plugin => $instance, tag => 'Virtual' );
     $parser->add_post_process_plugin( plugin => $instance );
+}
+
+sub handle_class_tag {
+    my( $self, $class, $tag, %args ) = @_;
+
+    $self->{skip_virtual_base}{$class->cpp_name} = 1;
+
+    1;
 }
 
 sub handle_method_tag {
@@ -111,6 +121,9 @@ sub post_process {
         # find virtual method in this class and in all base classes
         while( @classes ) {
             my $class = shift @classes;
+            next if    $class ne $node
+                    && $self->{skip_virtual_base}{$class->cpp_name};
+
             foreach my $method ( @{$class->methods} ) {
                 next unless $method->isa( 'ExtUtils::XSpp::Node::Method' );
                 # do not generate virtual handling code for methods that
