@@ -158,6 +158,11 @@ class %s : public %s
     // TODO wxPerl-specific
     WXPLI_DECLARE_V_CBACK();
 public:
+    SV* GetSelf()
+    {
+        return m_callback.GetSelf();
+    }
+
 EOC
           $cpp_class, $node->cpp_name;
 
