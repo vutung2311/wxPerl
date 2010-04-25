@@ -21,6 +21,19 @@
 %loadplugin{build::Wx::XSP::Overload};
 %loadplugin{build::Wx::XSP::Virtual};
 
+enum
+{
+    // allow column drag and drop
+    wxHD_ALLOW_REORDER = 0x0001,
+
+    // allow hiding (and showing back) the columns using the menu shown by
+    // right clicking the header
+    wxHD_ALLOW_HIDE = 0x0002,
+
+    // style used by default when creating the control
+    wxHD_DEFAULT_STYLE = wxHD_ALLOW_REORDER
+};
+
 /**
     @class wxHeaderCtrl
 
