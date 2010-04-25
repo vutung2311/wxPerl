@@ -298,6 +298,7 @@ EOT
                                 ( cpp_name     => $cpp_class,
                                   perl_name    => $perl_class,
                                   base_classes => [ $node ],
+                                  condition    => $node->condition,
                                   methods      => \@new_constructors,
                                   );
 
