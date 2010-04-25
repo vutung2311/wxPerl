@@ -218,6 +218,8 @@ wxHeaderCtrlSimple *    O_WXEVTHANDLER
 wxHeaderColumn *        O_NON_WXOBJECT_THR
 wxSettableHeaderColumn * O_NON_WXOBJECT_THR
 wxHeaderColumnSimple *  O_NON_WXOBJECT_THR
+wxPlHeaderColumn *      O_NON_WXOBJECT_THR
+wxPlSettableHeaderColumn * O_NON_WXOBJECT_THR
 
 wxWizard *              O_WXOBJECT
 wxWizardPage *          O_WXOBJECT
