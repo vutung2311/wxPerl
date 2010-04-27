@@ -10,6 +10,7 @@ Changes
 build/Wx/Overload/Driver.pm
 build/Wx/Overload/Handle.pm
 build/Wx/XSP/Enum.pm
+build/Wx/XSP/Event.pm
 build/Wx/XSP/Overload.pm
 build/Wx/XSP/Virtual.pm
 build/Wx/build/MakeMaker/Any_OS.pm
