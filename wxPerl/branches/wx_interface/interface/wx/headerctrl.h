@@ -21,6 +21,7 @@
 %loadplugin{build::Wx::XSP::Overload};
 %loadplugin{build::Wx::XSP::Virtual};
 %loadplugin{build::Wx::XSP::Enum};
+%loadplugin{build::Wx::XSP::Event};
 
 enum
 {
@@ -34,6 +35,33 @@ enum
     // style used by default when creating the control
     wxHD_DEFAULT_STYLE = wxHD_ALLOW_REORDER
 };
+
+%Event{%EVT_HEADER_CLICK(id, func)%}
+      {wxEVT_COMMAND_HEADER_CLICK};
+%Event{%EVT_HEADER_RIGHT_CLICK(id, func)%}
+      {wxEVT_COMMAND_HEADER_RIGHT_CLICK};
+%Event{%EVT_HEADER_MIDDLE_CLICK(id, func)%}
+      {wxEVT_COMMAND_HEADER_MIDDLE_CLICK};
+%Event{%EVT_HEADER_DCLICK(id, func)%}
+      {wxEVT_COMMAND_HEADER_DCLICK};
+%Event{%EVT_HEADER_RIGHT_DCLICK(id, func)%}
+      {wxEVT_COMMAND_HEADER_MIDDLE_DCLICK};
+%Event{%EVT_HEADER_MIDDLE_DCLICK(id, func)%}
+      {wxEVT_COMMAND_HEADER_MIDDLE_DCLICK};
+%Event{%EVT_HEADER_SEPARATOR_DCLICK(id, func)%}
+      {wxEVT_COMMAND_HEADER_SEPARATOR_DCLICK};
+%Event{%EVT_HEADER_BEGIN_RESIZE(id, func)%}
+      {wxEVT_COMMAND_HEADER_BEGIN_RESIZE};
+%Event{%EVT_HEADER_RESIZING(id, func)%}
+      {wxEVT_COMMAND_HEADER_RESIZING};
+%Event{%EVT_HEADER_END_RESIZE(id, func)%}
+      {wxEVT_COMMAND_HEADER_END_RESIZE};
+%Event{%EVT_HEADER_BEGIN_REORDER(id, func)%}
+      {wxEVT_COMMAND_HEADER_BEGIN_REORDER};
+%Event{%EVT_HEADER_END_REORDER(id, func)%}
+      {wxEVT_COMMAND_HEADER_END_REORDER};
+%Event{%EVT_HEADER_DRAGGING_CANCELLED(id, func)%}
+      {wxEVT_COMMAND_HEADER_DRAGGING_CANCELLED};
 
 /**
     @class wxHeaderCtrl
