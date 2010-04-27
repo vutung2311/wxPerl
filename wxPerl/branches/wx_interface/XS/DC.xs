@@ -5,7 +5,7 @@
 ## Modified by:
 ## Created:     29/10/2000
 ## RCS-ID:      $Id$
-## Copyright:   (c) 2000-2007, 2009 Mattia Barbon
+## Copyright:   (c) 2000-2007, 2009-2010 Mattia Barbon
 ## Licence:     This program is free software; you can redistribute it and/or
 ##              modify it under the same terms as Perl itself
 #############################################################################
@@ -681,6 +681,20 @@ wxDC::SetLayoutDirection( wxLayoutDirection dir )
 
 #endif
 
+#if wxUSE_GRAPHICS_CONTEXT && WXPERL_W_VERSION_GE( 2, 8, 8 ) && WXPERL_W_VERSION_LT( 2, 9, 0 ) && defined( __WXMAC__ )
+
+wxGraphicsContext*
+wxDC::GetGraphicsContext()
+  CODE:
+    RETVAL = THIS->GetGraphicsContext();
+  OUTPUT:
+    RETVAL
+  CLEANUP:
+    wxPli_object_set_deleteable( aTHX_ ST(0), false );
+
+#endif
+
+
 #if wxUSE_GRAPHICS_CONTEXT && WXPERL_W_VERSION_GE( 2, 8, 8 )
     
 # DECLARE_OVERLOAD( wmdc, Wx::MemoryDC )
@@ -717,6 +731,27 @@ newWindowDC( CLASS, dc )
   CODE:
     RETVAL = new wxGCDC( *dc );
   OUTPUT: RETVAL
+
+#if !defined( __WXMAC__ ) || WXPERL_W_VERSION_GE( 2, 9, 0 )
+
+wxGraphicsContext*
+wxGCDC::GetGraphicsContext()
+  CODE:
+    RETVAL = THIS->GetGraphicsContext();
+  OUTPUT:
+    RETVAL
+  CLEANUP:
+    wxPli_object_set_deleteable( aTHX_ ST(0), false );
+    
+
+void
+wxGCDC::SetGraphicsContext( ctx )
+    wxGraphicsContext* ctx
+  CODE:
+    wxPli_object_set_deleteable( aTHX_ ST(1), false );
+    THIS->SetGraphicsContext( ctx );
+
+#endif
 
 #endif    
 
