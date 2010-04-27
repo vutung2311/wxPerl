@@ -203,9 +203,11 @@ sub postamble_core {
   require Data::Dumper;
   Wx::build::Utils::write_string( 'files.lst',
                                   Data::Dumper->Dump( [ \%files ] ) );
+  # $exp and fix_alien depend on wxt_copy_files to ensure that blib/lib/Wx
+  # has been created
   my $text = <<EOT . $this->postamble_overload;
 
-$exp : wxt_binary_\$(LINKTYPE)
+$exp : wxt_copy_files wxt_binary_\$(LINKTYPE)
 \t\$(PERL) script/make_exp_list.pl $exp @{[$this->files_with_constants]} xspp/*.h ext/*/xspp/*.h
 
 \$(LINKTYPE) :: wxt_fix_alien $exp
@@ -220,7 +222,7 @@ wxt_copy_files :
 \t\$(PERL) script/copy_files.pl files.lst
 \t\$(TOUCH) wxt_copy_files
 
-wxt_fix_alien : lib/Wx/Mini.pm
+wxt_fix_alien : wxt_copy_files lib/Wx/Mini.pm
 \t\$(PERL) script/fix_alien_path.pl lib/Wx/Mini.pm blib/lib/Wx/Mini.pm
 \t\$(TOUCH) wxt_fix_alien
 

@@ -68,6 +68,7 @@ lib/Wx/Loader.pod
 lib/Wx/Locale.pm
 lib/Wx/Menu.pm
 lib/Wx/Mini.pm
+lib/Wx/NewClass.pod
 lib/Wx/RadioBox.pm
 lib/Wx/Thread.pod
 lib/Wx/Timer.pm
@@ -492,6 +493,7 @@ ext/richtext/XS/RichTextBuffer.xsp
 ext/richtext/XS/RichTextCtrl.xsp
 ext/richtext/XS/RichTextFileHandler.xsp
 ext/richtext/XS/RichTextFormattingDialog.xsp
+ext/richtext/XS/RichTextPrinting.xsp
 ext/richtext/XS/RichTextStyle.xsp
 ext/richtext/XS/RichTextStyleCtrl.xsp
 ext/richtext/XS/RichTextStyleOrganiserDialog.xsp
