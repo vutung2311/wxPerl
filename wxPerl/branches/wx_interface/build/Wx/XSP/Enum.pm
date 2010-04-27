@@ -28,7 +28,7 @@ sub post_process {
     }
 
     ( my $name = File::Basename::basename( $parser->current_file ) ) =~ tr/./_/;
-    my $file = "xspp/$name.h";
+    my $file = "xspp/const_$name.h";
     my @defines;
     while( my( $k, $v ) = each %constants ) {
         if( $v->[0] ) {
