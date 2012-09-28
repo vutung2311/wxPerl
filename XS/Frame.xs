@@ -60,10 +60,10 @@ wxFrame::Create( parent, id, title, pos = wxDefaultPosition, size = wxDefaultSiz
     long style
     wxString name
 
-#if WXPERL_W_VERSION_GE( 2, 8, 12 )
+#if 0
 
 void
-wxFrame::ProcessCommand( id )
+wxFrame::Command( id )
     int id
 
 #endif

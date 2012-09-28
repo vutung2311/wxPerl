@@ -481,7 +481,6 @@ XS/DirCtrl.xsp
 XS/DirDialog.xs
 XS/Display.xsp
 XS/EditableListBox.xsp
-XS/EventFilter.xsp
 XS/EvtHandler.xs
 XS/FileCtrl.xsp
 XS/FileDialog.xs
