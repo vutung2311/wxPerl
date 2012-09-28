@@ -1,5 +1,8 @@
 Revision history for Perl extension Wx.
 
+0.9913 Fri Sep 28 2012
+    -- ld fix for some 64 bit *nix environments
+
 0.9912 Fri Sep 21 2012
     - wrapped wxListCtrl::SetItemPtrData.
     - updated to use sv_magicext / mg_findext so
