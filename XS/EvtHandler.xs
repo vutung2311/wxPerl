@@ -20,21 +20,6 @@ wxEvtHandler::new()
   OUTPUT:
     RETVAL
 
-#if WXPERL_W_VERSION_GE( 2, 9, 3 )
-void
-AddFilter( filter )
-    wxEventFilter* filter
-  CODE:
-    wxEvtHandler::AddFilter( filter );
-    
-void
-RemoveFilter( filter )
-    wxEventFilter* filter
-  CODE:
-    wxEvtHandler::RemoveFilter( filter );
-    
-#endif // end if WXPERL_W_VERSION_GE( 2, 9, 3 )
-
 void
 wxEvtHandler::AddPendingEvent( event )
     wxEvent* event
@@ -111,12 +96,3 @@ wxEvtHandler::SetNextHandler( handler )
 void
 wxEvtHandler::SetPreviousHandler( handler )
     wxEvtHandler* handler
-
-#if WXPERL_W_VERSION_GE( 2, 9, 1 )
-
-bool
-wxEvtHandler::ProcessEventLocally( event )
-    wxEvent* event
-  C_ARGS: *event
-  
-#endif
