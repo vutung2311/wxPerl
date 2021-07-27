@@ -133,6 +133,7 @@ inline CV* wxPli_newXS(pTHX_ const char* name, XSUBADDR_t addr,
 #undef getc
 #undef getenv
 #undef malloc
+#undef calloc
 #undef open
 #undef read
 #undef realloc
